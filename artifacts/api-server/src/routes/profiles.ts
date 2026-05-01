@@ -67,6 +67,7 @@ router.put("/me", requireAuth, async (req, res): Promise<void> => {
         ...(data.smsNumber !== undefined && { smsNumber: data.smsNumber }),
         ...(data.contactSettings !== undefined && { contactSettings: data.contactSettings }),
         ...(data.leadCaptureEnabled !== undefined && { leadCaptureEnabled: data.leadCaptureEnabled }),
+        ...(data.verified !== undefined && { verified: data.verified }),
       })
       .where(eq(profilesTable.id, profile.id))
       .returning();

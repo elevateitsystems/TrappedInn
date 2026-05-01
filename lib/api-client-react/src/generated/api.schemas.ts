@@ -68,6 +68,7 @@ export interface UpdateProfileBody {
   /** @nullable */
   smsNumber?: string | null;
   leadCaptureEnabled?: boolean;
+  verified?: boolean;
   contactSettings?: UpdateProfileBodyContactSettings;
 }
 

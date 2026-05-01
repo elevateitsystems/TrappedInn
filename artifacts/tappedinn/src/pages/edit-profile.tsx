@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useGetMyProfile, useUpdateMyProfile, getGetMyProfileQueryKey } from "@workspace/api-client-react";
 import { AppLayout } from "@/components/layout";
 import { useQueryClient } from "@tanstack/react-query";
-import { Check, Loader2, Camera, Phone, Mail, Globe, MessageSquare, BadgeCheck, ExternalLink } from "lucide-react";
+import { Check, Loader2, Camera, Phone, Mail, Globe, MessageSquare, BadgeCheck, ExternalLink, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
 
 const BASE_URL = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -36,6 +36,7 @@ export default function EditProfilePage() {
     website: "",
     smsNumber: "",
     leadCaptureEnabled: false,
+    verified: false,
     contactSettings: { showPhone: true, showEmail: true, showWebsite: true, showSms: false },
     themeSettings: {
       backgroundColor: "",
@@ -63,6 +64,7 @@ export default function EditProfilePage() {
         website: (profile as any).website ?? "",
         smsNumber: (profile as any).smsNumber ?? "",
         leadCaptureEnabled: !!(profile as any).leadCaptureEnabled,
+        verified: !!(profile as any).verified,
         contactSettings: cs,
         themeSettings: {
           backgroundColor: ts.backgroundColor ?? "",
@@ -107,6 +109,7 @@ export default function EditProfilePage() {
           website: form.website || null,
           smsNumber: form.smsNumber || null,
           leadCaptureEnabled: form.leadCaptureEnabled,
+          verified: form.verified,
           contactSettings: form.contactSettings,
         } as any,
       },
@@ -354,6 +357,30 @@ export default function EditProfilePage() {
                   className={`relative w-11 h-6 rounded-full transition-colors ${form.leadCaptureEnabled ? "bg-primary" : "bg-muted"}`}
                 >
                   <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-all ${form.leadCaptureEnabled ? "left-[22px]" : "left-0.5"}`} />
+                </button>
+              </div>
+            </div>
+
+            {/* Verified badge */}
+            <div className={sectionCls}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-base font-display font-semibold flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-primary" />
+                    Verified Badge
+                  </h2>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    Show a{" "}
+                    <BadgeCheck className="inline w-3.5 h-3.5 text-primary align-text-bottom" />{" "}
+                    verified checkmark next to your name on your public profile
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setForm((f) => ({ ...f, verified: !f.verified }))}
+                  className={`relative w-11 h-6 rounded-full transition-colors ${form.verified ? "bg-primary" : "bg-muted"}`}
+                >
+                  <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-all ${form.verified ? "left-[22px]" : "left-0.5"}`} />
                 </button>
               </div>
             </div>

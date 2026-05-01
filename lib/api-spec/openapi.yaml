@@ -450,6 +450,8 @@ components:
           type: ["string", "null"]
         leadCaptureEnabled:
           type: boolean
+        verified:
+          type: boolean
         contactSettings:
           type: object
           additionalProperties: true

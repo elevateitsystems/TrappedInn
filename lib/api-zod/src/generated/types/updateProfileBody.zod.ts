@@ -18,6 +18,7 @@ export const UpdateProfileBody = zod.object({
   website: zod.string().nullish(),
   smsNumber: zod.string().nullish(),
   leadCaptureEnabled: zod.boolean().optional(),
+  verified: zod.boolean().optional(),
   contactSettings: zod.record(zod.string(), zod.unknown()).optional(),
 });
 
