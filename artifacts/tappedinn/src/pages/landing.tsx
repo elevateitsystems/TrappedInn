@@ -45,13 +45,13 @@ export default function LandingPage() {
         </div>
         <div className="flex items-center gap-3">
           <a
-            href="https://www.TappedInn.Net"
+            href="https://tappedinn.net/products/digital-business-card?variant=48403047088378"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-primary hover:underline transition-colors"
           >
             <ShoppingBag className="w-3.5 h-3.5" />
-            Order NFC Cards
+            Order Your Tapped Inn Card
           </a>
           <Link href="/sign-in" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             Sign in
@@ -99,13 +99,13 @@ export default function LandingPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
-              href="https://www.TappedInn.Net"
+              href="https://tappedinn.net/products/digital-business-card?variant=48403047088378"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-border bg-card text-foreground font-semibold hover:bg-accent transition-colors text-base w-full sm:w-auto justify-center"
             >
               <ShoppingBag className="w-4 h-4 text-primary" />
-              Order NFC Cards
+              Order Your Tapped Inn Card
             </a>
           </div>
         </motion.div>
@@ -165,7 +165,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Order NFC Cards banner */}
+      {/* Order Your Tapped Inn Card banner */}
       <section className="px-6 md:px-16 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -175,7 +175,7 @@ export default function LandingPage() {
           className="max-w-5xl mx-auto"
         >
           <a
-            href="https://www.TappedInn.Net"
+            href="https://tappedinn.net/products/digital-business-card?variant=48403047088378"
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col sm:flex-row items-center gap-6 p-6 md:p-8 rounded-3xl border border-primary/25 bg-primary/5 hover:bg-primary/8 transition-colors group"
@@ -185,7 +185,7 @@ export default function LandingPage() {
               <p className="text-xs font-medium text-primary uppercase tracking-wider mb-1">Physical + Digital</p>
               <h3 className="text-xl font-display font-semibold mb-1">Get your Tapped Inn NFC Card</h3>
               <p className="text-sm text-muted-foreground">
-                One tap connects anyone to your profile. No app required. Order your card at <span className="text-primary">TappedInn.Net</span>
+                One tap connects anyone to your profile. No app required. Order your card at <span className="text-primary">tappedinn.net</span>
               </p>
             </div>
             <div className="flex items-center gap-2 px-5 py-2.5 rounded-xl gradient-primary text-white text-sm font-semibold group-hover:opacity-90 transition-opacity shrink-0">
@@ -232,13 +232,13 @@ export default function LandingPage() {
           </div>
           <p className="text-sm text-muted-foreground">The NFC-powered digital identity platform.</p>
           <a
-            href="https://www.TappedInn.Net"
+            href="https://tappedinn.net/products/digital-business-card?variant=48403047088378"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-primary font-medium hover:underline flex items-center gap-1"
           >
             <ShoppingBag className="w-3.5 h-3.5" />
-            Order NFC Cards
+            Order Your Tapped Inn Card
           </a>
         </div>
       </footer>

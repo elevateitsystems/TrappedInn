@@ -61,15 +61,15 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         </nav>
 
         <div className="px-3 py-4 border-t border-border space-y-1">
-          {/* Order NFC Cards link */}
+          {/* Order Your Tapped Inn Card link */}
           <a
-            href="https://www.TappedInn.Net"
+            href="https://tappedinn.net/products/digital-business-card?variant=48403047088378"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-primary/10 transition-colors"
           >
             <ShoppingBag className="w-4 h-4 shrink-0" />
-            Order NFC Cards
+            Order Your Tapped Inn Card
           </a>
 
           {user && (
