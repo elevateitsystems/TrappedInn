@@ -63,7 +63,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         <div className="px-3 py-4 border-t border-border space-y-1">
           {/* Order Your Tapped Inn Card link */}
           <a
-            href="https://tappedinn.net/products/digital-business-card?variant=48403047088378"
+            href="https://www.TappedInn.net"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-primary/10 transition-colors"

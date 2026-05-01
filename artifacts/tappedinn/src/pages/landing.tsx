@@ -31,7 +31,7 @@ const features = [
 const stats = [
   { value: "0.3s", label: "Average tap-to-profile time" },
   { value: "100%", label: "Mobile-first design" },
-  { value: "NFC", label: "NTAG213/215 compatible" },
+  { value: "NFC", label: "Tap-to-connect cards" },
 ];
 
 export default function LandingPage() {
@@ -45,7 +45,7 @@ export default function LandingPage() {
         </div>
         <div className="flex items-center gap-3">
           <a
-            href="https://tappedinn.net/products/digital-business-card?variant=48403047088378"
+            href="https://www.TappedInn.net"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-primary hover:underline transition-colors"
@@ -99,7 +99,7 @@ export default function LandingPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
-              href="https://tappedinn.net/products/digital-business-card?variant=48403047088378"
+              href="https://www.TappedInn.net"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-border bg-card text-foreground font-semibold hover:bg-accent transition-colors text-base w-full sm:w-auto justify-center"
@@ -175,7 +175,7 @@ export default function LandingPage() {
           className="max-w-5xl mx-auto"
         >
           <a
-            href="https://tappedinn.net/products/digital-business-card?variant=48403047088378"
+            href="https://www.TappedInn.net"
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col sm:flex-row items-center gap-6 p-6 md:p-8 rounded-3xl border border-primary/25 bg-primary/5 hover:bg-primary/8 transition-colors group"
@@ -232,7 +232,7 @@ export default function LandingPage() {
           </div>
           <p className="text-sm text-muted-foreground">The NFC-powered digital identity platform.</p>
           <a
-            href="https://tappedinn.net/products/digital-business-card?variant=48403047088378"
+            href="https://www.TappedInn.net"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-primary font-medium hover:underline flex items-center gap-1"
