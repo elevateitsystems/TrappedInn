@@ -11,8 +11,9 @@ const APP_NAME = "Tapped Inn Network";
 const BASE_URL = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 export default function PublicProfilePage() {
-  const [, params] = useRoute("/p/:username");
-  const username = params?.username ?? "";
+  const [, paramsP] = useRoute("/p/:username");
+  const [, paramsAt] = useRoute("/@:username");
+  const username = paramsP?.username ?? paramsAt?.username ?? "";
 
   const { data: profile, isLoading, isError } = useGetPublicProfile(username, {
     query: { enabled: !!username } as any,
@@ -81,7 +82,7 @@ export default function PublicProfilePage() {
   const buttonRadius = buttonStyle === "rounded" ? "rounded-full" : buttonStyle === "square" ? "rounded-none" : "rounded-xl";
   const buttonBg = buttonStyle === "outline" ? "bg-transparent border-2" : "bg-card border border-border";
 
-  const profileUrl = `${window.location.origin}/p/${username}`;
+  const profileUrl = `${window.location.origin}/@${username}`;
 
   const contactButtons = [
     p.phone && cs.showPhone && { label: "Call", href: `tel:${p.phone}`, icon: Phone },

@@ -198,6 +198,7 @@ function AppRouter() {
           <Route path="/analytics" component={() => <ProtectedRoute component={AnalyticsPage} />} />
           <Route path="/modes" component={() => <ProtectedRoute component={ModesPage} />} />
           <Route path="/p/:username" component={PublicProfilePage} />
+          <Route path="/@:username" component={PublicProfilePage} />
           <Route path="/card/:id" component={CardRedirectPage} />
           <Route component={NotFound} />
         </Switch>

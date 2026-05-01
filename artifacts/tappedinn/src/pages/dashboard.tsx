@@ -26,7 +26,7 @@ function useActiveMode(profileId: string | undefined) {
 }
 
 function ShareCard({ username }: { username: string }) {
-  const profileUrl = `${window.location.origin}/p/${username}`;
+  const profileUrl = `${window.location.origin}/@${username}`;
   const [copied, setCopied] = useState(false);
   const canNativeShare = typeof navigator !== "undefined" && !!navigator.share;
 
@@ -64,7 +64,10 @@ function ShareCard({ username }: { username: string }) {
       <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Your profile link</p>
       <div className="flex items-center gap-2">
         <div className="flex-1 flex items-center gap-2 px-3 py-2 rounded-xl bg-input border border-border min-w-0">
-          <span className="text-sm text-muted-foreground truncate flex-1 font-mono select-all">{profileUrl}</span>
+          <span className="text-sm font-semibold truncate flex-1 select-all tracking-tight">
+            <span className="text-muted-foreground">TappedInn.net/</span>
+            <span className="text-primary">@{username}</span>
+          </span>
         </div>
         <button
           onClick={handleCopy}
@@ -84,7 +87,7 @@ function ShareCard({ username }: { username: string }) {
           </AnimatePresence>
         </button>
         <a
-          href={`/p/${username}`}
+          href={`/@${username}`}
           target="_blank"
           rel="noopener noreferrer"
           title="Open profile"
