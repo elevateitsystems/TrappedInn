@@ -1,0 +1,227 @@
+🔧 SYSTEM PATCH INSTRUCTIONS (TAPPED INN NETWORK)
+1. GLOBAL BRAND CORRECTION
+
+Problem: Platform identity is inconsistent.
+
+Action:
+
+Replace all hardcoded strings referencing anything else with:
+Tapped Inn Network
+
+Update locations:
+
+Navbar title
+Page metadata (SEO title/description)
+Email templates (sender name + footer)
+Default profile placeholder text
+URL structure if needed (keep clean: tappedinn.net/username)
+
+Backend constant:
+
+const APP_NAME = "Tapped Inn Network";
+
+Use this everywhere instead of hardcoding. Yes, everywhere. Humans forget things.
+
+2. CONTACT BUTTONS (TOP PRIORITY FEATURE)
+
+You’re not building a link list. You’re building a contact hub.
+
+DATABASE UPDATE
+
+Add fields to profiles:
+
+phone VARCHAR
+email VARCHAR
+website VARCHAR
+
+Optional but smarter:
+
+contact_settings JSONB
+
+Example:
+
+{
+  "showPhone": true,
+  "showEmail": true,
+  "showWebsite": false
+}
+FRONTEND (PROFILE PAGE UI)
+
+Placement:
+Directly under profile image + name
+
+Render logic:
+If field exists AND enabled → show button
+
+Buttons:
+
+Call → tel:+1234567890
+Email → mailto:user@email.com
+Website → direct link
+UI STRUCTURE
+
+Top section should now look like:
+
+[ Profile Image ]
+[ Name ]
+[ Bio ]
+
+[ Call ] [ Email ] [ Website ]  ← NEW ROW
+
+[ Link Buttons Below ]
+
+Stop burying contact info inside links like it’s 2015.
+
+3. REMOVE NFC DASHBOARD SECTION
+
+You already decided users don’t program cards. Good. That feature was just sitting there pretending to be useful.
+
+ACTION:
+Delete:
+/dashboard/cards page
+Cards UI components
+Any frontend references
+Backend:
+Keep cards table if you want internal use
+Remove public endpoints for card creation
+
+You (admin) handle NFC. Users don’t see it.
+
+4. PROFILE IMAGE UPLOAD (CRITICAL FIX)
+
+The fact this was missing is… concerning.
+
+BACKEND
+
+Add file upload support:
+
+Use:
+
+Multer (Node.js)
+npm install multer
+
+Endpoint:
+
+POST /upload/avatar
+
+Logic:
+
+Accept image
+Store in:
+AWS S3 OR
+Cloudinary (faster to set up)
+
+Return:
+
+{
+  "avatar_url": "https://..."
+}
+DATABASE
+
+Ensure profiles has:
+
+avatar_url TEXT
+FRONTEND
+
+In dashboard:
+
+Add upload button
+Preview image before saving
+Save returned URL to profile
+UI FIX
+
+Right now it says “Edit” but doesn’t actually let users upload. That’s not a feature, that’s decoration.
+
+Make it functional.
+
+5. PROFILE CUSTOMIZATION (YOU STARTED, NOW FINISH IT)
+
+You showed theme controls, but they’re surface-level.
+
+Let’s make it real.
+
+DATABASE (EXPAND theme_settings)
+{
+  "backgroundColor": "#000000",
+  "textColor": "#ffffff",
+  "buttonStyle": "rounded",
+  "font": "sans-serif",
+  "layout": "classic" // or "hero"
+}
+FRONTEND FEATURES
+
+Allow users to:
+
+Change background color
+Upload background image
+Adjust button style (rounded / square / outline)
+Toggle profile layout (you already have this UI)
+LIVE PREVIEW
+
+When user edits → preview updates instantly
+
+If it doesn’t feel instant, it feels broken.
+
+6. LINK SYSTEM UPGRADE
+
+Right now it’s just:
+“Add link”
+
+Upgrade it slightly:
+
+Each link should support:
+
+{
+  "title": "Instagram",
+  "url": "https://...",
+  "icon": "instagram", // optional
+  "type": "external" // future-proofing
+}
+
+Optional:
+
+drag to reorder
+toggle visibility
+7. PROFILE EXPERIENCE (WHAT USERS SEE)
+
+Final structure:
+
+[ Avatar ]
+[ Name ]
+[ Bio ]
+
+[ Contact Buttons Row ]
+(Call / Email / Website)
+
+[ Links Section ]
+(Button list)
+
+[ Optional Media Section ]
+
+Clean. Fast. No clutter. No confusion.
+
+8. WHAT YOU JUST DID (IN CASE YOU LOST TRACK)
+
+You transformed your app from:
+“Linktree clone with extra steps”
+
+Into:
+A real digital identity + contact platform
+
+That difference is what makes people actually use it.
+
+FINAL NOTE
+
+You’re getting close to something solid, but you’re still thinking like:
+“add features”
+
+Instead of:
+“design a system people actually use in real life”
+
+Right now, you fixed:
+
+branding inconsistency
+missing core functionality
+weak user control
+
+That’s not polish. That’s survival.

@@ -1,6 +1,6 @@
 import { useGetDashboardSummary, useGetRecentActivity, useGetMyProfile } from "@workspace/api-client-react";
 import { AppLayout } from "@/components/layout";
-import { Eye, Link2, CreditCard, Users, Wifi, MousePointerClick, Clock, User } from "lucide-react";
+import { Eye, Link2, Users, Wifi, MousePointerClick, Clock, User } from "lucide-react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -75,7 +75,7 @@ export default function DashboardPage() {
           {[
             { href: "/edit-profile", label: "Edit profile", icon: User },
             { href: "/edit-links", label: "Manage links", icon: Link2 },
-            { href: "/cards", label: "NFC cards", icon: CreditCard },
+            { href: "/connections", label: "Connections", icon: Users },
           ].map(({ href, label, icon: Icon }) => (
             <Link
               key={href}
@@ -91,7 +91,7 @@ export default function DashboardPage() {
         {/* Stats grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
           {summaryLoading ? (
-            Array.from({ length: 6 }).map((_, i) => (
+            Array.from({ length: 5 }).map((_, i) => (
               <div key={i} className="h-28 rounded-2xl bg-card border border-border animate-pulse" />
             ))
           ) : summary ? (
@@ -100,7 +100,6 @@ export default function DashboardPage() {
               <StatCard label="Link clicks" value={summary.linkClicks} icon={MousePointerClick} />
               <StatCard label="NFC taps" value={summary.nfcTaps} icon={Wifi} color="accent" />
               <StatCard label="Links" value={summary.totalLinks} icon={Link2} color="accent" />
-              <StatCard label="NFC cards" value={summary.totalCards} icon={CreditCard} color="accent" />
               <StatCard label="Connections" value={summary.totalConnections} icon={Users} color="accent" />
             </>
           ) : null}

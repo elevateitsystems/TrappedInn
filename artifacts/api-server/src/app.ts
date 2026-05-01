@@ -10,6 +10,13 @@ import {
 } from "./middlewares/clerkProxyMiddleware";
 import router from "./routes";
 import { logger } from "./lib/logger";
+import path from "path";
+import fs from "fs";
+
+const uploadsDir = path.resolve(process.cwd(), "uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 const app: Express = express();
 
@@ -48,6 +55,7 @@ app.use(
   })),
 );
 
+app.use("/api/uploads", express.static(uploadsDir));
 app.use("/api", router);
 
 export default app;

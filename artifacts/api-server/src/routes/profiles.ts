@@ -12,7 +12,7 @@ async function ensureUserAndProfile(userId: string, email?: string) {
   if (!user) {
     await db.insert(usersTable).values({
       id: userId,
-      email: email ?? `${userId}@tappedinn.local`,
+      email: email ?? `${userId}@tappedinnnetwork.local`,
     });
   }
 
@@ -26,6 +26,7 @@ async function ensureUserAndProfile(userId: string, email?: string) {
       username,
       displayName: "New User",
       themeSettings: {},
+      contactSettings: { showPhone: true, showEmail: true, showWebsite: true },
     }).returning();
     profile = rows[0];
   }
@@ -60,6 +61,10 @@ router.put("/me", requireAuth, async (req, res): Promise<void> => {
         ...(data.bio !== undefined && { bio: data.bio }),
         ...(data.avatarUrl !== undefined && { avatarUrl: data.avatarUrl }),
         ...(data.themeSettings !== undefined && { themeSettings: data.themeSettings as Record<string, unknown> }),
+        ...((data as any).phone !== undefined && { phone: (data as any).phone }),
+        ...((data as any).email !== undefined && { email: (data as any).email }),
+        ...((data as any).website !== undefined && { website: (data as any).website }),
+        ...((data as any).contactSettings !== undefined && { contactSettings: (data as any).contactSettings }),
       })
       .where(eq(profilesTable.id, profile.id))
       .returning();

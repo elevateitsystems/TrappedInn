@@ -4,7 +4,6 @@ import {
   LayoutDashboard,
   User,
   Link2,
-  CreditCard,
   Users,
   BarChart2,
   LogOut,
@@ -13,11 +12,12 @@ import {
 import { useClerk } from "@clerk/react";
 import { cn } from "@/lib/utils";
 
+const APP_NAME = "Tapped Inn Network";
+
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/edit-profile", label: "Profile", icon: User },
   { href: "/edit-links", label: "Links", icon: Link2 },
-  { href: "/cards", label: "NFC Cards", icon: CreditCard },
   { href: "/connections", label: "Connections", icon: Users },
   { href: "/analytics", label: "Analytics", icon: BarChart2 },
 ];
@@ -35,7 +35,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center shrink-0">
             <Wifi className="w-4 h-4 text-white" />
           </div>
-          <span className="font-display font-semibold text-sidebar-foreground">TappedInn</span>
+          <span className="font-display font-semibold text-sidebar-foreground text-sm leading-tight">{APP_NAME}</span>
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-0.5">
@@ -92,7 +92,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <div className="w-7 h-7 rounded-lg gradient-primary flex items-center justify-center">
               <Wifi className="w-3.5 h-3.5 text-white" />
             </div>
-            <span className="font-display font-semibold">TappedInn</span>
+            <span className="font-display font-semibold text-sm">{APP_NAME}</span>
           </div>
           <button
             onClick={() => signOut()}

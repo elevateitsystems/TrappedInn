@@ -11,12 +11,13 @@ import LandingPage from "@/pages/landing";
 import DashboardPage from "@/pages/dashboard";
 import EditProfilePage from "@/pages/edit-profile";
 import EditLinksPage from "@/pages/edit-links";
-import CardsPage from "@/pages/cards";
 import ConnectionsPage from "@/pages/connections";
 import AnalyticsPage from "@/pages/analytics";
 import PublicProfilePage from "@/pages/public-profile";
 import CardRedirectPage from "@/pages/card-redirect";
 import NotFound from "@/pages/not-found";
+
+const APP_NAME = "Tapped Inn Network";
 
 const clerkPubKey = publishableKeyFromHost(
   window.location.hostname,
@@ -170,13 +171,13 @@ function AppRouter() {
         signIn: {
           start: {
             title: "Welcome back",
-            subtitle: "Sign in to access your TappedInn profile",
+            subtitle: `Sign in to your ${APP_NAME} profile`,
           },
         },
         signUp: {
           start: {
             title: "Create your profile",
-            subtitle: "Join TappedInn and go beyond the business card",
+            subtitle: `Join ${APP_NAME} and go beyond the business card`,
           },
         },
       }}
@@ -192,7 +193,6 @@ function AppRouter() {
           <Route path="/dashboard" component={() => <ProtectedRoute component={DashboardPage} />} />
           <Route path="/edit-profile" component={() => <ProtectedRoute component={EditProfilePage} />} />
           <Route path="/edit-links" component={() => <ProtectedRoute component={EditLinksPage} />} />
-          <Route path="/cards" component={() => <ProtectedRoute component={CardsPage} />} />
           <Route path="/connections" component={() => <ProtectedRoute component={ConnectionsPage} />} />
           <Route path="/analytics" component={() => <ProtectedRoute component={AnalyticsPage} />} />
           <Route path="/p/:username" component={PublicProfilePage} />

@@ -2,6 +2,8 @@ import { Link } from "wouter";
 import { Wifi, ArrowRight, Zap, Globe, Users } from "lucide-react";
 import { motion } from "framer-motion";
 
+const APP_NAME = "Tapped Inn Network";
+
 const features = [
   {
     icon: Wifi,
@@ -10,8 +12,8 @@ const features = [
   },
   {
     icon: Globe,
-    title: "Your Link Hub",
-    description: "Everything you are, in one place. Portfolio, socials, work, contact — all instantly accessible.",
+    title: "Your Contact Hub",
+    description: "Everything you are, in one place. Phone, email, portfolio, socials — all instantly accessible.",
   },
   {
     icon: Users,
@@ -40,7 +42,7 @@ export default function LandingPage() {
           <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
             <Wifi className="w-4 h-4 text-white" />
           </div>
-          <span className="font-display font-semibold text-lg">TappedInn</span>
+          <span className="font-display font-semibold text-lg">{APP_NAME}</span>
         </div>
         <div className="flex items-center gap-3">
           <Link href="/sign-in" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
@@ -77,7 +79,7 @@ export default function LandingPage() {
             away
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            TappedInn turns a physical NFC card into a living digital identity. 
+            {APP_NAME} turns a physical NFC card into a living digital identity.
             Share everything — your links, your work, your story — the moment someone taps.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -185,7 +187,7 @@ export default function LandingPage() {
           <div className="w-5 h-5 rounded gradient-primary flex items-center justify-center">
             <Wifi className="w-2.5 h-2.5 text-white" />
           </div>
-          <span className="font-display font-medium">TappedInn</span>
+          <span className="font-display font-medium">{APP_NAME}</span>
         </div>
         <p>The NFC-powered digital identity platform.</p>
       </footer>

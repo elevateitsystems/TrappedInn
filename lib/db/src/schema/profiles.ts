@@ -13,7 +13,21 @@ export const profilesTable = pgTable("profiles", {
   displayName: text("display_name").notNull(),
   bio: text("bio"),
   avatarUrl: text("avatar_url"),
-  themeSettings: json("theme_settings").$type<Record<string, unknown>>().notNull().default({}),
+  phone: text("phone"),
+  email: text("email"),
+  website: text("website"),
+  contactSettings: json("contact_settings").$type<{
+    showPhone: boolean;
+    showEmail: boolean;
+    showWebsite: boolean;
+  }>().notNull().default({ showPhone: true, showEmail: true, showWebsite: true }),
+  themeSettings: json("theme_settings").$type<{
+    backgroundColor?: string;
+    textColor?: string;
+    buttonStyle?: "rounded" | "square" | "outline";
+    font?: string;
+    layout?: "classic" | "hero";
+  }>().notNull().default({}),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
