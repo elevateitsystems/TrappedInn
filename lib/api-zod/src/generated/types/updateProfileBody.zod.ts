@@ -13,6 +13,12 @@ export const UpdateProfileBody = zod.object({
   bio: zod.string().nullish(),
   avatarUrl: zod.string().nullish(),
   themeSettings: zod.record(zod.string(), zod.unknown()).optional(),
+  phone: zod.string().nullish(),
+  email: zod.string().nullish(),
+  website: zod.string().nullish(),
+  smsNumber: zod.string().nullish(),
+  leadCaptureEnabled: zod.boolean().optional(),
+  contactSettings: zod.record(zod.string(), zod.unknown()).optional(),
 });
 
 export type UpdateProfileBody = zod.input<typeof UpdateProfileBody>;

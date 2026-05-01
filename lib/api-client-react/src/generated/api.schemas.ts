@@ -49,6 +49,8 @@ export interface PublicProfile {
 
 export type UpdateProfileBodyThemeSettings = { [key: string]: unknown };
 
+export type UpdateProfileBodyContactSettings = { [key: string]: unknown };
+
 export interface UpdateProfileBody {
   username?: string;
   displayName?: string;
@@ -57,6 +59,16 @@ export interface UpdateProfileBody {
   /** @nullable */
   avatarUrl?: string | null;
   themeSettings?: UpdateProfileBodyThemeSettings;
+  /** @nullable */
+  phone?: string | null;
+  /** @nullable */
+  email?: string | null;
+  /** @nullable */
+  website?: string | null;
+  /** @nullable */
+  smsNumber?: string | null;
+  leadCaptureEnabled?: boolean;
+  contactSettings?: UpdateProfileBodyContactSettings;
 }
 
 export interface CreateLinkBody {

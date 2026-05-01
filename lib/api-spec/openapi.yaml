@@ -440,6 +440,19 @@ components:
         themeSettings:
           type: object
           additionalProperties: true
+        phone:
+          type: ["string", "null"]
+        email:
+          type: ["string", "null"]
+        website:
+          type: ["string", "null"]
+        smsNumber:
+          type: ["string", "null"]
+        leadCaptureEnabled:
+          type: boolean
+        contactSettings:
+          type: object
+          additionalProperties: true
 
     Link:
       type: object
