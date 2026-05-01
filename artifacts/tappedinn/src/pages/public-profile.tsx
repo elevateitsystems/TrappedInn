@@ -15,7 +15,7 @@ export default function PublicProfilePage() {
   const username = params?.username ?? "";
 
   const { data: profile, isLoading, isError } = useGetPublicProfile(username, {
-    query: { enabled: !!username },
+    query: { enabled: !!username } as any,
   });
   const trackEvent = useTrackEvent();
 
@@ -129,7 +129,7 @@ export default function PublicProfilePage() {
               {profile.displayName}
             </h1>
             {verified && (
-              <BadgeCheck className="w-5 h-5 text-primary shrink-0" title="Verified" />
+              <BadgeCheck className="w-5 h-5 text-primary shrink-0" aria-label="Verified" />
             )}
           </div>
           <p className="text-sm text-muted-foreground mt-0.5">@{profile.username}</p>

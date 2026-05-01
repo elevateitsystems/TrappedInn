@@ -9,7 +9,7 @@ export default function CardRedirectPage() {
   const [, setLocation] = useLocation();
 
   const { data: card, isError } = useGetCard(cardId, {
-    query: { enabled: !!cardId },
+    query: { enabled: !!cardId } as any,
   });
   const trackEvent = useTrackEvent();
 

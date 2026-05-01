@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useGetDashboardSummary, useGetRecentActivity, useGetMyProfile } from "@workspace/api-client-react";
 import { AppLayout } from "@/components/layout";
-import { Eye, Link2, Users, Wifi, MousePointerClick, Clock, User, Layers, Zap } from "lucide-react";
+import { Eye, Link2, Users, Wifi, MousePointerClick, Clock, User, Layers, Share2, Copy, Check, ExternalLink } from "lucide-react";
 import { Link } from "wouter";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const BASE_URL = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -23,6 +23,85 @@ function useActiveMode(profileId: string | undefined) {
   }, [profileId]);
 
   return activeMode;
+}
+
+function ShareCard({ username }: { username: string }) {
+  const profileUrl = `${window.location.origin}/p/${username}`;
+  const [copied, setCopied] = useState(false);
+  const canNativeShare = typeof navigator !== "undefined" && !!navigator.share;
+
+  const handleShare = async () => {
+    if (canNativeShare) {
+      try {
+        await navigator.share({
+          title: "My Tapped Inn profile",
+          text: "Check out my digital profile",
+          url: profileUrl,
+        });
+        return;
+      } catch {
+        // User cancelled or error — fall through to copy
+      }
+    }
+    await navigator.clipboard.writeText(profileUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(profileUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.05 }}
+      className="mb-6 p-4 rounded-2xl border border-border bg-card"
+    >
+      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Your profile link</p>
+      <div className="flex items-center gap-2">
+        <div className="flex-1 flex items-center gap-2 px-3 py-2 rounded-xl bg-input border border-border min-w-0">
+          <span className="text-sm text-muted-foreground truncate flex-1 font-mono select-all">{profileUrl}</span>
+        </div>
+        <button
+          onClick={handleCopy}
+          title="Copy link"
+          className="shrink-0 p-2.5 rounded-xl border border-border bg-card hover:bg-accent transition-colors"
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            {copied ? (
+              <motion.span key="check" initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.7, opacity: 0 }}>
+                <Check className="w-4 h-4 text-green-400" />
+              </motion.span>
+            ) : (
+              <motion.span key="copy" initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.7, opacity: 0 }}>
+                <Copy className="w-4 h-4 text-muted-foreground" />
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </button>
+        <a
+          href={`/p/${username}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Open profile"
+          className="shrink-0 p-2.5 rounded-xl border border-border bg-card hover:bg-accent transition-colors"
+        >
+          <ExternalLink className="w-4 h-4 text-muted-foreground" />
+        </a>
+        <button
+          onClick={handleShare}
+          className="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl gradient-primary text-white text-sm font-semibold hover:opacity-90 transition-opacity"
+        >
+          <Share2 className="w-4 h-4" />
+          Share
+        </button>
+      </div>
+    </motion.div>
+  );
 }
 
 function StatCard({
@@ -80,16 +159,11 @@ export default function DashboardPage() {
           className="mb-6"
         >
           <h1 className="text-2xl font-display font-semibold">Dashboard</h1>
-          <p className="text-muted-foreground mt-1">
-            {profile ? (
-              <>Your profile is live at{" "}
-                <Link href={`/p/${profile.username}`} className="text-primary hover:underline">
-                  /p/{profile.username}
-                </Link>
-              </>
-            ) : "Loading your profile..."}
-          </p>
+          <p className="text-muted-foreground mt-1 text-sm">Your profile overview and quick actions</p>
         </motion.div>
+
+        {/* Share card */}
+        {profile && <ShareCard username={profile.username} />}
 
         {/* Active mode banner */}
         {activeMode && (
