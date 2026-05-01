@@ -1,0 +1,278 @@
+You are building a multi-tenant SaaS platform with NFC-triggered web profiles and a social graph layer. Break it into systems and execute in order, or you’ll build a Frankenstein that barely loads.
+
+1. SYSTEM ARCHITECTURE (DEFINE BEFORE YOU TOUCH CODE)
+
+Core entities (database level):
+
+Users
+Profiles (1:1 with user)
+Links (1:many per profile)
+Cards (NFC devices tied to profiles)
+Connections (user-to-user relationships)
+Analytics (clicks, taps, views)
+
+You are not “making pages.” You are building a data model that renders pages dynamically.
+
+2. DATABASE DESIGN (POSTGRESQL)
+
+Tables:
+
+users
+
+id (UUID, primary key)
+email
+password_hash
+created_at
+
+profiles
+
+id
+user_id (FK)
+username (unique, becomes URL slug)
+display_name
+bio
+avatar_url
+theme_settings (JSON)
+
+links
+
+id
+profile_id (FK)
+title
+url
+position (for ordering)
+
+cards
+
+id
+profile_id (FK)
+nfc_uid (optional)
+redirect_url (this is what gets written to the NFC chip)
+
+connections
+
+id
+user_id
+connected_user_id
+
+analytics
+
+id
+profile_id
+event_type (view, click, tap)
+metadata (JSON)
+created_at
+
+If this structure confuses you, that’s not a “later problem.” That’s a “stop here” problem.
+
+3. BACKEND (API LAYER)
+
+Stack:
+
+Node.js + Express (or NestJS if you want structure)
+Auth: JWT-based authentication
+
+Endpoints you need:
+
+Auth
+
+POST /register
+POST /login
+
+Profile
+
+GET /:username → public profile page data
+PUT /profile → update profile
+
+Links
+
+POST /links
+PUT /links/:id
+DELETE /links/:id
+
+Cards
+
+POST /cards → generate NFC link
+GET /cards/:id → redirect handler
+
+Connections
+
+POST /connect/:userId
+GET /connections
+
+Analytics
+
+POST /track (log clicks/taps/views)
+
+Everything returns JSON. No exceptions.
+
+4. FRONTEND (USER INTERFACE)
+
+Stack:
+
+Next.js (React-based, handles routing + SEO)
+
+You need 3 main UI zones:
+
+A. Public Profile Page
+
+Route:
+tappedinn.net/[username]
+
+Renders:
+
+profile info
+links (buttons)
+optional media
+
+This page must:
+
+load fast
+be mobile-first
+not look cheap
+
+Because this is literally your product.
+
+B. Dashboard (logged-in users)
+
+Pages:
+
+/dashboard
+/edit-profile
+/edit-links
+/cards
+
+Features:
+
+drag-and-drop link ordering
+live preview of profile
+copy/share profile link
+generate NFC link
+C. NFC Redirect Logic
+
+When someone taps:
+
+NFC chip contains URL like:
+tappedinn.net/card/abc123
+
+Backend:
+
+looks up card
+redirects → tappedinn.net/williamburnley
+
+User sees profile instantly.
+
+No loading nonsense. No confusion.
+
+5. NFC IMPLEMENTATION (THIS PART IS SIMPLE, DON’T OVERTHINK IT)
+
+Buy NFC NTAG213/215 cards.
+
+Write to chip:
+
+a URL (that’s it)
+
+Example:
+tappedinn.net/card/abc123
+
+Use apps like:
+
+NFC Tools (iOS/Android)
+
+You are not building hardware. You are linking physical objects to URLs.
+
+6. ANALYTICS SYSTEM
+
+Track:
+
+profile views
+link clicks
+NFC taps
+
+Flow:
+Frontend → POST /track
+Store event in analytics table
+
+Later:
+
+display stats in dashboard
+
+If you skip this, your users have no idea if your product works.
+
+7. NETWORKING LAYER (PHASE 2, NOT DAY 1)
+
+Once core works:
+
+Add:
+
+user discovery (search + categories)
+“recently tapped” connections
+profile recommendations
+
+Now it becomes a network instead of a tool.
+
+8. DEPLOYMENT
+
+Frontend:
+
+Vercel
+
+Backend:
+
+Render / Railway / AWS
+
+Database:
+
+Supabase (fastest startup option)
+
+Domain:
+
+tappedinn.net
+
+Set up:
+
+HTTPS
+environment variables
+rate limiting (so bots don’t cook your servers)
+9. MONETIZATION (BECAUSE THIS ISN’T A CHARITY)
+
+Free tier:
+
+basic profile
+limited links
+
+Paid tier:
+
+custom themes
+analytics dashboard
+multiple cards
+priority discovery
+
+You’re not building this for vibes.
+
+10. EXECUTION ORDER (MOST IMPORTANT PART)
+
+Do NOT freestyle this.
+
+Database schema
+Backend API (basic CRUD)
+Public profile page
+Auth system
+Dashboard editor
+NFC redirect route
+Analytics tracking
+Polish UI
+Only then → networking features
+FINAL REALITY CHECK
+
+You’re trying to build something that competes with Linktree but adds:
+
+hardware interaction
+identity layer
+social graph
+
+That’s ambitious. Good. But ambition without sequencing just turns into unfinished code and a cool logo.
+
+If you treat this like a system and not a “cool idea,” you actually have a shot at building something people use at events, shoots, and business interactions.
+
+If you rush it, it becomes another dead link in someone else’s Linktree.

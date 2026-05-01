@@ -3,13 +3,26 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: TappedInn API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: profiles
+    description: Profile operations
+  - name: links
+    description: Link operations
+  - name: cards
+    description: NFC card operations
+  - name: connections
+    description: Connection operations
+  - name: analytics
+    description: Analytics operations
+  - name: dashboard
+    description: Dashboard summary operations
+
 paths:
   /healthz:
     get:
@@ -24,6 +37,326 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /profile/me:
+    get:
+      operationId: getMyProfile
+      tags: [profiles]
+      summary: Get current user's profile
+      responses:
+        "200":
+          description: Profile found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+        "404":
+          description: Profile not found
+    put:
+      operationId: updateMyProfile
+      tags: [profiles]
+      summary: Update current user's profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProfileBody"
+      responses:
+        "200":
+          description: Profile updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+
+  /profile/{username}:
+    get:
+      operationId: getPublicProfile
+      tags: [profiles]
+      summary: Get public profile by username
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Public profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicProfile"
+        "404":
+          description: Profile not found
+
+  /links:
+    get:
+      operationId: getLinks
+      tags: [links]
+      summary: Get all links for current user's profile
+      responses:
+        "200":
+          description: List of links
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Link"
+    post:
+      operationId: createLink
+      tags: [links]
+      summary: Create a new link
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateLinkBody"
+      responses:
+        "201":
+          description: Link created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Link"
+
+  /links/{id}:
+    put:
+      operationId: updateLink
+      tags: [links]
+      summary: Update a link
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateLinkBody"
+      responses:
+        "200":
+          description: Link updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Link"
+    delete:
+      operationId: deleteLink
+      tags: [links]
+      summary: Delete a link
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Link deleted
+
+  /links/reorder:
+    put:
+      operationId: reorderLinks
+      tags: [links]
+      summary: Reorder links by position
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReorderLinksBody"
+      responses:
+        "200":
+          description: Links reordered
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Link"
+
+  /cards:
+    get:
+      operationId: getCards
+      tags: [cards]
+      summary: Get all NFC cards for current user
+      responses:
+        "200":
+          description: List of cards
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Card"
+    post:
+      operationId: createCard
+      tags: [cards]
+      summary: Create a new NFC card
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCardBody"
+      responses:
+        "201":
+          description: Card created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Card"
+
+  /cards/{id}:
+    get:
+      operationId: getCard
+      tags: [cards]
+      summary: Get card by ID (redirect handler for NFC taps)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Card info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Card"
+        "404":
+          description: Card not found
+    delete:
+      operationId: deleteCard
+      tags: [cards]
+      summary: Delete an NFC card
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Card deleted
+
+  /connections:
+    get:
+      operationId: getConnections
+      tags: [connections]
+      summary: Get all connections for current user
+      responses:
+        "200":
+          description: List of connections
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Connection"
+
+  /connections/{userId}:
+    post:
+      operationId: createConnection
+      tags: [connections]
+      summary: Connect with a user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "201":
+          description: Connection created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Connection"
+    delete:
+      operationId: deleteConnection
+      tags: [connections]
+      summary: Remove a connection
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Connection removed
+
+  /analytics/track:
+    post:
+      operationId: trackEvent
+      tags: [analytics]
+      summary: Track an analytics event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrackEventBody"
+      responses:
+        "201":
+          description: Event tracked
+
+  /analytics/profile/{profileId}:
+    get:
+      operationId: getProfileAnalytics
+      tags: [analytics]
+      summary: Get analytics for a profile
+      parameters:
+        - name: profileId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Profile analytics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfileAnalytics"
+
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Get dashboard summary stats
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+
+  /dashboard/activity:
+    get:
+      operationId: getRecentActivity
+      tags: [dashboard]
+      summary: Get recent activity events
+      responses:
+        "200":
+          description: Recent activity
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ActivityEvent"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +367,288 @@ components:
       required:
         - status
 
+    Profile:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        username:
+          type: string
+        displayName:
+          type: string
+        bio:
+          type: ["string", "null"]
+        avatarUrl:
+          type: ["string", "null"]
+        themeSettings:
+          type: object
+          additionalProperties: true
+        createdAt:
+          type: string
+      required:
+        - id
+        - userId
+        - username
+        - displayName
+        - bio
+        - avatarUrl
+        - themeSettings
+        - createdAt
+
+    PublicProfile:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        displayName:
+          type: string
+        bio:
+          type: ["string", "null"]
+        avatarUrl:
+          type: ["string", "null"]
+        themeSettings:
+          type: object
+          additionalProperties: true
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/Link"
+      required:
+        - id
+        - username
+        - displayName
+        - bio
+        - avatarUrl
+        - themeSettings
+        - links
+
+    UpdateProfileBody:
+      type: object
+      properties:
+        username:
+          type: string
+        displayName:
+          type: string
+        bio:
+          type: ["string", "null"]
+        avatarUrl:
+          type: ["string", "null"]
+        themeSettings:
+          type: object
+          additionalProperties: true
+
+    Link:
+      type: object
+      properties:
+        id:
+          type: string
+        profileId:
+          type: string
+        title:
+          type: string
+        url:
+          type: string
+        position:
+          type: integer
+        createdAt:
+          type: string
+      required:
+        - id
+        - profileId
+        - title
+        - url
+        - position
+        - createdAt
+
+    CreateLinkBody:
+      type: object
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+        position:
+          type: integer
+      required:
+        - title
+        - url
+
+    UpdateLinkBody:
+      type: object
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+        position:
+          type: integer
+
+    ReorderLinksBody:
+      type: object
+      properties:
+        linkIds:
+          type: array
+          items:
+            type: string
+      required:
+        - linkIds
+
+    Card:
+      type: object
+      properties:
+        id:
+          type: string
+        profileId:
+          type: string
+        nfcUid:
+          type: ["string", "null"]
+        redirectUrl:
+          type: string
+        label:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+      required:
+        - id
+        - profileId
+        - nfcUid
+        - redirectUrl
+        - label
+        - createdAt
+
+    CreateCardBody:
+      type: object
+      properties:
+        nfcUid:
+          type: ["string", "null"]
+        label:
+          type: ["string", "null"]
+
+    Connection:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        connectedUserId:
+          type: string
+        connectedProfile:
+          $ref: "#/components/schemas/PublicProfile"
+        createdAt:
+          type: string
+      required:
+        - id
+        - userId
+        - connectedUserId
+        - connectedProfile
+        - createdAt
+
+    TrackEventBody:
+      type: object
+      properties:
+        profileId:
+          type: string
+        eventType:
+          type: string
+          enum: [view, click, tap]
+        metadata:
+          type: object
+          additionalProperties: true
+      required:
+        - profileId
+        - eventType
+
+    ProfileAnalytics:
+      type: object
+      properties:
+        totalViews:
+          type: integer
+        totalClicks:
+          type: integer
+        totalTaps:
+          type: integer
+        viewsByDay:
+          type: array
+          items:
+            $ref: "#/components/schemas/DayCount"
+        topLinks:
+          type: array
+          items:
+            $ref: "#/components/schemas/LinkClickCount"
+      required:
+        - totalViews
+        - totalClicks
+        - totalTaps
+        - viewsByDay
+        - topLinks
+
+    DayCount:
+      type: object
+      properties:
+        date:
+          type: string
+        count:
+          type: integer
+      required:
+        - date
+        - count
+
+    LinkClickCount:
+      type: object
+      properties:
+        linkId:
+          type: string
+        title:
+          type: string
+        clicks:
+          type: integer
+      required:
+        - linkId
+        - title
+        - clicks
+
+    DashboardSummary:
+      type: object
+      properties:
+        profileViews:
+          type: integer
+        totalLinks:
+          type: integer
+        totalCards:
+          type: integer
+        totalConnections:
+          type: integer
+        nfcTaps:
+          type: integer
+        linkClicks:
+          type: integer
+      required:
+        - profileViews
+        - totalLinks
+        - totalCards
+        - totalConnections
+        - nfcTaps
+        - linkClicks
+
+    ActivityEvent:
+      type: object
+      properties:
+        id:
+          type: string
+        eventType:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+        createdAt:
+          type: string
+      required:
+        - id
+        - eventType
+        - metadata
+        - createdAt
