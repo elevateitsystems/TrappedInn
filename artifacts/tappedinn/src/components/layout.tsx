@@ -8,6 +8,7 @@ import {
   BarChart2,
   LogOut,
   Wifi,
+  Layers,
 } from "lucide-react";
 import { useClerk } from "@clerk/react";
 import { cn } from "@/lib/utils";
@@ -18,6 +19,7 @@ const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/edit-profile", label: "Profile", icon: User },
   { href: "/edit-links", label: "Links", icon: Link2 },
+  { href: "/modes", label: "Modes", icon: Layers },
   { href: "/connections", label: "Connections", icon: Users },
   { href: "/analytics", label: "Analytics", icon: BarChart2 },
 ];

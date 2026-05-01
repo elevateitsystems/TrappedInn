@@ -7,6 +7,7 @@ import connectionsRouter from "./connections";
 import analyticsRouter from "./analytics";
 import dashboardRouter from "./dashboard";
 import uploadRouter from "./upload";
+import modesRouter from "./modes";
 
 const router: IRouter = Router();
 
@@ -18,5 +19,6 @@ router.use("/connections", connectionsRouter);
 router.use("/analytics", analyticsRouter);
 router.use("/dashboard", dashboardRouter);
 router.use("/upload", uploadRouter);
+router.use("/modes", modesRouter);
 
 export default router;

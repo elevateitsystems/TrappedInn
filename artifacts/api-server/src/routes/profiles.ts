@@ -1,11 +1,9 @@
 import { Router } from "express";
 import { eq } from "drizzle-orm";
-import { db, profilesTable, linksTable, usersTable } from "@workspace/db";
+import { db, profilesTable, linksTable, usersTable, profileModesTable } from "@workspace/db";
 import { requireAuth, getUserId } from "../lib/auth";
 import { UpdateMyProfileBody } from "@workspace/api-zod";
 import { randomUUID } from "crypto";
-
-const APP_NAME = "Tapped Inn Network";
 
 const router = Router();
 
@@ -89,11 +87,36 @@ router.get("/:username", async (req, res): Promise<void> => {
       res.status(404).json({ error: "Profile not found" });
       return;
     }
+
     const links = await db.query.linksTable.findMany({
       where: eq(linksTable.profileId, profile.id),
       orderBy: (l, { asc }) => [asc(l.position)],
     });
-    res.json({ ...profile, links });
+
+    const activeMode = await db.query.profileModesTable.findFirst({
+      where: eq(profileModesTable.profileId, profile.id),
+      orderBy: (m, { desc }) => [desc(m.isActive)],
+    }).then((m) => (m?.isActive ? m : null));
+
+    const publicProfile = {
+      ...profile,
+      links,
+      activeMode: activeMode ? {
+        id: activeMode.id,
+        label: activeMode.label,
+        emoji: activeMode.emoji,
+        displayName: activeMode.displayName,
+        bio: activeMode.bio,
+        themeSettings: activeMode.themeSettings,
+      } : null,
+      displayName: activeMode?.displayName ?? profile.displayName,
+      bio: activeMode?.bio ?? profile.bio,
+      themeSettings: activeMode?.themeSettings && Object.keys(activeMode.themeSettings).length > 0
+        ? activeMode.themeSettings
+        : profile.themeSettings,
+    };
+
+    res.json(publicProfile);
   } catch (err) {
     req.log.error({ err }, "Failed to get public profile");
     res.status(500).json({ error: "Internal server error" });

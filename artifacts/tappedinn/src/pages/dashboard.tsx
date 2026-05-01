@@ -1,9 +1,29 @@
+import { useState, useEffect } from "react";
 import { useGetDashboardSummary, useGetRecentActivity, useGetMyProfile } from "@workspace/api-client-react";
 import { AppLayout } from "@/components/layout";
-import { Eye, Link2, Users, Wifi, MousePointerClick, Clock, User } from "lucide-react";
+import { Eye, Link2, Users, Wifi, MousePointerClick, Clock, User, Layers, Zap } from "lucide-react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+
+const BASE_URL = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+function useActiveMode(profileId: string | undefined) {
+  const [activeMode, setActiveMode] = useState<{ label: string; emoji: string } | null>(null);
+
+  useEffect(() => {
+    if (!profileId) return;
+    fetch(`${BASE_URL}/api/modes`, { credentials: "include" })
+      .then((r) => r.json())
+      .then((modes: any[]) => {
+        const active = modes.find((m) => m.isActive);
+        setActiveMode(active ?? null);
+      })
+      .catch(() => {});
+  }, [profileId]);
+
+  return activeMode;
+}
 
 function StatCard({
   label,
@@ -48,6 +68,7 @@ export default function DashboardPage() {
   const { data: summary, isLoading: summaryLoading } = useGetDashboardSummary();
   const { data: activity, isLoading: activityLoading } = useGetRecentActivity();
   const { data: profile } = useGetMyProfile();
+  const activeMode = useActiveMode(profile?.id);
 
   return (
     <AppLayout>
@@ -56,7 +77,7 @@ export default function DashboardPage() {
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="mb-6"
         >
           <h1 className="text-2xl font-display font-semibold">Dashboard</h1>
           <p className="text-muted-foreground mt-1">
@@ -70,11 +91,30 @@ export default function DashboardPage() {
           </p>
         </motion.div>
 
+        {/* Active mode banner */}
+        {activeMode && (
+          <motion.div
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 flex items-center gap-3 px-4 py-3 rounded-2xl border border-primary/30 bg-primary/8"
+          >
+            <span className="text-xl">{activeMode.emoji}</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs text-primary font-medium">Active mode</p>
+              <p className="text-sm font-display font-semibold">{activeMode.label}</p>
+            </div>
+            <Link href="/modes" className="text-xs text-primary hover:underline font-medium shrink-0">
+              Switch
+            </Link>
+          </motion.div>
+        )}
+
         {/* Quick actions */}
         <div className="flex flex-wrap gap-2 mb-8">
           {[
             { href: "/edit-profile", label: "Edit profile", icon: User },
             { href: "/edit-links", label: "Manage links", icon: Link2 },
+            { href: "/modes", label: "Switch mode", icon: Layers },
             { href: "/connections", label: "Connections", icon: Users },
           ].map(({ href, label, icon: Icon }) => (
             <Link

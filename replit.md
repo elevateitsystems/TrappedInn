@@ -52,7 +52,8 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - `/edit-links` — Drag-to-reorder links manager
 - `/connections` — Social connections
 - `/analytics` — Analytics charts
-- `/p/:username` — Public profile with contact buttons (Call/Email/Website) + link list + theme applied
+- `/modes` — Profile Modes management (create/edit/activate modes, each with its own displayName, bio, emoji)
+- `/p/:username` — Public profile with contact buttons (Call/Email/Website) + link list + theme applied + active mode badge
 - `/card/:id` — NFC card redirect (hits backend, redirects to `/p/username`)
 
 ## Key Commands
@@ -68,5 +69,6 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - `lib/api-zod/src/index.ts` gets overwritten by orval codegen — must only export `./generated/api`
 - Avatar uploads stored at `artifacts/api-server/uploads/`, served at `/api/uploads/<filename>`
 - NFC cards are admin-managed only — no cards page in frontend
+- Profile Modes: `profile_modes` table, CRUD at `/api/modes`, activate/deactivate endpoints. Active mode overrides displayName/bio/themeSettings on the public profile response. Dashboard shows active mode banner with quick-switch link.
 - Theme: dark background `hsl(240 10% 4%)`, purple primary `hsl(262 83% 68%)`, Plus Jakarta Sans + Space Grotesk fonts
 - APP_NAME constant = "Tapped Inn Network" — used everywhere in UI copy

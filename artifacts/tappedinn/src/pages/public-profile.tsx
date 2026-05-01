@@ -118,6 +118,12 @@ export default function PublicProfilePage() {
             </div>
           )}
 
+          {p.activeMode && (
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-2">
+              <span>{p.activeMode.emoji}</span>
+              {p.activeMode.label} Mode
+            </div>
+          )}
           <div className="flex items-center gap-1.5">
             <h1 className="text-2xl font-display font-semibold" style={{ color: textColor }}>
               {profile.displayName}
