@@ -1,0 +1,157 @@
+1. “SAVE CONTACT” BUTTON (NON-NEGOTIABLE)
+
+If someone taps a card and has to manually type your info, you’ve already lost.
+
+Feature:
+
+One button → downloads contact as a .vcf file
+Instantly saves:
+name
+phone
+email
+business
+
+Why it matters:
+This turns your page from “links” into a real business card replacement.
+
+2. TAP HISTORY (YOUR SECRET WEAPON)
+
+When someone taps your card:
+
+log it
+show user: “You were tapped by 12 people today”
+
+Optional:
+
+show approximate location (city-level, not creepy)
+timestamp
+
+Why it matters:
+People love feedback. It makes the product feel alive instead of static.
+
+3. “TAPPED CONNECTIONS”
+
+You said networking. Now actually do it.
+
+Feature:
+
+When two people tap each other → connection created
+Shows in dashboard:
+name
+profile
+when you met
+
+This becomes:
+a digital Rolodex without the awkward “what was their name again?” problem
+
+4. QUICK ACTION BUTTONS (YOU STARTED THIS, FINISH IT)
+
+Don’t just do call/email.
+
+Add:
+
+Text → sms: link
+Directions → opens maps
+Book now → calendar integration
+
+Why it matters:
+People don’t want to scroll. They want to act immediately.
+
+5. PROFILE MODES (THIS IS A BIG ONE)
+
+Let users switch profiles depending on context:
+
+“Business Mode”
+“Creative Mode”
+“Event Mode”
+
+Same account, different layouts/links.
+
+Why it matters:
+A photographer at a wedding vs. at a networking event should not be showing the same thing.
+
+6. ANALYTICS THAT AREN’T BORING
+
+Don’t just show numbers.
+
+Show:
+
+most clicked link
+tap-to-click conversion
+peak activity times
+
+Why it matters:
+Now users can actually optimize their profile, not just stare at stats.
+
+7. VERIFIED / TRUST BADGE
+
+You’re building a network. Trust matters.
+
+Feature:
+
+verified profiles (manual or paid)
+badge on profile
+
+Why it matters:
+Prevents your platform from becoming a spam landfill.
+
+8. DISCOVERY / DIRECTORY (PHASE 2 GOLD)
+
+Let users explore others:
+
+categories (artists, brands, videographers)
+local discovery
+trending profiles
+
+Why it matters:
+Now your platform generates exposure, not just stores links.
+
+9. MINI LANDING PAGE BLOCKS
+
+Instead of just links, let users add:
+
+image blocks
+video embeds
+testimonials
+product highlights
+
+Why it matters:
+Now it feels like a real brand page, not a button list.
+
+10. “TAP TO FOLLOW” SOCIAL SHORTCUT
+
+After someone taps:
+
+one-click follow on Instagram, TikTok, etc.
+
+Why it matters:
+Removes friction. People are lazy. Design for that.
+
+11. QR CODE AUTO-GENERATION
+
+Each profile gets:
+
+downloadable QR code
+
+Why it matters:
+Now your platform works:
+
+on flyers
+shirts
+posters
+events
+
+No NFC required.
+
+12. LEAD CAPTURE MODE
+
+Let users toggle:
+
+“Collect leads”
+
+Adds:
+
+name/email input on profile
+
+Why it matters:
+Now businesses can capture customers, not just show links.

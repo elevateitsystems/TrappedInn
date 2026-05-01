@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { eq, and, gte, sql, count } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { db, analyticsTable, linksTable } from "@workspace/db";
 import { TrackEventBody } from "@workspace/api-zod";
 import { randomUUID } from "crypto";
@@ -26,6 +26,26 @@ router.post("/track", async (req, res): Promise<void> => {
   }
 });
 
+router.post("/lead", async (req, res): Promise<void> => {
+  const { profileId, name, email } = req.body as { profileId?: string; name?: string; email?: string };
+  if (!profileId || !email) {
+    res.status(400).json({ error: "profileId and email are required" });
+    return;
+  }
+  try {
+    await db.insert(analyticsTable).values({
+      id: randomUUID(),
+      profileId,
+      eventType: "lead",
+      metadata: { name: name ?? "", email },
+    });
+    res.status(201).json({ success: true });
+  } catch (err) {
+    req.log.error({ err }, "Failed to capture lead");
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 router.get("/profile/:profileId", async (req, res): Promise<void> => {
   const { profileId } = req.params;
   try {
@@ -36,8 +56,10 @@ router.get("/profile/:profileId", async (req, res): Promise<void> => {
     const totalViews = allEvents.filter((e) => e.eventType === "view").length;
     const totalClicks = allEvents.filter((e) => e.eventType === "click").length;
     const totalTaps = allEvents.filter((e) => e.eventType === "tap").length;
+    const totalLeads = allEvents.filter((e) => e.eventType === "lead").length;
 
-    // Views by day (last 30 days)
+    const conversionRate = totalViews > 0 ? Math.round((totalClicks / totalViews) * 100) : 0;
+
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
@@ -54,7 +76,20 @@ router.get("/profile/:profileId", async (req, res): Promise<void> => {
       .map(([date, count]) => ({ date, count }))
       .sort((a, b) => a.date.localeCompare(b.date));
 
-    // Top links by click (metadata.linkId)
+    const hourCountMap: Record<number, number> = {};
+    for (let h = 0; h < 24; h++) hourCountMap[h] = 0;
+    for (const e of allEvents.filter((e) => e.eventType === "view")) {
+      const h = e.createdAt.getHours();
+      hourCountMap[h] = (hourCountMap[h] ?? 0) + 1;
+    }
+    const activityByHour = Object.entries(hourCountMap).map(([hour, count]) => ({
+      hour: Number(hour),
+      label: `${Number(hour) % 12 || 12}${Number(hour) < 12 ? "am" : "pm"}`,
+      count,
+    }));
+
+    const peakHour = activityByHour.reduce((max, h) => (h.count > max.count ? h : max), activityByHour[0]);
+
     const clickEvents = allEvents.filter((e) => e.eventType === "click");
     const linkClickMap: Record<string, number> = {};
     for (const e of clickEvents) {
@@ -77,7 +112,17 @@ router.get("/profile/:profileId", async (req, res): Promise<void> => {
         })
     );
 
-    res.json({ totalViews, totalClicks, totalTaps, viewsByDay, topLinks });
+    res.json({
+      totalViews,
+      totalClicks,
+      totalTaps,
+      totalLeads,
+      conversionRate,
+      viewsByDay,
+      activityByHour,
+      peakHour: peakHour ?? null,
+      topLinks,
+    });
   } catch (err) {
     req.log.error({ err }, "Failed to get analytics");
     res.status(500).json({ error: "Internal server error" });

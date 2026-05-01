@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, json } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, json, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 import { usersTable } from "./users";
@@ -16,11 +16,13 @@ export const profilesTable = pgTable("profiles", {
   phone: text("phone"),
   email: text("email"),
   website: text("website"),
+  smsNumber: text("sms_number"),
   contactSettings: json("contact_settings").$type<{
     showPhone: boolean;
     showEmail: boolean;
     showWebsite: boolean;
-  }>().notNull().default({ showPhone: true, showEmail: true, showWebsite: true }),
+    showSms: boolean;
+  }>().notNull().default({ showPhone: true, showEmail: true, showWebsite: true, showSms: false }),
   themeSettings: json("theme_settings").$type<{
     backgroundColor?: string;
     textColor?: string;
@@ -28,6 +30,8 @@ export const profilesTable = pgTable("profiles", {
     font?: string;
     layout?: "classic" | "hero";
   }>().notNull().default({}),
+  leadCaptureEnabled: boolean("lead_capture_enabled").notNull().default(false),
+  verified: boolean("verified").notNull().default(false),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

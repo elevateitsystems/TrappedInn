@@ -22,7 +22,7 @@ export default function ConnectionsPage() {
       <div className="max-w-lg mx-auto">
         <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <h1 className="text-2xl font-display font-semibold">Connections</h1>
-          <p className="text-muted-foreground mt-1 text-sm">People you've connected with on TappedInn</p>
+          <p className="text-muted-foreground mt-1 text-sm">People you've connected with on Tapped Inn Network</p>
         </motion.div>
 
         {isLoading ? (

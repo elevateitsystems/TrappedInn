@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useGetMyProfile, useUpdateMyProfile, getGetMyProfileQueryKey } from "@workspace/api-client-react";
 import { AppLayout } from "@/components/layout";
 import { useQueryClient } from "@tanstack/react-query";
-import { Check, Loader2, Camera, Phone, Mail, Globe } from "lucide-react";
+import { Check, Loader2, Camera, Phone, Mail, Globe, MessageSquare, BadgeCheck } from "lucide-react";
 import { motion } from "framer-motion";
 
 const BASE_URL = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -34,7 +34,9 @@ export default function EditProfilePage() {
     phone: "",
     email: "",
     website: "",
-    contactSettings: { showPhone: true, showEmail: true, showWebsite: true },
+    smsNumber: "",
+    leadCaptureEnabled: false,
+    contactSettings: { showPhone: true, showEmail: true, showWebsite: true, showSms: false },
     themeSettings: {
       backgroundColor: "",
       textColor: "",
@@ -50,7 +52,7 @@ export default function EditProfilePage() {
   useEffect(() => {
     if (profile) {
       const ts = (profile as any).themeSettings ?? {};
-      const cs = (profile as any).contactSettings ?? { showPhone: true, showEmail: true, showWebsite: true };
+      const cs = (profile as any).contactSettings ?? { showPhone: true, showEmail: true, showWebsite: true, showSms: false };
       setForm({
         username: profile.username,
         displayName: profile.displayName,
@@ -59,6 +61,8 @@ export default function EditProfilePage() {
         phone: (profile as any).phone ?? "",
         email: (profile as any).email ?? "",
         website: (profile as any).website ?? "",
+        smsNumber: (profile as any).smsNumber ?? "",
+        leadCaptureEnabled: !!(profile as any).leadCaptureEnabled,
         contactSettings: cs,
         themeSettings: {
           backgroundColor: ts.backgroundColor ?? "",
@@ -98,9 +102,11 @@ export default function EditProfilePage() {
           bio: form.bio || null,
           avatarUrl: form.avatarUrl || null,
           themeSettings: form.themeSettings,
-          ...(form.phone !== undefined && { phone: form.phone || null }),
-          ...(form.email !== undefined && { email: form.email || null }),
-          ...(form.website !== undefined && { website: form.website || null }),
+          phone: form.phone || null,
+          email: form.email || null,
+          website: form.website || null,
+          smsNumber: form.smsNumber || null,
+          leadCaptureEnabled: form.leadCaptureEnabled,
           contactSettings: form.contactSettings,
         } as any,
       },
@@ -290,6 +296,50 @@ export default function EditProfilePage() {
                     placeholder="https://yourwebsite.com"
                   />
                 </div>
+
+                <div className={fieldCls}>
+                  <div className="flex items-center justify-between">
+                    <label className={labelCls + " flex items-center gap-1.5"}>
+                      <MessageSquare className="w-3.5 h-3.5 text-muted-foreground" /> SMS / Text
+                    </label>
+                    <label className="flex items-center gap-1.5 text-xs text-muted-foreground cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={form.contactSettings.showSms}
+                        onChange={(e) => setForm((f) => ({ ...f, contactSettings: { ...f.contactSettings, showSms: e.target.checked } }))}
+                        className="accent-primary"
+                      />
+                      Show on profile
+                    </label>
+                  </div>
+                  <input
+                    type="tel"
+                    value={form.smsNumber}
+                    onChange={(e) => setForm((f) => ({ ...f, smsNumber: e.target.value }))}
+                    className={inputCls}
+                    placeholder="+1 (555) 000-0000"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Lead capture */}
+            <div className={sectionCls}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-base font-display font-semibold flex items-center gap-2">
+                    <BadgeCheck className="w-4 h-4 text-primary" />
+                    Lead Capture
+                  </h2>
+                  <p className="text-xs text-muted-foreground mt-0.5">Show a "Stay in touch" form on your public profile</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setForm((f) => ({ ...f, leadCaptureEnabled: !f.leadCaptureEnabled }))}
+                  className={`relative w-11 h-6 rounded-full transition-colors ${form.leadCaptureEnabled ? "bg-primary" : "bg-muted"}`}
+                >
+                  <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-all ${form.leadCaptureEnabled ? "left-[22px]" : "left-0.5"}`} />
+                </button>
               </div>
             </div>
 

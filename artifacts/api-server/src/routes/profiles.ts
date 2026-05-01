@@ -5,10 +5,12 @@ import { requireAuth, getUserId } from "../lib/auth";
 import { UpdateMyProfileBody } from "@workspace/api-zod";
 import { randomUUID } from "crypto";
 
+const APP_NAME = "Tapped Inn Network";
+
 const router = Router();
 
 async function ensureUserAndProfile(userId: string, email?: string) {
-  let user = await db.query.usersTable.findFirst({ where: eq(usersTable.id, userId) });
+  const user = await db.query.usersTable.findFirst({ where: eq(usersTable.id, userId) });
   if (!user) {
     await db.insert(usersTable).values({
       id: userId,
@@ -26,7 +28,7 @@ async function ensureUserAndProfile(userId: string, email?: string) {
       username,
       displayName: "New User",
       themeSettings: {},
-      contactSettings: { showPhone: true, showEmail: true, showWebsite: true },
+      contactSettings: { showPhone: true, showEmail: true, showWebsite: true, showSms: false },
     }).returning();
     profile = rows[0];
   }
@@ -53,18 +55,20 @@ router.put("/me", requireAuth, async (req, res): Promise<void> => {
   }
   try {
     const profile = await ensureUserAndProfile(userId);
-    const data = parsed.data;
+    const data = parsed.data as any;
     const updated = await db.update(profilesTable)
       .set({
         ...(data.username !== undefined && { username: data.username }),
         ...(data.displayName !== undefined && { displayName: data.displayName }),
         ...(data.bio !== undefined && { bio: data.bio }),
         ...(data.avatarUrl !== undefined && { avatarUrl: data.avatarUrl }),
-        ...(data.themeSettings !== undefined && { themeSettings: data.themeSettings as Record<string, unknown> }),
-        ...((data as any).phone !== undefined && { phone: (data as any).phone }),
-        ...((data as any).email !== undefined && { email: (data as any).email }),
-        ...((data as any).website !== undefined && { website: (data as any).website }),
-        ...((data as any).contactSettings !== undefined && { contactSettings: (data as any).contactSettings }),
+        ...(data.themeSettings !== undefined && { themeSettings: data.themeSettings }),
+        ...(data.phone !== undefined && { phone: data.phone }),
+        ...(data.email !== undefined && { email: data.email }),
+        ...(data.website !== undefined && { website: data.website }),
+        ...(data.smsNumber !== undefined && { smsNumber: data.smsNumber }),
+        ...(data.contactSettings !== undefined && { contactSettings: data.contactSettings }),
+        ...(data.leadCaptureEnabled !== undefined && { leadCaptureEnabled: data.leadCaptureEnabled }),
       })
       .where(eq(profilesTable.id, profile.id))
       .returning();
