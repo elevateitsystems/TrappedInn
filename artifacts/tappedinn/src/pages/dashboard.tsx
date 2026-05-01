@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useGetDashboardSummary, useGetRecentActivity, useGetMyProfile } from "@workspace/api-client-react";
 import { AppLayout } from "@/components/layout";
-import { Eye, Link2, Users, Wifi, MousePointerClick, Clock, User, Layers, Share2, Copy, Check, ExternalLink } from "lucide-react";
+import { Eye, Link2, Users, Wifi, MousePointerClick, Clock, User, Layers, Share2, Copy, Check } from "lucide-react";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -63,12 +63,17 @@ function ShareCard({ username }: { username: string }) {
     >
       <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Your profile link</p>
       <div className="flex items-center gap-2">
-        <div className="flex-1 flex items-center gap-2 px-3 py-2 rounded-xl bg-input border border-border min-w-0">
-          <span className="text-sm font-semibold truncate flex-1 select-all tracking-tight">
-            <span className="text-muted-foreground">TappedInn.net/</span>
-            <span className="text-primary">@{username}</span>
+        <a
+          href={profileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-1 flex items-center gap-2 px-3 py-2 rounded-xl bg-input border border-border min-w-0 hover:border-primary/40 transition-colors"
+        >
+          <span className="text-sm font-semibold truncate flex-1 tracking-tight">
+            <span className="text-muted-foreground">/@</span>
+            <span className="text-primary">{username}</span>
           </span>
-        </div>
+        </a>
         <button
           onClick={handleCopy}
           title="Copy link"
@@ -86,15 +91,6 @@ function ShareCard({ username }: { username: string }) {
             )}
           </AnimatePresence>
         </button>
-        <a
-          href={`/@${username}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          title="Open profile"
-          className="shrink-0 p-2.5 rounded-xl border border-border bg-card hover:bg-accent transition-colors"
-        >
-          <ExternalLink className="w-4 h-4 text-muted-foreground" />
-        </a>
         <button
           onClick={handleShare}
           className="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl gradient-primary text-white text-sm font-semibold hover:opacity-90 transition-opacity"
