@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useGetMyProfile, useUpdateMyProfile, getGetMyProfileQueryKey } from "@workspace/api-client-react";
 import { AppLayout } from "@/components/layout";
 import { useQueryClient } from "@tanstack/react-query";
-import { Check, Loader2, Camera, Phone, Mail, Globe, MessageSquare, BadgeCheck } from "lucide-react";
+import { Check, Loader2, Camera, Phone, Mail, Globe, MessageSquare, BadgeCheck, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 
 const BASE_URL = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -129,8 +129,23 @@ export default function EditProfilePage() {
     <AppLayout>
       <div className="max-w-lg mx-auto">
         <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <h1 className="text-2xl font-display font-semibold">Edit Profile</h1>
-          <p className="text-muted-foreground mt-1 text-sm">Your public identity on Tapped Inn Network</p>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h1 className="text-2xl font-display font-semibold">Edit Profile</h1>
+              <p className="text-muted-foreground mt-1 text-sm">Your public identity on Tapped Inn Network</p>
+            </div>
+            {profile && (
+              <a
+                href={`/p/${profile.username}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl border border-border bg-card text-sm font-medium hover:bg-accent hover:border-primary/30 transition-all"
+              >
+                <ExternalLink className="w-3.5 h-3.5 text-primary" />
+                View profile
+              </a>
+            )}
+          </div>
         </motion.div>
 
         {isLoading ? (

@@ -1,6 +1,7 @@
 import { Link } from "wouter";
-import { Wifi, ArrowRight, Zap, Globe, Users } from "lucide-react";
+import { ArrowRight, Zap, Globe, Users, Wifi, ShoppingBag, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
+import logoImg from "/tappedinn-logo.png";
 
 const APP_NAME = "Tapped Inn Network";
 
@@ -37,14 +38,21 @@ export default function LandingPage() {
   return (
     <div className="min-h-dvh bg-background text-foreground overflow-x-hidden">
       {/* Nav */}
-      <nav className="flex items-center justify-between px-6 md:px-16 py-5 border-b border-border/50">
+      <nav className="flex items-center justify-between px-6 md:px-16 py-4 border-b border-border/50">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
-            <Wifi className="w-4 h-4 text-white" />
-          </div>
+          <img src={logoImg} alt="Tapped Inn" className="w-9 h-9 object-contain" style={{ filter: "invert(1)" }} />
           <span className="font-display font-semibold text-lg">{APP_NAME}</span>
         </div>
         <div className="flex items-center gap-3">
+          <a
+            href="https://www.TappedInn.Net"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-primary hover:underline transition-colors"
+          >
+            <ShoppingBag className="w-3.5 h-3.5" />
+            Order NFC Cards
+          </a>
           <Link href="/sign-in" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             Sign in
           </Link>
@@ -90,12 +98,15 @@ export default function LandingPage() {
               Create your profile
               <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link
-              href="/sign-in"
+            <a
+              href="https://www.TappedInn.Net"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-border bg-card text-foreground font-semibold hover:bg-accent transition-colors text-base w-full sm:w-auto justify-center"
             >
-              Sign in
-            </Link>
+              <ShoppingBag className="w-4 h-4 text-primary" />
+              Order NFC Cards
+            </a>
           </div>
         </motion.div>
 
@@ -154,6 +165,37 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Order NFC Cards banner */}
+      <section className="px-6 md:px-16 py-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="max-w-5xl mx-auto"
+        >
+          <a
+            href="https://www.TappedInn.Net"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col sm:flex-row items-center gap-6 p-6 md:p-8 rounded-3xl border border-primary/25 bg-primary/5 hover:bg-primary/8 transition-colors group"
+          >
+            <img src={logoImg} alt="Tapped Inn" className="w-16 h-16 object-contain shrink-0" style={{ filter: "invert(1)" }} />
+            <div className="flex-1 text-center sm:text-left">
+              <p className="text-xs font-medium text-primary uppercase tracking-wider mb-1">Physical + Digital</p>
+              <h3 className="text-xl font-display font-semibold mb-1">Get your Tapped Inn NFC Card</h3>
+              <p className="text-sm text-muted-foreground">
+                One tap connects anyone to your profile. No app required. Order your card at <span className="text-primary">TappedInn.Net</span>
+              </p>
+            </div>
+            <div className="flex items-center gap-2 px-5 py-2.5 rounded-xl gradient-primary text-white text-sm font-semibold group-hover:opacity-90 transition-opacity shrink-0">
+              Order now
+              <ExternalLink className="w-3.5 h-3.5" />
+            </div>
+          </a>
+        </motion.div>
+      </section>
+
       {/* CTA */}
       <section className="px-6 md:px-16 py-20">
         <motion.div
@@ -182,14 +224,23 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
-      <footer className="px-6 md:px-16 py-8 border-t border-border/50 text-center text-sm text-muted-foreground">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <div className="w-5 h-5 rounded gradient-primary flex items-center justify-center">
-            <Wifi className="w-2.5 h-2.5 text-white" />
+      <footer className="px-6 md:px-16 py-8 border-t border-border/50">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2.5">
+            <img src={logoImg} alt="Tapped Inn" className="w-6 h-6 object-contain" style={{ filter: "invert(1)" }} />
+            <span className="font-display font-medium text-sm">{APP_NAME}</span>
           </div>
-          <span className="font-display font-medium">{APP_NAME}</span>
+          <p className="text-sm text-muted-foreground">The NFC-powered digital identity platform.</p>
+          <a
+            href="https://www.TappedInn.Net"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-primary font-medium hover:underline flex items-center gap-1"
+          >
+            <ShoppingBag className="w-3.5 h-3.5" />
+            Order NFC Cards
+          </a>
         </div>
-        <p>The NFC-powered digital identity platform.</p>
       </footer>
     </div>
   );
