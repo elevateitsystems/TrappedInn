@@ -139,7 +139,7 @@ export default function EditProfilePage() {
             </div>
             {profile && (
               <a
-                href={`/@${profile.username}`}
+                href={`/p/${profile.username}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl border border-border bg-card text-sm font-medium hover:bg-accent hover:border-primary/30 transition-all"
