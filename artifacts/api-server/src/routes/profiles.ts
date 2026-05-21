@@ -66,6 +66,7 @@ router.put("/me", requireAuth, async (req, res): Promise<void> => {
         ...(data.email !== undefined && { email: data.email }),
         ...(data.website !== undefined && { website: data.website }),
         ...(data.smsNumber !== undefined && { smsNumber: data.smsNumber }),
+        ...(data.location !== undefined && { location: data.location }),
         ...(data.contactSettings !== undefined && { contactSettings: data.contactSettings }),
         ...(data.leadCaptureEnabled !== undefined && { leadCaptureEnabled: data.leadCaptureEnabled }),
         // SECURITY: verified / verificationLevel are intentionally NOT writable here.

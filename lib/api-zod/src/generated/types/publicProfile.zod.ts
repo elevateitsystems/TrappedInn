@@ -14,6 +14,7 @@ export const PublicProfile = zod.object({
   bio: zod.string().nullable(),
   avatarUrl: zod.string().nullable(),
   headerImageUrl: zod.string().nullish(),
+  location: zod.string().nullish(),
   themeSettings: zod.record(zod.string(), zod.unknown()),
   verificationLevel: zod.enum(["none", "blue", "gold", "elite_black"]),
   verifiedAt: zod.string().nullish(),

@@ -18,12 +18,14 @@ export const profilesTable = pgTable("profiles", {
   email: text("email"),
   website: text("website"),
   smsNumber: text("sms_number"),
+  location: text("location"),
   contactSettings: json("contact_settings").$type<{
     showPhone: boolean;
     showEmail: boolean;
     showWebsite: boolean;
     showSms: boolean;
-  }>().notNull().default({ showPhone: true, showEmail: true, showWebsite: true, showSms: false }),
+    showLocation?: boolean;
+  }>().notNull().default({ showPhone: true, showEmail: true, showWebsite: true, showSms: false, showLocation: true }),
   themeSettings: json("theme_settings").$type<{
     backgroundColor?: string;
     textColor?: string;

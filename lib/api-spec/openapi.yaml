@@ -384,6 +384,8 @@ components:
           type: ["string", "null"]
         headerImageUrl:
           type: ["string", "null"]
+        location:
+          type: ["string", "null"]
         themeSettings:
           type: object
           additionalProperties: true
@@ -421,6 +423,8 @@ components:
         avatarUrl:
           type: ["string", "null"]
         headerImageUrl:
+          type: ["string", "null"]
+        location:
           type: ["string", "null"]
         themeSettings:
           type: object
@@ -467,6 +471,8 @@ components:
         website:
           type: ["string", "null"]
         smsNumber:
+          type: ["string", "null"]
+        location:
           type: ["string", "null"]
         leadCaptureEnabled:
           type: boolean

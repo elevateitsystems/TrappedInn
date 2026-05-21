@@ -1,7 +1,7 @@
 import { useRoute } from "wouter";
 import { useGetPublicProfile, useTrackEvent } from "@workspace/api-client-react";
 import { useEffect, useState } from "react";
-import { Wifi, ExternalLink, Phone, Mail, Globe, MessageSquare, Download, QrCode, Loader2 } from "lucide-react";
+import { Wifi, ExternalLink, Phone, Mail, Globe, MessageSquare, Download, QrCode, Loader2, MapPin } from "lucide-react";
 import { VerifiedBadge, type VerificationLevel } from "@/components/verified-badge";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
@@ -84,11 +84,17 @@ export default function PublicProfilePage() {
 
   const profileUrl = `${window.location.origin}/p/${username}`;
 
+  const showLocation = cs.showLocation !== false; // default true
+  const mapsHref = p.location
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.location)}`
+    : "";
+
   const contactButtons = [
     p.phone && cs.showPhone && { label: "Call", href: `tel:${p.phone}`, icon: Phone },
     p.smsNumber && cs.showSms && { label: "Text", href: `sms:${p.smsNumber}`, icon: MessageSquare },
     p.email && cs.showEmail && { label: "Email", href: `mailto:${p.email}`, icon: Mail },
     p.website && cs.showWebsite && { label: "Website", href: p.website, icon: Globe, external: true },
+    p.location && showLocation && { label: "Directions", href: mapsHref, icon: MapPin, external: true },
   ].filter(Boolean) as { label: string; href: string; icon: React.ElementType; external?: boolean }[];
 
   return (

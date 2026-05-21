@@ -32,6 +32,8 @@ export interface Profile {
   avatarUrl: string | null;
   /** @nullable */
   headerImageUrl?: string | null;
+  /** @nullable */
+  location?: string | null;
   themeSettings: ProfileThemeSettings;
   verificationLevel: ProfileVerificationLevel;
   /** @nullable */
@@ -71,6 +73,8 @@ export interface PublicProfile {
   avatarUrl: string | null;
   /** @nullable */
   headerImageUrl?: string | null;
+  /** @nullable */
+  location?: string | null;
   themeSettings: PublicProfileThemeSettings;
   verificationLevel: PublicProfileVerificationLevel;
   /** @nullable */
@@ -100,6 +104,8 @@ export interface UpdateProfileBody {
   website?: string | null;
   /** @nullable */
   smsNumber?: string | null;
+  /** @nullable */
+  location?: string | null;
   leadCaptureEnabled?: boolean;
   contactSettings?: UpdateProfileBodyContactSettings;
 }

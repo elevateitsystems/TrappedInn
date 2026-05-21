@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useGetMyProfile, useUpdateMyProfile, getGetMyProfileQueryKey } from "@workspace/api-client-react";
 import { AppLayout } from "@/components/layout";
 import { useQueryClient } from "@tanstack/react-query";
-import { Check, Loader2, Camera, Phone, Mail, Globe, MessageSquare, BadgeCheck, ExternalLink, ShieldCheck } from "lucide-react";
+import { Check, Loader2, Camera, Phone, Mail, Globe, MessageSquare, BadgeCheck, ExternalLink, ShieldCheck, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 
 const BASE_URL = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -50,9 +50,10 @@ export default function EditProfilePage() {
     email: "",
     website: "",
     smsNumber: "",
+    location: "",
     leadCaptureEnabled: false,
     verified: false,
-    contactSettings: { showPhone: true, showEmail: true, showWebsite: true, showSms: false },
+    contactSettings: { showPhone: true, showEmail: true, showWebsite: true, showSms: false, showLocation: true },
     themeSettings: {
       backgroundColor: "",
       textColor: "",
@@ -70,7 +71,7 @@ export default function EditProfilePage() {
   useEffect(() => {
     if (profile) {
       const ts = (profile as any).themeSettings ?? {};
-      const cs = (profile as any).contactSettings ?? { showPhone: true, showEmail: true, showWebsite: true, showSms: false };
+      const cs = { showPhone: true, showEmail: true, showWebsite: true, showSms: false, showLocation: true, ...((profile as any).contactSettings ?? {}) };
       setForm({
         username: profile.username,
         displayName: profile.displayName,
@@ -81,6 +82,7 @@ export default function EditProfilePage() {
         email: (profile as any).email ?? "",
         website: (profile as any).website ?? "",
         smsNumber: (profile as any).smsNumber ?? "",
+        location: (profile as any).location ?? "",
         leadCaptureEnabled: !!(profile as any).leadCaptureEnabled,
         verified: !!(profile as any).verified,
         contactSettings: cs,
@@ -144,6 +146,7 @@ export default function EditProfilePage() {
           email: form.email || null,
           website: form.website || null,
           smsNumber: form.smsNumber || null,
+          location: form.location || null,
           leadCaptureEnabled: form.leadCaptureEnabled,
           verified: form.verified,
           contactSettings: form.contactSettings,
@@ -372,6 +375,33 @@ export default function EditProfilePage() {
                     className={inputCls}
                     placeholder="https://yourwebsite.com"
                   />
+                </div>
+
+                <div className={fieldCls}>
+                  <div className="flex items-center justify-between">
+                    <label className={labelCls + " flex items-center gap-1.5"}>
+                      <MapPin className="w-3.5 h-3.5 text-muted-foreground" /> Address / Location
+                    </label>
+                    <label className="flex items-center gap-1.5 text-xs text-muted-foreground cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={form.contactSettings.showLocation !== false}
+                        onChange={(e) => setForm((f) => ({ ...f, contactSettings: { ...f.contactSettings, showLocation: e.target.checked } }))}
+                        className="accent-primary"
+                      />
+                      Show on profile
+                    </label>
+                  </div>
+                  <input
+                    type="text"
+                    value={form.location}
+                    onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))}
+                    className={inputCls}
+                    placeholder="123 Main St, City, State (for businesses with a physical location)"
+                  />
+                  <p className="text-[11px] text-muted-foreground mt-1.5 ml-0.5">
+                    Visitors will see a “Directions” button that opens this address in Google Maps.
+                  </p>
                 </div>
 
                 <div className={fieldCls}>

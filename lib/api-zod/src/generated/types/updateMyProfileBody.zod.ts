@@ -18,6 +18,7 @@ export const UpdateMyProfileBody = zod.object({
   email: zod.string().nullish(),
   website: zod.string().nullish(),
   smsNumber: zod.string().nullish(),
+  location: zod.string().nullish(),
   leadCaptureEnabled: zod.boolean().optional(),
   contactSettings: zod.record(zod.string(), zod.unknown()).optional(),
 });
