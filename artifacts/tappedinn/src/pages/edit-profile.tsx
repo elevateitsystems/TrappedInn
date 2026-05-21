@@ -7,7 +7,9 @@ import { motion } from "framer-motion";
 
 const BASE_URL = import.meta.env.BASE_URL.replace(/\/$/, "");
 
-async function uploadAvatar(file: File): Promise<string> {
+import { ImageCropperModal } from "@/components/image-cropper-modal";
+
+async function uploadAvatar(file: File | Blob): Promise<string> {
   const formData = new FormData();
   formData.append("avatar", file);
   const res = await fetch(`${BASE_URL}/api/upload/avatar`, {
@@ -20,7 +22,7 @@ async function uploadAvatar(file: File): Promise<string> {
   return data.avatar_url as string;
 }
 
-async function uploadHeader(file: File): Promise<string> {
+async function uploadHeader(file: File | Blob): Promise<string> {
   const formData = new FormData();
   formData.append("header", file);
   const res = await fetch(`${BASE_URL}/api/upload/header`, {
@@ -99,15 +101,64 @@ export default function EditProfilePage() {
     }
   }, [profile]);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Crop-before-upload state
+  const [avatarCropSrc, setAvatarCropSrc] = useState<string | null>(null);
+  const [headerCropSrc, setHeaderCropSrc] = useState<string | null>(null);
+
+  const MAX_IMAGE_BYTES = 15 * 1024 * 1024; // 15 MB
+
+  const validateImage = (file: File): boolean => {
+    if (!file.type.startsWith("image/")) {
+      alert("Please select an image file (JPG, PNG, GIF, or WebP).");
+      return false;
+    }
+    if (file.size > MAX_IMAGE_BYTES) {
+      alert("Image is too large. Please pick one under 15 MB.");
+      return false;
+    }
+    return true;
+  };
+
+  // Revoke previous object URLs to avoid leaks
+  const closeAvatarCrop = () => {
+    setAvatarCropSrc((cur) => {
+      if (cur) URL.revokeObjectURL(cur);
+      return null;
+    });
+  };
+  const closeHeaderCrop = () => {
+    setHeaderCropSrc((cur) => {
+      if (cur) URL.revokeObjectURL(cur);
+      return null;
+    });
+  };
+
+  // Cleanup any active object URLs on unmount
+  useEffect(() => {
+    return () => {
+      if (avatarCropSrc) URL.revokeObjectURL(avatarCropSrc);
+      if (headerCropSrc) URL.revokeObjectURL(headerCropSrc);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    e.target.value = "";
     if (!file) return;
-    setAvatarPreview(URL.createObjectURL(file));
+    if (!validateImage(file)) return;
+    // Revoke any prior URL before opening a new one
+    if (avatarCropSrc) URL.revokeObjectURL(avatarCropSrc);
+    setAvatarCropSrc(URL.createObjectURL(file));
+  };
+
+  const handleAvatarCropSave = async (blob: Blob) => {
     setUploading(true);
     try {
-      const url = await uploadAvatar(file);
+      const url = await uploadAvatar(blob);
       setForm((f) => ({ ...f, avatarUrl: url }));
       setAvatarPreview(url);
+      closeAvatarCrop();
     } catch {
       alert("Failed to upload avatar. Please try again.");
     } finally {
@@ -115,15 +166,22 @@ export default function EditProfilePage() {
     }
   };
 
-  const handleHeaderFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleHeaderFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    e.target.value = "";
     if (!file) return;
-    setHeaderPreview(URL.createObjectURL(file));
+    if (!validateImage(file)) return;
+    if (headerCropSrc) URL.revokeObjectURL(headerCropSrc);
+    setHeaderCropSrc(URL.createObjectURL(file));
+  };
+
+  const handleHeaderCropSave = async (blob: Blob) => {
     setHeaderUploading(true);
     try {
-      const url = await uploadHeader(file);
+      const url = await uploadHeader(blob);
       setForm((f) => ({ ...f, headerImageUrl: url }));
       setHeaderPreview(url);
+      closeHeaderCrop();
     } catch {
       alert("Failed to upload header image. Please try again.");
     } finally {
@@ -576,6 +634,28 @@ export default function EditProfilePage() {
           </form>
         )}
       </div>
+
+      {avatarCropSrc && (
+        <ImageCropperModal
+          imageSrc={avatarCropSrc}
+          aspect={1}
+          shape="round"
+          title="Crop profile picture"
+          onCancel={closeAvatarCrop}
+          onSave={handleAvatarCropSave}
+        />
+      )}
+
+      {headerCropSrc && (
+        <ImageCropperModal
+          imageSrc={headerCropSrc}
+          aspect={3 / 1}
+          shape="rect"
+          title="Crop header image"
+          onCancel={closeHeaderCrop}
+          onSave={handleHeaderCropSave}
+        />
+      )}
     </AppLayout>
   );
 }
