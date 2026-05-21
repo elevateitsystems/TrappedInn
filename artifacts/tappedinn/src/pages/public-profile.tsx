@@ -99,14 +99,14 @@ export default function PublicProfilePage() {
 
   return (
     <div
-      className="min-h-dvh flex items-start justify-center px-4 py-12"
+      className="min-h-dvh flex items-start justify-center px-4 py-12 md:py-16"
       style={{ backgroundColor: bgColor, color: textColor }}
     >
       {showQr && (
         <QrModal url={profileUrl} name={profile.displayName} onClose={() => setShowQr(false)} />
       )}
 
-      <div className="w-full max-w-sm mx-auto">
+      <div className="w-full max-w-sm md:max-w-xl mx-auto">
         {/* Header image + Avatar + identity */}
         <motion.div
           initial={{ opacity: 0, y: -12 }}
@@ -115,26 +115,26 @@ export default function PublicProfilePage() {
         >
           {/* Header banner */}
           {p.headerImageUrl ? (
-            <div className="relative mb-10">
+            <div className="relative mb-10 md:mb-16">
               {/* Banner image — overflow-hidden only on this inner div */}
               <div className="rounded-2xl overflow-hidden">
                 <img
                   src={p.headerImageUrl}
                   alt="Profile header"
-                  className="w-full h-32 object-cover"
+                  className="w-full h-32 md:h-56 object-cover"
                 />
               </div>
               {/* Avatar sits OUTSIDE overflow-hidden so it isn't clipped */}
-              <div className="absolute -bottom-8 left-4" style={{ zIndex: 10 }}>
+              <div className="absolute -bottom-8 md:-bottom-14 left-4 md:left-6" style={{ zIndex: 10 }}>
                 {profile.avatarUrl ? (
                   <img
                     src={profile.avatarUrl}
                     alt={profile.displayName}
-                    className="w-16 h-16 rounded-full object-cover"
-                    style={{ border: "3px solid hsl(var(--background))" }}
+                    className="w-16 h-16 md:w-28 md:h-28 rounded-full object-cover"
+                    style={{ border: "4px solid hsl(var(--background))" }}
                   />
                 ) : (
-                  <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center text-white font-display font-semibold text-2xl" style={{ border: "3px solid hsl(var(--background))" }}>
+                  <div className="w-16 h-16 md:w-28 md:h-28 rounded-full gradient-primary flex items-center justify-center text-white font-display font-semibold text-2xl md:text-4xl" style={{ border: "4px solid hsl(var(--background))" }}>
                     {profile.displayName[0]?.toUpperCase()}
                   </div>
                 )}
@@ -149,10 +149,10 @@ export default function PublicProfilePage() {
                 <img
                   src={profile.avatarUrl}
                   alt={profile.displayName}
-                  className={`object-cover border-2 border-border mb-4 ${layout === "hero" ? "w-28 h-28 rounded-3xl" : "w-20 h-20 rounded-full"}`}
+                  className={`object-cover border-2 border-border mb-4 ${layout === "hero" ? "w-28 h-28 md:w-36 md:h-36 rounded-3xl" : "w-20 h-20 md:w-28 md:h-28 rounded-full"}`}
                 />
               ) : (
-                <div className={`gradient-primary flex items-center justify-center text-white font-display font-semibold mb-4 ${layout === "hero" ? "w-28 h-28 rounded-3xl text-4xl" : "w-20 h-20 rounded-full text-3xl"}`}>
+                <div className={`gradient-primary flex items-center justify-center text-white font-display font-semibold mb-4 ${layout === "hero" ? "w-28 h-28 md:w-36 md:h-36 rounded-3xl text-4xl md:text-5xl" : "w-20 h-20 md:w-28 md:h-28 rounded-full text-3xl md:text-4xl"}`}>
                   {profile.displayName[0]?.toUpperCase()}
                 </div>
               )
@@ -165,14 +165,14 @@ export default function PublicProfilePage() {
             </div>
           )}
           <div className="flex items-center gap-1.5">
-            <h1 className="text-2xl font-display font-semibold" style={{ color: textColor }}>
+            <h1 className="text-2xl md:text-4xl font-display font-semibold" style={{ color: textColor }}>
               {profile.displayName}
             </h1>
             <VerifiedBadge level={verificationLevel} size="md" />
           </div>
-          <p className="text-sm text-muted-foreground mt-0.5">@{profile.username}</p>
+          <p className="text-sm md:text-base text-muted-foreground mt-0.5">@{profile.username}</p>
           {profile.bio && (
-            <p className="text-sm text-muted-foreground mt-3 leading-relaxed max-w-xs">{profile.bio}</p>
+            <p className="text-sm md:text-base text-muted-foreground mt-3 leading-relaxed max-w-xs md:max-w-md">{profile.bio}</p>
           )}
           </div>
         </motion.div>
