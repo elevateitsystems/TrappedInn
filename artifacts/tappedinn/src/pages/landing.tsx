@@ -159,10 +159,10 @@ export default function LandingPage() {
         className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-16 py-4"
         style={{ background: "rgba(10,10,10,0.92)", borderBottom: `1px solid ${BORDER}`, backdropFilter: "blur(12px)" }}
       >
-        <div className="flex items-center gap-2.5">
+        <Link href="/" className="flex items-center gap-2.5" title="Home">
           <img src={logoImg} alt="Tapped Inn" className="w-8 h-8 object-contain" style={{ filter: "invert(1)" }} />
           <span className="font-display font-bold text-base tracking-tight text-white">{APP_NAME}</span>
-        </div>
+        </Link>
         <div className="flex items-center gap-4">
           <a
             href="https://www.TappedInn.net"

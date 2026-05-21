@@ -39,10 +39,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-dvh bg-background">
       {/* Sidebar */}
       <aside className="hidden md:flex flex-col w-60 border-r border-border bg-sidebar shrink-0">
-        <div className="flex items-center gap-2.5 px-5 py-4 border-b border-border">
+        <Link
+          href="/dashboard"
+          className="flex items-center gap-2.5 px-5 py-4 border-b border-border hover:bg-sidebar-accent/40 transition-colors"
+          title="Back to your dashboard"
+        >
           <img src={logoImg} alt="Tapped Inn" className="w-9 h-9 object-contain shrink-0" style={{ filter: "invert(1)" }} />
           <span className="font-display font-semibold text-sidebar-foreground text-sm leading-tight">{APP_NAME}</span>
-        </div>
+        </Link>
 
         <nav className="flex-1 px-3 py-4 space-y-0.5">
           {navItems.map(({ href, label, icon: Icon }) => {
@@ -114,10 +118,10 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Mobile header */}
       <div className="flex flex-col flex-1 min-w-0">
         <header className="md:hidden flex items-center justify-between px-4 py-3 border-b border-border bg-background/95 backdrop-blur sticky top-0 z-40">
-          <div className="flex items-center gap-2">
+          <Link href="/dashboard" className="flex items-center gap-2" title="Back to your dashboard">
             <img src={logoImg} alt="Tapped Inn" className="w-7 h-7 object-contain" style={{ filter: "invert(1)" }} />
             <span className="font-display font-semibold text-sm">{APP_NAME}</span>
-          </div>
+          </Link>
           <button
             onClick={() => signOut()}
             className="p-2 text-muted-foreground hover:text-foreground transition-colors"

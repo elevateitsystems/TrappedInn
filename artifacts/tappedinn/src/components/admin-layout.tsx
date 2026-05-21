@@ -46,7 +46,11 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-dvh bg-background">
       <aside className="hidden md:flex flex-col w-64 border-r border-border bg-sidebar shrink-0">
-        <div className="flex items-center gap-2.5 px-5 py-4 border-b border-border">
+        <Link
+          href="/dashboard"
+          className="flex items-center gap-2.5 px-5 py-4 border-b border-border hover:bg-sidebar-accent/40 transition-colors"
+          title="Back to your dashboard"
+        >
           <img
             src={logoImg}
             alt="Tapped Inn"
@@ -61,7 +65,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
               Admin Console
             </p>
           </div>
-        </div>
+        </Link>
 
         <nav className="flex-1 px-3 py-4 space-y-0.5">
           {navItems.map(({ href, label, icon: Icon, exact }) => {
@@ -121,10 +125,10 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
 
       <div className="flex flex-col flex-1 min-w-0">
         <header className="md:hidden flex items-center justify-between px-4 py-3 border-b border-border bg-background/95 backdrop-blur sticky top-0 z-40">
-          <div className="flex items-center gap-2">
+          <Link href="/dashboard" className="flex items-center gap-2" title="Back to your dashboard">
             <img src={logoImg} alt="Tapped Inn" className="w-7 h-7 object-contain" style={{ filter: "invert(1)" }} />
             <span className="font-display font-semibold text-sm">Admin</span>
-          </div>
+          </Link>
           <Link href="/dashboard" className="text-xs text-muted-foreground">
             Exit
           </Link>
