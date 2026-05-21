@@ -13,6 +13,7 @@ export const profilesTable = pgTable("profiles", {
   displayName: text("display_name").notNull(),
   bio: text("bio"),
   avatarUrl: text("avatar_url"),
+  headerImageUrl: text("header_image_url"),
   phone: text("phone"),
   email: text("email"),
   website: text("website"),

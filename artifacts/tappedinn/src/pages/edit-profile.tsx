@@ -20,17 +20,32 @@ async function uploadAvatar(file: File): Promise<string> {
   return data.avatar_url as string;
 }
 
+async function uploadHeader(file: File): Promise<string> {
+  const formData = new FormData();
+  formData.append("header", file);
+  const res = await fetch(`${BASE_URL}/api/upload/header`, {
+    method: "POST",
+    body: formData,
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error("Upload failed");
+  const data = await res.json();
+  return data.header_image_url as string;
+}
+
 export default function EditProfilePage() {
   const { data: profile, isLoading } = useGetMyProfile();
   const updateProfile = useUpdateMyProfile();
   const queryClient = useQueryClient();
   const fileRef = useRef<HTMLInputElement>(null);
+  const headerFileRef = useRef<HTMLInputElement>(null);
 
   const [form, setForm] = useState({
     username: "",
     displayName: "",
     bio: "",
     avatarUrl: "",
+    headerImageUrl: "",
     phone: "",
     email: "",
     website: "",
@@ -49,6 +64,8 @@ export default function EditProfilePage() {
   const [saved, setSaved] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState<string>("");
+  const [headerUploading, setHeaderUploading] = useState(false);
+  const [headerPreview, setHeaderPreview] = useState<string>("");
 
   useEffect(() => {
     if (profile) {
@@ -59,6 +76,7 @@ export default function EditProfilePage() {
         displayName: profile.displayName,
         bio: profile.bio ?? "",
         avatarUrl: profile.avatarUrl ?? "",
+        headerImageUrl: (profile as any).headerImageUrl ?? "",
         phone: (profile as any).phone ?? "",
         email: (profile as any).email ?? "",
         website: (profile as any).website ?? "",
@@ -75,6 +93,7 @@ export default function EditProfilePage() {
         },
       });
       setAvatarPreview(profile.avatarUrl ?? "");
+      setHeaderPreview((profile as any).headerImageUrl ?? "");
     }
   }, [profile]);
 
@@ -94,6 +113,22 @@ export default function EditProfilePage() {
     }
   };
 
+  const handleHeaderFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setHeaderPreview(URL.createObjectURL(file));
+    setHeaderUploading(true);
+    try {
+      const url = await uploadHeader(file);
+      setForm((f) => ({ ...f, headerImageUrl: url }));
+      setHeaderPreview(url);
+    } catch {
+      alert("Failed to upload header image. Please try again.");
+    } finally {
+      setHeaderUploading(false);
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     updateProfile.mutate(
@@ -103,6 +138,7 @@ export default function EditProfilePage() {
           displayName: form.displayName,
           bio: form.bio || null,
           avatarUrl: form.avatarUrl || null,
+          headerImageUrl: form.headerImageUrl || null,
           themeSettings: form.themeSettings,
           phone: form.phone || null,
           email: form.email || null,
@@ -159,43 +195,66 @@ export default function EditProfilePage() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Avatar upload */}
-            <div className="flex flex-col items-center gap-3 py-2">
-              <div className="relative group">
-                {avatarPreview ? (
-                  <img
-                    src={avatarPreview}
-                    alt="Avatar"
-                    className="w-20 h-20 rounded-full object-cover border-2 border-border"
-                  />
+            {/* Header image + avatar upload */}
+            <div className="rounded-2xl overflow-hidden border border-border">
+              {/* Header banner */}
+              <div
+                className="relative h-32 cursor-pointer group"
+                style={{ background: "hsl(240 10% 8%)" }}
+                onClick={() => headerFileRef.current?.click()}
+              >
+                {headerPreview ? (
+                  <img src={headerPreview} alt="Header" className="w-full h-full object-cover" />
                 ) : (
-                  <div className="w-20 h-20 rounded-full gradient-primary flex items-center justify-center text-white text-2xl font-display font-semibold">
-                    {form.displayName[0]?.toUpperCase() ?? "?"}
+                  <div className="w-full h-full flex flex-col items-center justify-center gap-1.5 text-muted-foreground">
+                    <Camera className="w-5 h-5" />
+                    <span className="text-xs font-medium">Add header image</span>
                   </div>
                 )}
-                <button
-                  type="button"
-                  onClick={() => fileRef.current?.click()}
-                  disabled={uploading}
-                  className="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                >
-                  {uploading ? (
-                    <Loader2 className="w-5 h-5 text-white animate-spin" />
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  {headerUploading ? (
+                    <Loader2 className="w-6 h-6 text-white animate-spin" />
                   ) : (
-                    <Camera className="w-5 h-5 text-white" />
+                    <div className="flex items-center gap-1.5 text-white text-xs font-semibold">
+                      <Camera className="w-4 h-4" /> Change header
+                    </div>
                   )}
-                </button>
+                </div>
+                <input ref={headerFileRef} type="file" accept="image/*" className="hidden" onChange={handleHeaderFileChange} />
               </div>
-              <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-              <button
-                type="button"
-                onClick={() => fileRef.current?.click()}
-                disabled={uploading}
-                className="text-xs text-primary hover:underline font-medium"
-              >
-                {uploading ? "Uploading..." : "Change photo"}
-              </button>
+
+              {/* Avatar overlapping header */}
+              <div className="flex items-end gap-3 px-4 pb-4 -mt-8 relative">
+                <div className="relative group shrink-0">
+                  {avatarPreview ? (
+                    <img src={avatarPreview} alt="Avatar" className="w-16 h-16 rounded-full object-cover border-2 border-background" />
+                  ) : (
+                    <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center text-white text-xl font-display font-semibold border-2 border-background">
+                      {form.displayName[0]?.toUpperCase() ?? "?"}
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => fileRef.current?.click()}
+                    disabled={uploading}
+                    className="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                  >
+                    {uploading ? <Loader2 className="w-4 h-4 text-white animate-spin" /> : <Camera className="w-4 h-4 text-white" />}
+                  </button>
+                </div>
+                <div className="flex gap-2 mb-1">
+                  <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading} className="text-xs text-primary hover:underline font-medium">
+                    {uploading ? "Uploading..." : "Change photo"}
+                  </button>
+                  {headerPreview && (
+                    <button type="button" onClick={() => { setHeaderPreview(""); setForm((f) => ({ ...f, headerImageUrl: "" })); }} className="text-xs text-muted-foreground hover:text-destructive font-medium">
+                      Remove header
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
+            <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
 
             {/* Basic info */}
             <div className={fieldCls}>

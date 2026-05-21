@@ -100,23 +100,53 @@ export default function PublicProfilePage() {
       )}
 
       <div className="w-full max-w-sm mx-auto">
-        {/* Avatar + identity */}
+        {/* Header image + Avatar + identity */}
         <motion.div
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`flex flex-col items-center text-center ${layout === "hero" ? "mb-6" : "mb-7"}`}
+          className={`flex flex-col ${layout === "hero" ? "mb-6" : "mb-7"}`}
         >
-          {profile.avatarUrl ? (
-            <img
-              src={profile.avatarUrl}
-              alt={profile.displayName}
-              className={`object-cover border-2 border-border mb-4 ${layout === "hero" ? "w-28 h-28 rounded-3xl" : "w-20 h-20 rounded-full"}`}
-            />
-          ) : (
-            <div className={`gradient-primary flex items-center justify-center text-white font-display font-semibold mb-4 ${layout === "hero" ? "w-28 h-28 rounded-3xl text-4xl" : "w-20 h-20 rounded-full text-3xl"}`}>
-              {profile.displayName[0]?.toUpperCase()}
+          {/* Header banner */}
+          {p.headerImageUrl ? (
+            <div className="relative rounded-2xl overflow-hidden mb-0">
+              <img
+                src={p.headerImageUrl}
+                alt="Profile header"
+                className="w-full h-32 object-cover"
+              />
+              {/* Avatar overlapping the header */}
+              <div className="absolute -bottom-7 left-4">
+                {profile.avatarUrl ? (
+                  <img
+                    src={profile.avatarUrl}
+                    alt={profile.displayName}
+                    className="w-16 h-16 rounded-full object-cover border-3 border-background"
+                    style={{ border: "3px solid var(--background)" }}
+                  />
+                ) : (
+                  <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center text-white font-display font-semibold text-2xl" style={{ border: "3px solid var(--background)" }}>
+                    {profile.displayName[0]?.toUpperCase()}
+                  </div>
+                )}
+              </div>
             </div>
-          )}
+          ) : null}
+
+          {/* Avatar (no header) + centered layout */}
+          <div className={`flex flex-col items-center text-center ${p.headerImageUrl ? "mt-10 pt-1" : ""}`}>
+            {!p.headerImageUrl && (
+              profile.avatarUrl ? (
+                <img
+                  src={profile.avatarUrl}
+                  alt={profile.displayName}
+                  className={`object-cover border-2 border-border mb-4 ${layout === "hero" ? "w-28 h-28 rounded-3xl" : "w-20 h-20 rounded-full"}`}
+                />
+              ) : (
+                <div className={`gradient-primary flex items-center justify-center text-white font-display font-semibold mb-4 ${layout === "hero" ? "w-28 h-28 rounded-3xl text-4xl" : "w-20 h-20 rounded-full text-3xl"}`}>
+                  {profile.displayName[0]?.toUpperCase()}
+                </div>
+              )
+            )}
 
           {p.activeMode && (
             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-2">
@@ -136,6 +166,7 @@ export default function PublicProfilePage() {
           {profile.bio && (
             <p className="text-sm text-muted-foreground mt-3 leading-relaxed max-w-xs">{profile.bio}</p>
           )}
+          </div>
         </motion.div>
 
         {/* Contact action buttons */}

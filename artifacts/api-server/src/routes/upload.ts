@@ -43,4 +43,13 @@ router.post("/avatar", requireAuth, upload.single("avatar"), (req, res): void =>
   res.json({ avatar_url: avatarUrl });
 });
 
+router.post("/header", requireAuth, upload.single("header"), (req, res): void => {
+  if (!req.file) {
+    res.status(400).json({ error: "No file uploaded" });
+    return;
+  }
+  const headerImageUrl = `/api/uploads/${req.file.filename}`;
+  res.json({ header_image_url: headerImageUrl });
+});
+
 export default router;

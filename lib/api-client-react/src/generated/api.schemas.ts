@@ -20,6 +20,8 @@ export interface Profile {
   bio: string | null;
   /** @nullable */
   avatarUrl: string | null;
+  /** @nullable */
+  headerImageUrl?: string | null;
   themeSettings: ProfileThemeSettings;
   createdAt: string;
 }
@@ -43,6 +45,8 @@ export interface PublicProfile {
   bio: string | null;
   /** @nullable */
   avatarUrl: string | null;
+  /** @nullable */
+  headerImageUrl?: string | null;
   themeSettings: PublicProfileThemeSettings;
   links: Link[];
 }
@@ -58,6 +62,8 @@ export interface UpdateProfileBody {
   bio?: string | null;
   /** @nullable */
   avatarUrl?: string | null;
+  /** @nullable */
+  headerImageUrl?: string | null;
   themeSettings?: UpdateProfileBodyThemeSettings;
   /** @nullable */
   phone?: string | null;

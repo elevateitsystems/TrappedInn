@@ -25,6 +25,7 @@ export const GetMyProfileResponse = zod.object({
   displayName: zod.string(),
   bio: zod.string().nullable(),
   avatarUrl: zod.string().nullable(),
+  headerImageUrl: zod.string().nullish(),
   themeSettings: zod.record(zod.string(), zod.unknown()),
   createdAt: zod.string(),
 });
@@ -37,6 +38,7 @@ export const UpdateMyProfileBody = zod.object({
   displayName: zod.string().optional(),
   bio: zod.string().nullish(),
   avatarUrl: zod.string().nullish(),
+  headerImageUrl: zod.string().nullish(),
   themeSettings: zod.record(zod.string(), zod.unknown()).optional(),
   phone: zod.string().nullish(),
   email: zod.string().nullish(),
@@ -54,6 +56,7 @@ export const UpdateMyProfileResponse = zod.object({
   displayName: zod.string(),
   bio: zod.string().nullable(),
   avatarUrl: zod.string().nullable(),
+  headerImageUrl: zod.string().nullish(),
   themeSettings: zod.record(zod.string(), zod.unknown()),
   createdAt: zod.string(),
 });
@@ -71,6 +74,7 @@ export const GetPublicProfileResponse = zod.object({
   displayName: zod.string(),
   bio: zod.string().nullable(),
   avatarUrl: zod.string().nullable(),
+  headerImageUrl: zod.string().nullish(),
   themeSettings: zod.record(zod.string(), zod.unknown()),
   links: zod.array(
     zod.object({
@@ -209,6 +213,7 @@ export const GetConnectionsResponseItem = zod.object({
     displayName: zod.string(),
     bio: zod.string().nullable(),
     avatarUrl: zod.string().nullable(),
+    headerImageUrl: zod.string().nullish(),
     themeSettings: zod.record(zod.string(), zod.unknown()),
     links: zod.array(
       zod.object({

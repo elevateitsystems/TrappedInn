@@ -12,6 +12,7 @@ export const UpdateProfileBody = zod.object({
   displayName: zod.string().optional(),
   bio: zod.string().nullish(),
   avatarUrl: zod.string().nullish(),
+  headerImageUrl: zod.string().nullish(),
   themeSettings: zod.record(zod.string(), zod.unknown()).optional(),
   phone: zod.string().nullish(),
   email: zod.string().nullish(),

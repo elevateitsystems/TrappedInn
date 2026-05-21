@@ -60,6 +60,7 @@ router.put("/me", requireAuth, async (req, res): Promise<void> => {
         ...(data.displayName !== undefined && { displayName: data.displayName }),
         ...(data.bio !== undefined && { bio: data.bio }),
         ...(data.avatarUrl !== undefined && { avatarUrl: data.avatarUrl }),
+        ...(data.headerImageUrl !== undefined && { headerImageUrl: data.headerImageUrl }),
         ...(data.themeSettings !== undefined && { themeSettings: data.themeSettings }),
         ...(data.phone !== undefined && { phone: data.phone }),
         ...(data.email !== undefined && { email: data.email }),

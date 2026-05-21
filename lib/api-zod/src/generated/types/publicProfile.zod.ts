@@ -13,6 +13,7 @@ export const PublicProfile = zod.object({
   displayName: zod.string(),
   bio: zod.string().nullable(),
   avatarUrl: zod.string().nullable(),
+  headerImageUrl: zod.string().nullish(),
   themeSettings: zod.record(zod.string(), zod.unknown()),
   links: zod.array(
     zod.object({

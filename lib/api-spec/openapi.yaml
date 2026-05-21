@@ -382,6 +382,8 @@ components:
           type: ["string", "null"]
         avatarUrl:
           type: ["string", "null"]
+        headerImageUrl:
+          type: ["string", "null"]
         themeSettings:
           type: object
           additionalProperties: true
@@ -410,6 +412,8 @@ components:
           type: ["string", "null"]
         avatarUrl:
           type: ["string", "null"]
+        headerImageUrl:
+          type: ["string", "null"]
         themeSettings:
           type: object
           additionalProperties: true
@@ -436,6 +440,8 @@ components:
         bio:
           type: ["string", "null"]
         avatarUrl:
+          type: ["string", "null"]
+        headerImageUrl:
           type: ["string", "null"]
         themeSettings:
           type: object
