@@ -18,6 +18,12 @@ import VerificationPage from "@/pages/verification";
 import PublicProfilePage from "@/pages/public-profile";
 import CardRedirectPage from "@/pages/card-redirect";
 import NotFound from "@/pages/not-found";
+import AdminDashboardPage from "@/pages/admin/dashboard";
+import AdminUsersPage from "@/pages/admin/users";
+import AdminVerificationsPage from "@/pages/admin/verifications";
+import AdminOrdersPage from "@/pages/admin/orders";
+import AdminAnalyticsPage from "@/pages/admin/analytics";
+import AdminSettingsPage from "@/pages/admin/settings";
 
 const APP_NAME = "Tapped Inn Network";
 
@@ -199,6 +205,12 @@ function AppRouter() {
           <Route path="/analytics" component={() => <ProtectedRoute component={AnalyticsPage} />} />
           <Route path="/modes" component={() => <ProtectedRoute component={ModesPage} />} />
           <Route path="/verification" component={() => <ProtectedRoute component={VerificationPage} />} />
+          <Route path="/admin" component={() => <ProtectedRoute component={AdminDashboardPage} />} />
+          <Route path="/admin/users" component={() => <ProtectedRoute component={AdminUsersPage} />} />
+          <Route path="/admin/verifications" component={() => <ProtectedRoute component={AdminVerificationsPage} />} />
+          <Route path="/admin/orders" component={() => <ProtectedRoute component={AdminOrdersPage} />} />
+          <Route path="/admin/analytics" component={() => <ProtectedRoute component={AdminAnalyticsPage} />} />
+          <Route path="/admin/settings" component={() => <ProtectedRoute component={AdminSettingsPage} />} />
           <Route path="/p/:username" component={PublicProfilePage} />
           <Route path="/card/:id" component={CardRedirectPage} />
           <Route component={NotFound} />

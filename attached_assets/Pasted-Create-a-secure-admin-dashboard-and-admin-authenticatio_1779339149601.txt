@@ -1,0 +1,140 @@
+Create a secure admin dashboard and admin authentication system for the Tapped Inn Network platform.
+
+I need a complete admin interface where administrators can log in separately from normal users and manage the platform without editing code manually.
+
+ADMIN AUTHENTICATION:
+
+Create secure admin login functionality
+Admin accounts should be role-protected
+Only admins can access the admin dashboard
+Store admin sessions securely
+Redirect unauthorized users away from admin pages
+
+ADMIN DASHBOARD FEATURES:
+
+USER MANAGEMENT
+Create a dashboard page where admins can:
+View all users
+Search users by username/email
+View profile information
+See account creation date
+See verification status
+See user activity/basic analytics
+Suspend or disable accounts if needed
+VERIFICATION MANAGEMENT
+Create a verification management system connected to user accounts.
+
+Each user should have:
+
+verification_level
+verified_at
+verification_type
+
+verification_level values:
+
+none
+blue
+gold
+elite_black
+
+Admin dashboard must allow:
+
+Manually approve verification
+Remove verification
+Upgrade verification tier
+Downgrade verification tier
+View pending verification purchases
+View verification history/logs
+
+When a verification level is updated:
+
+Badge should automatically appear on the user profile
+Profile perks should unlock automatically
+NEW USER SIGNUPS
+Create a dashboard section showing:
+newest registered users
+signup date/time
+email
+username
+verification status
+PURCHASE / ORDER MANAGEMENT
+Prepare the system for Shopify integration.
+
+Create a section where admins can:
+
+View verification purchases
+Match purchases to usernames
+Approve purchases manually
+See payment status
+
+Important:
+For now, verification approval can be manual through the admin dashboard.
+
+Later, prepare the backend structure for Shopify webhooks so verification can automatically apply after purchase.
+
+PROFILE FEATURE UNLOCKS
+Users should unlock features automatically based on verification_level.
+
+BLUE VERIFIED unlocks:
+
+blue badge
+premium themes
+verified search priority
+
+GOLD VERIFIED unlocks:
+
+all blue perks
+enhanced customization
+profile animations
+higher search priority
+
+ELITE BLACK VERIFIED unlocks:
+
+all gold perks
+elite themes
+homepage spotlight eligibility
+highest search priority
+ADMIN UI DESIGN
+Design the admin dashboard with:
+modern dark UI
+sidebar navigation
+analytics cards
+user tables
+verification management panel
+responsive mobile support
+
+Sidebar sections:
+
+Dashboard
+Users
+Verifications
+Orders
+Analytics
+Settings
+DATABASE REQUIREMENTS
+
+Add these fields to the users table:
+
+verification_level
+verified_at
+verification_type
+is_admin
+account_status
+
+Create admin-protected routes and middleware.
+
+SECURITY
+Prevent non-admin access
+Secure authentication
+Validation on all admin actions
+Admin activity logging
+Rate limiting on login attempts
+FUTURE READY
+Structure the backend so future features can easily be added:
+subscriptions
+business accounts
+team management
+analytics upgrades
+featured profile placements
+
+The goal is to create a scalable admin system for managing the Tapped Inn Network platform professionally without manually editing code every time a user needs verification or account changes.

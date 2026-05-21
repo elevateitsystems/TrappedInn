@@ -92,6 +92,15 @@ router.get("/:username", async (req, res): Promise<void> => {
       return;
     }
 
+    // Block suspended / disabled accounts from being viewed publicly
+    const owner = await db.query.usersTable.findFirst({
+      where: eq(usersTable.id, profile.userId),
+    });
+    if (owner && owner.accountStatus !== "active") {
+      res.status(403).json({ error: "This profile is unavailable." });
+      return;
+    }
+
     const links = await db.query.linksTable.findMany({
       where: eq(linksTable.profileId, profile.id),
       orderBy: (l, { asc }) => [asc(l.position)],
