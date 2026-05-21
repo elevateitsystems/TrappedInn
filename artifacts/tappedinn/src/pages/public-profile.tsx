@@ -108,23 +108,26 @@ export default function PublicProfilePage() {
         >
           {/* Header banner */}
           {p.headerImageUrl ? (
-            <div className="relative rounded-2xl overflow-hidden mb-0">
-              <img
-                src={p.headerImageUrl}
-                alt="Profile header"
-                className="w-full h-32 object-cover"
-              />
-              {/* Avatar overlapping the header */}
-              <div className="absolute -bottom-7 left-4">
+            <div className="relative mb-10">
+              {/* Banner image — overflow-hidden only on this inner div */}
+              <div className="rounded-2xl overflow-hidden">
+                <img
+                  src={p.headerImageUrl}
+                  alt="Profile header"
+                  className="w-full h-32 object-cover"
+                />
+              </div>
+              {/* Avatar sits OUTSIDE overflow-hidden so it isn't clipped */}
+              <div className="absolute -bottom-8 left-4" style={{ zIndex: 10 }}>
                 {profile.avatarUrl ? (
                   <img
                     src={profile.avatarUrl}
                     alt={profile.displayName}
-                    className="w-16 h-16 rounded-full object-cover border-3 border-background"
-                    style={{ border: "3px solid var(--background)" }}
+                    className="w-16 h-16 rounded-full object-cover"
+                    style={{ border: "3px solid hsl(var(--background))" }}
                   />
                 ) : (
-                  <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center text-white font-display font-semibold text-2xl" style={{ border: "3px solid var(--background)" }}>
+                  <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center text-white font-display font-semibold text-2xl" style={{ border: "3px solid hsl(var(--background))" }}>
                     {profile.displayName[0]?.toUpperCase()}
                   </div>
                 )}
@@ -132,8 +135,8 @@ export default function PublicProfilePage() {
             </div>
           ) : null}
 
-          {/* Avatar (no header) + centered layout */}
-          <div className={`flex flex-col items-center text-center ${p.headerImageUrl ? "mt-10 pt-1" : ""}`}>
+          {/* Content: centered when no header, left-aligned when header present */}
+          <div className={`flex flex-col items-center text-center`}>
             {!p.headerImageUrl && (
               profile.avatarUrl ? (
                 <img
