@@ -19,6 +19,8 @@ export const Connection = zod.object({
     avatarUrl: zod.string().nullable(),
     headerImageUrl: zod.string().nullish(),
     themeSettings: zod.record(zod.string(), zod.unknown()),
+    verificationLevel: zod.enum(["none", "blue", "gold", "elite_black"]),
+    verifiedAt: zod.string().nullish(),
     links: zod.array(
       zod.object({
         id: zod.string(),

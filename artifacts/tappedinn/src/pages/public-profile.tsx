@@ -1,7 +1,8 @@
 import { useRoute } from "wouter";
 import { useGetPublicProfile, useTrackEvent } from "@workspace/api-client-react";
 import { useEffect, useState } from "react";
-import { Wifi, ExternalLink, Phone, Mail, Globe, MessageSquare, Download, QrCode, BadgeCheck, Loader2 } from "lucide-react";
+import { Wifi, ExternalLink, Phone, Mail, Globe, MessageSquare, Download, QrCode, Loader2 } from "lucide-react";
+import { VerifiedBadge, type VerificationLevel } from "@/components/verified-badge";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { downloadVCard } from "@/lib/vcard";
@@ -75,7 +76,7 @@ export default function PublicProfilePage() {
   const textColor = ts.textColor || undefined;
   const buttonStyle = ts.buttonStyle ?? "rounded";
   const layout = ts.layout ?? "classic";
-  const verified = !!p.verified;
+  const verificationLevel = (p.verificationLevel ?? (p.verified ? "blue" : "none")) as VerificationLevel;
   const leadCaptureEnabled = !!p.leadCaptureEnabled;
 
   const buttonRadius = buttonStyle === "rounded" ? "rounded-full" : buttonStyle === "square" ? "rounded-none" : "rounded-xl";
@@ -161,9 +162,7 @@ export default function PublicProfilePage() {
             <h1 className="text-2xl font-display font-semibold" style={{ color: textColor }}>
               {profile.displayName}
             </h1>
-            {verified && (
-              <BadgeCheck className="w-5 h-5 text-primary shrink-0" aria-label="Verified" />
-            )}
+            <VerifiedBadge level={verificationLevel} size="md" />
           </div>
           <p className="text-sm text-muted-foreground mt-0.5">@{profile.username}</p>
           {profile.bio && (

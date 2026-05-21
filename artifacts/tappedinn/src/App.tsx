@@ -14,6 +14,7 @@ import EditLinksPage from "@/pages/edit-links";
 import ConnectionsPage from "@/pages/connections";
 import AnalyticsPage from "@/pages/analytics";
 import ModesPage from "@/pages/modes";
+import VerificationPage from "@/pages/verification";
 import PublicProfilePage from "@/pages/public-profile";
 import CardRedirectPage from "@/pages/card-redirect";
 import NotFound from "@/pages/not-found";
@@ -197,6 +198,7 @@ function AppRouter() {
           <Route path="/connections" component={() => <ProtectedRoute component={ConnectionsPage} />} />
           <Route path="/analytics" component={() => <ProtectedRoute component={AnalyticsPage} />} />
           <Route path="/modes" component={() => <ProtectedRoute component={ModesPage} />} />
+          <Route path="/verification" component={() => <ProtectedRoute component={VerificationPage} />} />
           <Route path="/p/:username" component={PublicProfilePage} />
           <Route path="/card/:id" component={CardRedirectPage} />
           <Route component={NotFound} />

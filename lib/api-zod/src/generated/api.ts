@@ -27,6 +27,9 @@ export const GetMyProfileResponse = zod.object({
   avatarUrl: zod.string().nullable(),
   headerImageUrl: zod.string().nullish(),
   themeSettings: zod.record(zod.string(), zod.unknown()),
+  verificationLevel: zod.enum(["none", "blue", "gold", "elite_black"]),
+  verifiedAt: zod.string().nullish(),
+  verificationType: zod.string().optional(),
   createdAt: zod.string(),
 });
 
@@ -45,7 +48,6 @@ export const UpdateMyProfileBody = zod.object({
   website: zod.string().nullish(),
   smsNumber: zod.string().nullish(),
   leadCaptureEnabled: zod.boolean().optional(),
-  verified: zod.boolean().optional(),
   contactSettings: zod.record(zod.string(), zod.unknown()).optional(),
 });
 
@@ -58,6 +60,9 @@ export const UpdateMyProfileResponse = zod.object({
   avatarUrl: zod.string().nullable(),
   headerImageUrl: zod.string().nullish(),
   themeSettings: zod.record(zod.string(), zod.unknown()),
+  verificationLevel: zod.enum(["none", "blue", "gold", "elite_black"]),
+  verifiedAt: zod.string().nullish(),
+  verificationType: zod.string().optional(),
   createdAt: zod.string(),
 });
 
@@ -76,6 +81,8 @@ export const GetPublicProfileResponse = zod.object({
   avatarUrl: zod.string().nullable(),
   headerImageUrl: zod.string().nullish(),
   themeSettings: zod.record(zod.string(), zod.unknown()),
+  verificationLevel: zod.enum(["none", "blue", "gold", "elite_black"]),
+  verifiedAt: zod.string().nullish(),
   links: zod.array(
     zod.object({
       id: zod.string(),
@@ -215,6 +222,8 @@ export const GetConnectionsResponseItem = zod.object({
     avatarUrl: zod.string().nullable(),
     headerImageUrl: zod.string().nullish(),
     themeSettings: zod.record(zod.string(), zod.unknown()),
+    verificationLevel: zod.enum(["none", "blue", "gold", "elite_black"]),
+    verifiedAt: zod.string().nullish(),
     links: zod.array(
       zod.object({
         id: zod.string(),

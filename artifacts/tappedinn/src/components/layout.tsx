@@ -9,6 +9,7 @@ import {
   LogOut,
   Layers,
   ShoppingBag,
+  ShieldCheck,
 } from "lucide-react";
 import { useClerk } from "@clerk/react";
 import { cn } from "@/lib/utils";
@@ -23,6 +24,7 @@ const navItems = [
   { href: "/modes", label: "Modes", icon: Layers },
   { href: "/connections", label: "Connections", icon: Users },
   { href: "/analytics", label: "Analytics", icon: BarChart2 },
+  { href: "/verification", label: "Get Verified", icon: ShieldCheck },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {

@@ -11,6 +11,16 @@ export interface HealthStatus {
 
 export type ProfileThemeSettings = { [key: string]: unknown };
 
+export type ProfileVerificationLevel =
+  (typeof ProfileVerificationLevel)[keyof typeof ProfileVerificationLevel];
+
+export const ProfileVerificationLevel = {
+  none: "none",
+  blue: "blue",
+  gold: "gold",
+  elite_black: "elite_black",
+} as const;
+
 export interface Profile {
   id: string;
   userId: string;
@@ -23,10 +33,24 @@ export interface Profile {
   /** @nullable */
   headerImageUrl?: string | null;
   themeSettings: ProfileThemeSettings;
+  verificationLevel: ProfileVerificationLevel;
+  /** @nullable */
+  verifiedAt?: string | null;
+  verificationType?: string;
   createdAt: string;
 }
 
 export type PublicProfileThemeSettings = { [key: string]: unknown };
+
+export type PublicProfileVerificationLevel =
+  (typeof PublicProfileVerificationLevel)[keyof typeof PublicProfileVerificationLevel];
+
+export const PublicProfileVerificationLevel = {
+  none: "none",
+  blue: "blue",
+  gold: "gold",
+  elite_black: "elite_black",
+} as const;
 
 export interface Link {
   id: string;
@@ -48,6 +72,9 @@ export interface PublicProfile {
   /** @nullable */
   headerImageUrl?: string | null;
   themeSettings: PublicProfileThemeSettings;
+  verificationLevel: PublicProfileVerificationLevel;
+  /** @nullable */
+  verifiedAt?: string | null;
   links: Link[];
 }
 
@@ -74,7 +101,6 @@ export interface UpdateProfileBody {
   /** @nullable */
   smsNumber?: string | null;
   leadCaptureEnabled?: boolean;
-  verified?: boolean;
   contactSettings?: UpdateProfileBodyContactSettings;
 }
 

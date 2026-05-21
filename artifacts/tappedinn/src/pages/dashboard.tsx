@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useGetDashboardSummary, useGetRecentActivity, useGetMyProfile } from "@workspace/api-client-react";
 import { AppLayout } from "@/components/layout";
-import { Eye, Link2, Users, Wifi, MousePointerClick, Clock, User, Layers, Share2, Copy, Check, ExternalLink } from "lucide-react";
+import { Eye, Link2, Users, Wifi, MousePointerClick, Clock, User, Layers, Share2, Copy, Check, ExternalLink, ShieldCheck, ArrowRight } from "lucide-react";
+import { VerifiedBadge, type VerificationLevel } from "@/components/verified-badge";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -164,6 +165,45 @@ export default function DashboardPage() {
 
         {/* Share card */}
         {profile && <ShareCard username={profile.username} />}
+
+        {/* Get Verified CTA */}
+        {profile && (() => {
+          const level = (profile.verificationLevel ?? "none") as VerificationLevel;
+          const isVerified = level !== "none";
+          return (
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-6"
+            >
+              <Link
+                href="/verification"
+                className="flex items-center gap-4 px-4 py-4 rounded-2xl border border-primary/30 bg-gradient-to-r from-primary/10 to-transparent hover:border-primary/60 transition-colors group"
+              >
+                <div className="w-11 h-11 rounded-xl bg-primary/15 flex items-center justify-center shrink-0">
+                  {isVerified ? (
+                    <VerifiedBadge level={level} size="md" />
+                  ) : (
+                    <ShieldCheck className="w-5 h-5 text-primary" />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-display font-semibold flex items-center gap-1.5">
+                    {isVerified
+                      ? `You're ${level === "blue" ? "Blue" : level === "gold" ? "Gold" : "Elite Black"} Verified`
+                      : "Get Tapped Inn Verified"}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {isVerified
+                      ? "Manage your verification or upgrade your rank"
+                      : "Lifetime badge from $25. Boost trust, unlock premium perks."}
+                  </p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-0.5 transition-transform shrink-0" />
+              </Link>
+            </motion.div>
+          );
+        })()}
 
         {/* Active mode banner */}
         {activeMode && (

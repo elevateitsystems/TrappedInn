@@ -16,6 +16,9 @@ export const Profile = zod.object({
   avatarUrl: zod.string().nullable(),
   headerImageUrl: zod.string().nullish(),
   themeSettings: zod.record(zod.string(), zod.unknown()),
+  verificationLevel: zod.enum(["none", "blue", "gold", "elite_black"]),
+  verifiedAt: zod.string().nullish(),
+  verificationType: zod.string().optional(),
   createdAt: zod.string(),
 });
 

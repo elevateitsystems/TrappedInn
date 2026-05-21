@@ -1,0 +1,133 @@
+Create a new feature called “Tapped Inn Verified ” for user profiles.
+
+The site should support 3 lifetime verification ranks: Blue Verified, Gold Verified, and Elite Black Verified. Each rank should display a badge beside the user’s name on their public profile and unlock different profile perks.
+
+Verification must be stored on each user profile as:
+
+verification_level:
+
+none
+blue
+gold
+elite_black
+
+verified_at:
+
+date/time the rank was applied
+
+verification_type:
+
+lifetime
+
+On the public profile page, if a user has a verification level, show the correct badge beside their username.
+
+Rank 1: BLUE VERIFIED
+
+Price: $25 Lifetime
+
+Purchase link:
+https://tappedinn.net/products/blue-verified-badge?utm_source=copyToPasteBoard&utm_medium=product-links&utm_content=web
+
+Badge color:
+Official Blue Verification Badge
+
+Purpose:
+Confirms the creator, artist, entrepreneur, or business is authentic and verified within the Tapped Inn Network.
+
+Perks:
+
+Official Blue Verified Badge
+Verification check beside username
+Increased trust on profile
+Access to premium profile themes
+Priority appearance in searches
+“Official Verified Member” status
+Lifetime verification ownership
+Future verified-only feature access
+Access to verified community opportunities
+
+Best for:
+Creators, entrepreneurs, musicians, influencers, freelancers.
+
+Rank 2: GOLD VERIFIED
+
+Price: $100 Lifetime
+
+Purchase link:
+https://tappedinn.net/products/gold-verified-badge?utm_source=copyToPasteBoard&utm_medium=product-links&utm_content=web
+
+Badge color:
+Premium Gold Verification Badge
+
+Purpose:
+For serious brands and businesses wanting elevated authority and premium network status.
+
+Perks:
+Everything in Blue Verified plus:
+
+Gold Verified Badge
+Featured placement opportunities
+Enhanced profile customization
+Premium animated profile effects
+Higher visibility in search/discovery
+Priority support
+Exclusive drops/features access
+“Gold Verified Partner” status
+Business credibility enhancement
+Priority username requests
+
+Best for:
+Businesses, agencies, clothing brands, labels, established creators.
+
+Rank 3: ELITE BLACK VERIFIED
+
+Price: $250 Lifetime
+
+Purchase link:
+https://tappedinn.net/products/elite-black-verified?utm_source=copyToPasteBoard&utm_medium=product-links&utm_content=web
+
+Badge color:
+Elite Black Verification Badge
+
+Purpose:
+Highest level of Tapped Inn Network status and exclusivity.
+
+Perks:
+Everything in Gold Verified plus:
+
+Elite Black Verified Badge
+Top-tier network recognition
+Homepage spotlight opportunities
+Concierge setup assistance
+Exclusive elite profile themes
+First access to future tools/features
+Elite-only networking opportunities
+Custom profile priority upgrades
+Highest search/discovery visibility
+“Elite Network Member” status
+Early beta access to future platform features
+
+Best for:
+High-level brands, executives, influencers, major creators, investors, serious entrepreneurs.
+
+Add a “Get Verified” or “Upgrade Verification” section inside the user dashboard and on profile settings.
+
+The page should display the 3 rank cards with:
+
+badge image
+rank name
+lifetime price
+purpose
+perks list
+best for section
+purchase button
+
+Each purchase button should open the correct Shopify product link.
+
+Important:
+The checkout must collect the user’s Tapped Inn username or account email so the verification can be applied to the correct profile.
+
+After purchase, verification can be applied in one of two ways:
+
+Option 1: Manual approval for now
+After someone purchases, admin manually updates their verification_level in the admin dashboard.

@@ -33,6 +33,9 @@ export const profilesTable = pgTable("profiles", {
   }>().notNull().default({}),
   leadCaptureEnabled: boolean("lead_capture_enabled").notNull().default(false),
   verified: boolean("verified").notNull().default(false),
+  verificationLevel: text("verification_level").notNull().default("none"),
+  verifiedAt: timestamp("verified_at"),
+  verificationType: text("verification_type").notNull().default("lifetime"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

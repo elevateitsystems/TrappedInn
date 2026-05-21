@@ -387,6 +387,13 @@ components:
         themeSettings:
           type: object
           additionalProperties: true
+        verificationLevel:
+          type: string
+          enum: [none, blue, gold, elite_black]
+        verifiedAt:
+          type: ["string", "null"]
+        verificationType:
+          type: string
         createdAt:
           type: string
       required:
@@ -397,6 +404,7 @@ components:
         - bio
         - avatarUrl
         - themeSettings
+        - verificationLevel
         - createdAt
 
     PublicProfile:
@@ -417,6 +425,11 @@ components:
         themeSettings:
           type: object
           additionalProperties: true
+        verificationLevel:
+          type: string
+          enum: [none, blue, gold, elite_black]
+        verifiedAt:
+          type: ["string", "null"]
         links:
           type: array
           items:
@@ -428,6 +441,7 @@ components:
         - bio
         - avatarUrl
         - themeSettings
+        - verificationLevel
         - links
 
     UpdateProfileBody:
@@ -455,8 +469,6 @@ components:
         smsNumber:
           type: ["string", "null"]
         leadCaptureEnabled:
-          type: boolean
-        verified:
           type: boolean
         contactSettings:
           type: object
