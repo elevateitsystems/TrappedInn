@@ -14,6 +14,12 @@ const LEVEL_LABEL: Record<Exclude<VerificationLevel, "none">, string> = {
   elite_black: "Elite Black Verified",
 };
 
+const LEVEL_TOOLTIP: Record<Exclude<VerificationLevel, "none">, string> = {
+  blue: "Verified Blue user — authentic member of the Tapped Inn Network.",
+  gold: "Verified Gold user — premium partner on the Tapped Inn Network.",
+  elite_black: "Verified Elite Black user — top-tier member of the Tapped Inn Network.",
+};
+
 type Props = {
   level: VerificationLevel | null | undefined;
   size?: keyof typeof SIZES;
@@ -25,6 +31,7 @@ export function VerifiedBadge({ level, size = "md", className }: Props) {
 
   const sizeClass = SIZES[size];
   const label = LEVEL_LABEL[level];
+  const tooltip = LEVEL_TOOLTIP[level];
 
   const fill =
     level === "blue"
@@ -38,10 +45,21 @@ export function VerifiedBadge({ level, size = "md", className }: Props) {
 
   return (
     <span
-      title={label}
+      title={tooltip}
       aria-label={label}
-      className={cn("inline-flex shrink-0 align-middle", sizeClass, className)}
+      className={cn(
+        "relative inline-flex shrink-0 align-middle group cursor-help",
+        sizeClass,
+        className
+      )}
     >
+      {/* Custom styled tooltip on hover */}
+      <span
+        role="tooltip"
+        className="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-full mb-2 whitespace-nowrap px-2.5 py-1.5 rounded-md bg-popover border border-popover-border text-popover-foreground text-xs font-medium shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50"
+      >
+        {tooltip}
+      </span>
       <svg viewBox="0 0 24 24" className="w-full h-full" aria-hidden="true">
         <path
           d="M12 1.5l2.3 2.05 3.05-.35 1.3 2.8 2.8 1.3-.35 3.05L23.1 12.6l-2.05 2.3.35 3.05-2.8 1.3-1.3 2.8-3.05-.35L12 23.85l-2.3-2.05-3.05.35-1.3-2.8-2.8-1.3.35-3.05L.85 12.6l2.05-2.3-.35-3.05 2.8-1.3 1.3-2.8 3.05.35z"
