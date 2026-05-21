@@ -317,7 +317,7 @@ export default function PublicProfilePage() {
             href="/sign-up"
             className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl border border-primary/40 bg-primary/5 hover:bg-primary/10 transition-colors text-sm font-semibold text-primary"
           >
-            ✦ New Here? Let's Get You Tapped Inn!
+            ✦ Get Tapped Inn — Claim Your Free Profile
           </Link>
         </motion.div>
 
