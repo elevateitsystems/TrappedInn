@@ -102,7 +102,7 @@ function AnalyticsWidget() {
   const cards = [
     { value: "2,847", label: "Profile Views", color: GOLD },
     { value: "412", label: "Link Clicks", color: "#60a5fa" },
-    { value: "89", label: "NFC Taps", color: "#a78bfa" },
+    { value: "89", label: "Profile Taps", color: "#a78bfa" },
     { value: "37", label: "Connections", color: "#34d399" },
   ];
   return (
@@ -128,7 +128,7 @@ function AnalyticsWidget() {
 const featureCards = [
   {
     icon: Wifi,
-    title: "NFC Tap-to-Connect",
+    title: "Tap-to-Connect",
     desc: "One tap with your Tapped Inn card opens your full digital profile instantly. No app, no friction.",
   },
   {
@@ -203,7 +203,7 @@ export default function LandingPage() {
               style={{ background: GOLD_BG, color: GOLD, border: `1px solid ${GOLD_BORDER}` }}
             >
               <Wifi className="w-3 h-3" />
-              NFC-Powered Digital Identity
+              Your New Digital Identity
             </div>
 
             <h1 className="font-display font-black leading-[1.0] tracking-tight mb-6" style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)" }}>
@@ -241,7 +241,7 @@ export default function LandingPage() {
             </div>
 
             <div className="flex items-center gap-6">
-              {[["⚡", "60-second setup"], ["🆓", "Free to start"], ["💳", "NFC card available"]].map(([icon, txt]) => (
+              {[["⚡", "60-second setup"], ["🆓", "Free to start"], ["💳", "Smart card available"]].map(([icon, txt]) => (
                 <div key={txt as string} className="flex items-center gap-1.5 text-xs" style={{ color: "#555" }}>
                   <span>{icon}</span>
                   <span>{txt}</span>
@@ -264,7 +264,7 @@ export default function LandingPage() {
       {/* Value bar */}
       <div style={{ background: CARD, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}` }}>
         <div className="max-w-5xl mx-auto px-6 md:px-16 py-5 flex flex-wrap justify-center gap-10">
-          {[["🔗", "All your links, one place"], ["📲", "NFC tap-to-share"], ["📊", "Real-time analytics"], ["🌐", "Your profile, anywhere"]].map(([icon, label]) => (
+          {[["🔗", "All your links, one place"], ["📲", "Tap-to-share"], ["📊", "Real-time analytics"], ["🌐", "Your profile, anywhere"]].map(([icon, label]) => (
             <div key={label as string} className="flex items-center gap-2 text-sm font-semibold" style={{ color: "#aaa" }}>
               <span className="text-lg">{icon}</span>
               {label}
@@ -352,7 +352,7 @@ export default function LandingPage() {
             </h2>
             <p className="text-lg leading-relaxed mb-8" style={{ color: "#888" }}>
               Add your unique Tapped Inn link to every platform where your audience lives.
-              Use your NFC card to drive in-person connections back to your digital world.
+              Use your Tapped Inn card to drive in-person connections back to your digital world.
             </p>
             <div className="flex flex-wrap gap-2 mb-8">
               {["📱 TikTok", "📸 Instagram", "🐦 Twitter/X", "💼 LinkedIn", "📧 Email sig", "🎤 Events"].map((p) => (
@@ -400,7 +400,7 @@ export default function LandingPage() {
               Know who's engaging with you
             </h2>
             <p className="text-lg leading-relaxed mb-8" style={{ color: "#888" }}>
-              Track your engagement in real time. See which links get clicked, when NFC taps happen,
+              Track your engagement in real time. See which links get clicked, when taps happen,
               and who's connecting with you — so you can keep your audience coming back.
             </p>
             <Link href="/sign-up" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm transition-opacity hover:opacity-85" style={{ background: GOLD, color: "#000" }}>
@@ -472,7 +472,7 @@ export default function LandingPage() {
             </div>
             <div className="flex-1 text-center sm:text-left">
               <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: GOLD }}>Physical + Digital</p>
-              <h3 className="text-xl font-display font-black mb-1 text-white">Get your Tapped Inn NFC Card</h3>
+              <h3 className="text-xl font-display font-black mb-1 text-white">Get your Tapped Inn Card</h3>
               <p className="text-sm" style={{ color: "#777" }}>One tap connects anyone to your profile. No app required. Order at <span style={{ color: GOLD }}>TappedInn.net</span></p>
             </div>
             <div className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold shrink-0 transition-opacity group-hover:opacity-85" style={{ background: GOLD, color: "#000" }}>
@@ -502,7 +502,7 @@ export default function LandingPage() {
             <span style={{ color: GOLD }}>GET TAPPED INN?</span>
           </h2>
           <p className="text-xl mb-10" style={{ color: "#888" }}>
-            Create your profile in under a minute. Your NFC card does the rest.
+            Create your profile in under a minute. Your Tapped Inn card does the rest.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -531,7 +531,7 @@ export default function LandingPage() {
             <img src={logoImg} alt="Tapped Inn" className="w-6 h-6 object-contain" style={{ filter: "invert(1)" }} />
             <span className="font-display font-bold text-sm text-white">{APP_NAME}</span>
           </div>
-          <p className="text-sm" style={{ color: "#555" }}>The NFC-powered digital identity platform.</p>
+          <p className="text-sm" style={{ color: "#555" }}>Your new digital identity platform.</p>
           <a
             href="https://www.TappedInn.net"
             target="_blank"
