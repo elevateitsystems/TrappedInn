@@ -207,10 +207,9 @@ export default function LandingPage() {
             </div>
 
             <h1 className="font-display font-black leading-[1.0] tracking-tight mb-6" style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)" }}>
-              TAP.{" "}
-              <span style={{ color: GOLD }}>CONNECT.</span>
+              GET <span style={{ color: GOLD }}>TAPPED INN</span>,
               <br />
-              GET TAPPED INN.
+              STAY <span style={{ color: GOLD }}>TAPPED INN</span>.
             </h1>
 
             <p className="text-lg leading-relaxed mb-8" style={{ color: "#999" }}>
