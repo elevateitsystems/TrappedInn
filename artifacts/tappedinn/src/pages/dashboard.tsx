@@ -268,7 +268,7 @@ export default function DashboardPage() {
           <div className="rounded-2xl border border-border bg-card overflow-hidden">
             {activityLoading ? (
               <div className="p-8 text-center text-muted-foreground text-sm">Loading...</div>
-            ) : !activity || activity.length === 0 ? (
+            ) : !Array.isArray(activity) || activity.length === 0 ? (
               <div className="p-12 text-center">
                 <Eye className="w-8 h-8 text-muted-foreground/50 mx-auto mb-3" />
                 <p className="text-muted-foreground text-sm">No activity yet.</p>
