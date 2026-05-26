@@ -1,0 +1,233 @@
+
+> tapped-inn-next@0.1.0 build /home/mokhlesur-rahman/projects/Elevate IT/Tapped-Inn-Network
+> next build
+
+▲ Next.js 16.2.6 (Turbopack)
+- Environments: .env.local, .env
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 8 errors:
+./src/app/(dashboard)/edit-profile/page.tsx:639:7
+Expected ',', got '{'
+  [90m637 |[0m       </div>
+  [90m638 |[0m
+[31m[1m>[0m [90m639 |[0m       {avatarCropSrc && (
+  [90m    |[0m       [31m[1m^[0m
+  [90m640 |[0m         <[33mImageCropperModal[0m
+  [90m641 |[0m           imageSrc={avatarCropSrc}
+  [90m642 |[0m           aspect={[35m1[0m}
+
+Parsing ecmascript source code failed
+
+
+./src/app/p/[username]/page.tsx:11:1
+Module not found: Can't resolve '@/components/qr-modal'
+  [90m 9 |[0m [36mimport[0m { motion, [33mAnimatePresence[0m } [36mfrom[0m [32m"framer-motion"[0m;
+  [90m10 |[0m [36mimport[0m { downloadVCard } [36mfrom[0m [32m"@/lib/vcard"[0m;
+[31m[1m>[0m [90m11 |[0m [36mimport[0m { [33mQrModal[0m } [36mfrom[0m [32m"@/components/qr-modal"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m12 |[0m
+  [90m13 |[0m [36mconst[0m [33mAPP_NAME[0m = [32m"Tapped Inn Network"[0m;
+  [90m14 |[0m [36mconst[0m [33mBASE_URL[0m = [36mimport[0m.meta.env.[33mBASE_URL[0m.replace([35m/\/$/[0m, [32m""[0m);
+
+Import map: aliased to relative './src/components/qr-modal' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/p/[username]/page.tsx [Client Component Browser]
+    ./src/app/p/[username]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/p/[username]/page.tsx [Client Component SSR]
+    ./src/app/p/[username]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/(dashboard)/verification/page.tsx:3:1
+Module not found: Can't resolve '@/components/verified-badge'
+  [90m1 |[0m ...[32ment"[0m;
+  [90m2 |[0m ...
+[31m[1m>[0m [90m3 |[0m ... [33mVerifiedBadge[0m, [36mtype[0m [33mVerificationLevel[0m } [36mfrom[0m [32m"@/components/verified...[0m
+  [90m  |[0m    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m ... useGetMyProfile } [36mfrom[0m [32m"@/lib/api-client"[0m;
+  [90m5 |[0m ... [33mCheck[0m, [33mExternalLink[0m, [33mShieldCheck[0m } [36mfrom[0m [32m"lucide-react"[0m;
+  [90m6 |[0m ... motion } [36mfrom[0m [32m"framer-motion"[0m;
+
+Import map: aliased to relative './src/components/verified-badge' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(dashboard)/verification/page.tsx [Client Component Browser]
+    ./src/app/(dashboard)/verification/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(dashboard)/verification/page.tsx [Client Component SSR]
+    ./src/app/(dashboard)/verification/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/p/[username]/page.tsx:7:1
+Module not found: Can't resolve '@/components/verified-badge'
+  [90m 5 |[0m ...useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m 6 |[0m ...[33mWifi[0m, [33mExternalLink[0m, [33mPhone[0m, [33mMail[0m, [33mGlobe[0m, [33mMessageSquare[0m, [33mDownload[0m, [33mQr...[0m
+[31m[1m>[0m [90m 7 |[0m ...[33mVerifiedBadge[0m, [36mtype[0m [33mVerificationLevel[0m } [36mfrom[0m [32m"@/components/verified...[0m
+  [90m   |[0m    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m 8 |[0m ...[33mLink[0m } [36mfrom[0m [32m"wouter"[0m;
+  [90m 9 |[0m ...motion, [33mAnimatePresence[0m } [36mfrom[0m [32m"framer-motion"[0m;
+  [90m10 |[0m ...downloadVCard } [36mfrom[0m [32m"@/lib/vcard"[0m;
+
+Import map: aliased to relative './src/components/verified-badge' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/p/[username]/page.tsx [Client Component Browser]
+    ./src/app/p/[username]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/p/[username]/page.tsx [Client Component SSR]
+    ./src/app/p/[username]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/p/[username]/page.tsx:10:1
+Module not found: Can't resolve '@/lib/vcard'
+  [90m 8 |[0m [36mimport[0m { [33mLink[0m } [36mfrom[0m [32m"wouter"[0m;
+  [90m 9 |[0m [36mimport[0m { motion, [33mAnimatePresence[0m } [36mfrom[0m [32m"framer-motion"[0m;
+[31m[1m>[0m [90m10 |[0m [36mimport[0m { downloadVCard } [36mfrom[0m [32m"@/lib/vcard"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m11 |[0m [36mimport[0m { [33mQrModal[0m } [36mfrom[0m [32m"@/components/qr-modal"[0m;
+  [90m12 |[0m
+  [90m13 |[0m [36mconst[0m [33mAPP_NAME[0m = [32m"Tapped Inn Network"[0m;
+
+Import map: aliased to relative './src/lib/vcard' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/p/[username]/page.tsx [Client Component Browser]
+    ./src/app/p/[username]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/p/[username]/page.tsx [Client Component SSR]
+    ./src/app/p/[username]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/(dashboard)/analytics/page.tsx:6:1
+Module not found: Can't resolve 'recharts'
+  [90m 4 |[0m [36mimport[0m { [33mBarChart2[0m, [33mEye[0m, [33mMousePointerClick[0m, [33mWifi[0m, [33mTrendingUp[0m, [33mUsers[0m, [33mC...[0m
+  [90m 5 |[0m [36mimport[0m { motion } [36mfrom[0m [32m"framer-motion"[0m;
+[31m[1m>[0m [90m 6 |[0m [36mimport[0m {
+  [90m   |[0m [31m[1m^^^^^^^[0m
+[31m[1m>[0m [90m 7 |[0m   [33mLineChart[0m,
+  [90m   |[0m [31m[1m^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m 8 |[0m   [33mLine[0m,
+  [90m   |[0m [31m[1m^^^^^^^[0m
+[31m[1m>[0m [90m 9 |[0m   [33mBarChart[0m,
+  [90m   |[0m [31m[1m^^^^^^^^^^^[0m
+[31m[1m>[0m [90m10 |[0m   [33mBar[0m,
+  [90m   |[0m [31m[1m^^^^^^[0m
+[31m[1m>[0m [90m11 |[0m   [33mXAxis[0m,
+  [90m   |[0m [31m[1m^^^^^^^^[0m
+[31m[1m>[0m [90m12 |[0m   [33mYAxis[0m,
+  [90m   |[0m [31m[1m^^^^^^^^[0m
+[31m[1m>[0m [90m13 |[0m   [33mCartesianGrid[0m,
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m14 |[0m   [33mTooltip[0m,
+  [90m   |[0m [31m[1m^^^^^^^^^^[0m
+[31m[1m>[0m [90m15 |[0m   [33mResponsiveContainer[0m,
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m16 |[0m } [36mfrom[0m [32m"recharts"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+  [90m17 |[0m
+  [90m18 |[0m [36mconst[0m [33mCHART_STYLE[0m = {
+  [90m19 |[0m   background: [32m"hsl(240 10% 7%)"[0m,
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(dashboard)/analytics/page.tsx [Client Component Browser]
+    ./src/app/(dashboard)/analytics/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(dashboard)/analytics/page.tsx [Client Component SSR]
+    ./src/app/(dashboard)/analytics/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/card/[id]/page.tsx:3:1
+Module not found: Can't resolve 'wouter'
+  [90m1 |[0m [32m"use client"[0m;
+  [90m2 |[0m [36mimport[0m { useEffect } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { useRoute, useLocation } [36mfrom[0m [32m"wouter"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m [36mimport[0m { useGetCard, useTrackEvent } [36mfrom[0m [32m"@/lib/api-client"[0m;
+  [90m5 |[0m [36mimport[0m { [33mWifi[0m } [36mfrom[0m [32m"lucide-react"[0m;
+  [90m6 |[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/card/[id]/page.tsx [Client Component Browser]
+    ./src/app/card/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/card/[id]/page.tsx [Client Component SSR]
+    ./src/app/card/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/p/[username]/page.tsx:8:1
+Module not found: Can't resolve 'wouter'
+  [90m 6 |[0m [36mimport[0m { [33mWifi[0m, [33mExternalLink[0m, [33mPhone[0m, [33mMail[0m, [33mGlobe[0m, [33mMessageSquare[0m, [33mDownlo..[0m.
+  [90m 7 |[0m [36mimport[0m { [33mVerifiedBadge[0m, [36mtype[0m [33mVerificationLevel[0m } [36mfrom[0m [32m"@/components/ve...[0m
+[31m[1m>[0m [90m 8 |[0m [36mimport[0m { [33mLink[0m } [36mfrom[0m [32m"wouter"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m 9 |[0m [36mimport[0m { motion, [33mAnimatePresence[0m } [36mfrom[0m [32m"framer-motion"[0m;
+  [90m10 |[0m [36mimport[0m { downloadVCard } [36mfrom[0m [32m"@/lib/vcard"[0m;
+  [90m11 |[0m [36mimport[0m { [33mQrModal[0m } [36mfrom[0m [32m"@/components/qr-modal"[0m;
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/p/[username]/page.tsx [Client Component Browser]
+    ./src/app/p/[username]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/p/[username]/page.tsx [Client Component SSR]
+    ./src/app/p/[username]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (./src/app/(dashboard)/edit-profile/page.tsx:639:7)
+    at <unknown> (./src/app/p/[username]/page.tsx:11:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/app/(dashboard)/verification/page.tsx:3:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/app/p/[username]/page.tsx:7:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/app/p/[username]/page.tsx:10:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/app/(dashboard)/analytics/page.tsx:6:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/app/card/[id]/page.tsx:3:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/app/p/[username]/page.tsx:8:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+ ELIFECYCLE  Command failed with exit code 1.
