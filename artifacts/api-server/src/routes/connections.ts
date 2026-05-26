@@ -39,7 +39,7 @@ router.get("/", requireAuth, async (req, res): Promise<void> => {
 
 router.post("/:userId", requireAuth, async (req, res): Promise<void> => {
   const userId = getUserId(req);
-  const { userId: connectedUserId } = req.params;
+  const connectedUserId = req.params.userId as string;
   try {
     const existing = await db.query.connectionsTable.findFirst({
       where: and(
@@ -71,7 +71,7 @@ router.post("/:userId", requireAuth, async (req, res): Promise<void> => {
 
 router.delete("/:userId", requireAuth, async (req, res): Promise<void> => {
   const userId = getUserId(req);
-  const { userId: connectedUserId } = req.params;
+  const connectedUserId = req.params.userId as string;
   try {
     await db.delete(connectionsTable).where(
       and(

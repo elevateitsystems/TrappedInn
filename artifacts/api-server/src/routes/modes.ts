@@ -62,7 +62,7 @@ router.post("/", requireAuth, async (req, res): Promise<void> => {
 
 router.put("/:id", requireAuth, async (req, res): Promise<void> => {
   const userId = getUserId(req);
-  const { id } = req.params;
+  const id = req.params.id as string;
   const { label, emoji, displayName, bio, themeSettings } = req.body as any;
   try {
     const profile = await getProfileForUser(userId);
@@ -89,7 +89,7 @@ router.put("/:id", requireAuth, async (req, res): Promise<void> => {
 
 router.delete("/:id", requireAuth, async (req, res): Promise<void> => {
   const userId = getUserId(req);
-  const { id } = req.params;
+  const id = req.params.id as string;
   try {
     const profile = await getProfileForUser(userId);
     if (!profile) { res.status(404).json({ error: "Profile not found" }); return; }
@@ -114,7 +114,7 @@ router.delete("/:id", requireAuth, async (req, res): Promise<void> => {
 
 router.post("/:id/activate", requireAuth, async (req, res): Promise<void> => {
   const userId = getUserId(req);
-  const { id } = req.params;
+  const id = req.params.id as string;
   try {
     const profile = await getProfileForUser(userId);
     if (!profile) { res.status(404).json({ error: "Profile not found" }); return; }

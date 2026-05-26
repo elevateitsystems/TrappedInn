@@ -63,9 +63,10 @@ router.use(adminReadLimit);
 router.use(sameOriginRequired);
 router.use((req, _res, next) => {
   if (["POST", "PUT", "PATCH", "DELETE"].includes(req.method)) {
-    return adminWriteLimit(req, _res, next);
+    adminWriteLimit(req, _res, next);
+  } else {
+    next();
   }
-  next();
 });
 
 const VERIFICATION_LEVELS = ["none", "blue", "gold", "elite_black"] as const;
@@ -226,7 +227,7 @@ router.get("/signups", ...requireAdmin, async (_req, res): Promise<void> => {
 
 // User detail
 router.get("/users/:userId", ...requireAdmin, async (req, res): Promise<void> => {
-  const { userId } = req.params;
+  const userId = req.params.userId as string;
   try {
     const user = await db.query.usersTable.findFirst({ where: eq(usersTable.id, userId) });
     if (!user) {
@@ -260,7 +261,7 @@ const updateVerificationBody = z.object({
 
 router.put("/users/:userId/verification", ...requireAdmin, async (req, res): Promise<void> => {
   const adminId = getUserId(req);
-  const { userId } = req.params;
+  const userId = req.params.userId as string;
   const parsed = updateVerificationBody.safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: parsed.error.message });
@@ -303,7 +304,7 @@ const updateStatusBody = z.object({ accountStatus: z.enum(ACCOUNT_STATUSES) });
 
 router.put("/users/:userId/status", ...requireAdmin, async (req, res): Promise<void> => {
   const adminId = getUserId(req);
-  const { userId } = req.params;
+  const userId = req.params.userId as string;
   const parsed = updateStatusBody.safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: parsed.error.message });
@@ -340,7 +341,7 @@ const updateAdminBody = z.object({ isAdmin: z.boolean() });
 
 router.put("/users/:userId/admin", ...requireAdmin, async (req, res): Promise<void> => {
   const adminId = getUserId(req);
-  const { userId } = req.params;
+  const userId = req.params.userId as string;
   const parsed = updateAdminBody.safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: parsed.error.message });
@@ -468,7 +469,7 @@ const updateOrderBody = z.object({
 
 router.put("/orders/:orderId", ...requireAdmin, async (req, res): Promise<void> => {
   const adminId = getUserId(req);
-  const { orderId } = req.params;
+  const orderId = req.params.orderId as string;
   const parsed = updateOrderBody.safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: parsed.error.message });

@@ -68,7 +68,7 @@ router.post("/", requireAuth, async (req, res): Promise<void> => {
 });
 
 router.get("/:id", async (req, res): Promise<void> => {
-  const { id } = req.params;
+  const id = req.params.id as string;
   try {
     const card = await db.query.cardsTable.findFirst({
       where: eq(cardsTable.id, id),
@@ -85,7 +85,7 @@ router.get("/:id", async (req, res): Promise<void> => {
 });
 
 router.delete("/:id", requireAuth, async (req, res): Promise<void> => {
-  const { id } = req.params;
+  const id = req.params.id as string;
   try {
     await db.delete(cardsTable).where(eq(cardsTable.id, id));
     res.status(204).send();
@@ -96,7 +96,7 @@ router.delete("/:id", requireAuth, async (req, res): Promise<void> => {
 });
 
 router.get("/:id/redirect", async (req, res): Promise<void> => {
-  const { id } = req.params;
+  const id = req.params.id as string;
   try {
     const card = await db.query.cardsTable.findFirst({
       where: eq(cardsTable.id, id),

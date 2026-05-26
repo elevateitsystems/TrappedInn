@@ -82,7 +82,7 @@ router.put("/me", requireAuth, async (req, res): Promise<void> => {
 });
 
 router.get("/:username", async (req, res): Promise<void> => {
-  const { username } = req.params;
+  const username = req.params.username as string;
   try {
     const profile = await db.query.profilesTable.findFirst({
       where: eq(profilesTable.username, username),

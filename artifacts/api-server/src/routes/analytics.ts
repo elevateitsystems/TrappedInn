@@ -47,7 +47,7 @@ router.post("/lead", async (req, res): Promise<void> => {
 });
 
 router.get("/profile/:profileId", async (req, res): Promise<void> => {
-  const { profileId } = req.params;
+  const profileId = req.params.profileId as string;
   try {
     const allEvents = await db.query.analyticsTable.findMany({
       where: eq(analyticsTable.profileId, profileId),

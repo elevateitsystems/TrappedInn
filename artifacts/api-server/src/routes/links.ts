@@ -89,7 +89,7 @@ router.put("/reorder", requireAuth, async (req, res): Promise<void> => {
 });
 
 router.put("/:id", requireAuth, async (req, res): Promise<void> => {
-  const { id } = req.params;
+  const id = req.params.id as string;
   const parsed = UpdateLinkBody.safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: parsed.error.message });
@@ -117,7 +117,7 @@ router.put("/:id", requireAuth, async (req, res): Promise<void> => {
 });
 
 router.delete("/:id", requireAuth, async (req, res): Promise<void> => {
-  const { id } = req.params;
+  const id = req.params.id as string;
   try {
     await db.delete(linksTable).where(eq(linksTable.id, id));
     res.status(204).send();
