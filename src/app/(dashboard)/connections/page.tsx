@@ -13,7 +13,7 @@ export default function ConnectionsPage() {
 
   const handleRemove = (userId: string) => {
     deleteConnection.mutate(
-      { userId },
+      { id: userId },
       { onSuccess: () => queryClient.invalidateQueries({ queryKey: getGetConnectionsQueryKey() }) }
     );
   };
@@ -42,7 +42,7 @@ export default function ConnectionsPage() {
           </div>
         ) : (
           <div className="space-y-3">
-            {connections.map((conn, i) => {
+            {connections.map((conn: any, i: number) => {
               const p = conn.connectedProfile;
               return (
                 <motion.div

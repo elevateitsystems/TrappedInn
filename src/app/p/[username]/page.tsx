@@ -38,7 +38,7 @@ export default function PublicProfilePage() {
     if (!profile?.id) return;
     setLeadSubmitting(true);
     try {
-      await fetch(`${BASE_URL}/api/analytics/lead`, {
+      await fetch(`/api/analytics/lead`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ profileId: profile.id, name: leadName, email: leadEmail }),
@@ -104,7 +104,7 @@ export default function PublicProfilePage() {
       style={{ backgroundColor: bgColor, color: textColor }}
     >
       {showQr && (
-        <QrModal url={profileUrl} name={profile?.displayName} onClose={() => setShowQr(false)} />
+        <QrModal url={profileUrl} title={profile?.displayName} onClose={() => setShowQr(false)} />
       )}
 
       <div className="w-full max-w-sm md:max-w-xl mx-auto">
@@ -244,7 +244,7 @@ export default function PublicProfilePage() {
 
         {/* Link list */}
         <div className="space-y-3">
-          {profile?.links?.map((link, i) => (
+          {profile?.links?.map((link: { id: string, url: string, title: string }, i: number) => (
             <motion.a
               key={link.id}
               href={link.url}

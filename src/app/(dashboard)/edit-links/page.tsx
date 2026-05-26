@@ -14,6 +14,13 @@ import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea
 import { GripVertical, Pencil, Trash2, Plus, Check, X, Loader2, Link2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface LinkItem {
+  id: string;
+  title: string;
+  url: string;
+  position: number;
+}
+
 interface LinkForm {
   title: string;
   url: string;
@@ -123,9 +130,9 @@ export default function EditLinksPage() {
 
   const [showAdd, setShowAdd] = useState(false);
   const [newForm, setNewForm] = useState<LinkForm>({ title: "", url: "" });
-  const [localLinks, setLocalLinks] = useState<typeof links>(undefined);
+  const [localLinks, setLocalLinks] = useState<LinkItem[] | undefined>(undefined);
 
-  const displayLinks = localLinks ?? links ?? [];
+  const displayLinks: LinkItem[] = localLinks ?? (links as LinkItem[]) ?? [];
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
@@ -155,7 +162,7 @@ export default function EditLinksPage() {
     items.splice(result.destination.index, 0, moved);
     setLocalLinks(items);
     reorderLinks.mutate(
-      { data: { linkIds: items.map((l) => l.id) } },
+      { data: { ids: items.map((l) => l.id) } },
       { onSuccess: () => queryClient.invalidateQueries({ queryKey: getGetLinksQueryKey() }) }
     );
   };

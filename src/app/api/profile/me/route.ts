@@ -23,13 +23,20 @@ export async function GET() {
       const name = user.firstName || user.username || "New User";
       
       const newProfile = {
+        id: crypto.randomUUID(),
         userId,
         username: (user.username || user.id).toLowerCase(),
         displayName: name,
         email,
         bio: "",
         themeSettings: {},
-        contactSettings: {},
+        contactSettings: {
+          showPhone: true,
+          showEmail: true,
+          showWebsite: true,
+          showSms: false,
+          showLocation: true,
+        },
         leadCaptureEnabled: false,
         verified: false,
       };

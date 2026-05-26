@@ -17,16 +17,6 @@ export async function GET(
       where: eq(profilesTable.username, username),
     }));
 
-    // Increment view count if the column exists
-    if (profile && "viewCount" in profile) {
-      await withRetry(() =>
-        db
-          .update(profilesTable)
-          .set({ viewCount: (profile as any).viewCount + 1 })
-          .where(eq(profilesTable.id, profile.id))
-      );
-    }
-
     if (!profile) {
       return NextResponse.json({ error: "Profile not found" }, { status: 404 });
     }

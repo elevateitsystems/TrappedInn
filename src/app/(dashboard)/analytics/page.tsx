@@ -162,7 +162,7 @@ export default function AnalyticsPage() {
                 <p className="text-center text-muted-foreground text-sm py-8">No link clicks yet</p>
               ) : (
                 <div className="space-y-3">
-                  {analytics.topLinks.map((link, i) => (
+                  {analytics.topLinks.map((link: any, i: number) => (
                     <motion.div
                       key={link.linkId}
                       initial={{ opacity: 0, x: -10 }}
