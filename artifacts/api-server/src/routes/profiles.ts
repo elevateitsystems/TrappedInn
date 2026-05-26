@@ -18,7 +18,7 @@ async function ensureUserAndProfile(userId: string, email?: string) {
 
   let profile = await db.query.profilesTable.findFirst({ where: eq(profilesTable.userId, userId) });
   if (!profile) {
-    const username = `user_${userId.slice(0, 8)}`;
+    const username = `user_${randomUUID().replace(/-/g, "").slice(0, 8)}`;
     const id = randomUUID();
     const rows = await db.insert(profilesTable).values({
       id,

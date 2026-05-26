@@ -126,7 +126,7 @@ function StatCard({
           <Icon className={cn("w-4.5 h-4.5", color === "primary" ? "text-primary" : "text-accent-foreground")} />
         </div>
       </div>
-      <p className="text-2xl font-display font-semibold">{value.toLocaleString()}</p>
+      <p className="text-2xl font-display font-semibold">{value?.toLocaleString()||"--"}</p>
       <p className="text-sm text-muted-foreground mt-1">{label}</p>
     </div>
   );

@@ -29,7 +29,7 @@ function StatBadge({ label, value, icon: Icon, sub }: { label: string; value: st
         <Icon className="w-3.5 h-3.5 text-primary" />
       </div>
       <div>
-        <p className="text-lg font-display font-semibold">{typeof value === "number" ? value.toLocaleString() : value}</p>
+        <p className="text-lg font-display font-semibold">{typeof value === "number" ? value?.toLocaleString() : value}</p>
         <p className="text-xs text-muted-foreground">{label}</p>
         {sub && <p className="text-xs text-primary">{sub}</p>}
       </div>

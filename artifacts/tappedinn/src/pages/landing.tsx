@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { ArrowRight, Wifi, ShoppingBag, ExternalLink, BarChart2, Users, Share2, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import logoImg from "/tappedinn-logo.png";
+import logoImg from "/logo.jpg";
 
 const APP_NAME = "Tapped Inn Network";
 

@@ -291,7 +291,7 @@ export default function EditProfilePage() {
                     <img src={avatarPreview} alt="Avatar" className="w-16 h-16 rounded-full object-cover border-2 border-background" />
                   ) : (
                     <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center text-white text-xl font-display font-semibold border-2 border-background">
-                      {form.displayName[0]?.toUpperCase() ?? "?"}
+                      {(form.displayName || "")[0]?.toUpperCase() ?? "?"}
                     </div>
                   )}
                   <button

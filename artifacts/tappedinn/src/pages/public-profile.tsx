@@ -103,7 +103,7 @@ export default function PublicProfilePage() {
       style={{ backgroundColor: bgColor, color: textColor }}
     >
       {showQr && (
-        <QrModal url={profileUrl} name={profile.displayName} onClose={() => setShowQr(false)} />
+        <QrModal url={profileUrl} name={profile?.displayName} onClose={() => setShowQr(false)} />
       )}
 
       <div className="w-full max-w-sm md:max-w-xl mx-auto">
@@ -126,16 +126,16 @@ export default function PublicProfilePage() {
               </div>
               {/* Avatar sits OUTSIDE overflow-hidden so it isn't clipped */}
               <div className="absolute -bottom-8 md:-bottom-14 left-4 md:left-6" style={{ zIndex: 10 }}>
-                {profile.avatarUrl ? (
+                {profile?.avatarUrl ? (
                   <img
-                    src={profile.avatarUrl}
-                    alt={profile.displayName}
+                    src={profile?.avatarUrl}
+                    alt={profile?.displayName}
                     className="w-16 h-16 md:w-28 md:h-28 rounded-full object-cover"
                     style={{ border: "4px solid hsl(var(--background))" }}
                   />
                 ) : (
                   <div className="w-16 h-16 md:w-28 md:h-28 rounded-full gradient-primary flex items-center justify-center text-white font-display font-semibold text-2xl md:text-4xl" style={{ border: "4px solid hsl(var(--background))" }}>
-                    {profile.displayName[0]?.toUpperCase()}
+                    {profile?.displayName?.[0]?.toUpperCase() || "--"}
                   </div>
                 )}
               </div>
@@ -145,15 +145,15 @@ export default function PublicProfilePage() {
           {/* Content: centered when no header, left-aligned when header present */}
           <div className={`flex flex-col items-center text-center`}>
             {!p.headerImageUrl && (
-              profile.avatarUrl ? (
+              profile?.avatarUrl ? (
                 <img
-                  src={profile.avatarUrl}
-                  alt={profile.displayName}
+                  src={profile?.avatarUrl}
+                  alt={profile?.displayName}
                   className={`object-cover border-2 border-border mb-4 ${layout === "hero" ? "w-28 h-28 md:w-36 md:h-36 rounded-3xl" : "w-20 h-20 md:w-28 md:h-28 rounded-full"}`}
                 />
               ) : (
                 <div className={`gradient-primary flex items-center justify-center text-white font-display font-semibold mb-4 ${layout === "hero" ? "w-28 h-28 md:w-36 md:h-36 rounded-3xl text-4xl md:text-5xl" : "w-20 h-20 md:w-28 md:h-28 rounded-full text-3xl md:text-4xl"}`}>
-                  {profile.displayName[0]?.toUpperCase()}
+                  {profile?.displayName?.[0]?.toUpperCase()||'--'}
                 </div>
               )
             )}
@@ -166,13 +166,13 @@ export default function PublicProfilePage() {
           )}
           <div className="flex items-center gap-1.5">
             <h1 className="text-2xl md:text-4xl font-display font-semibold" style={{ color: textColor }}>
-              {profile.displayName}
+              {profile?.displayName}
             </h1>
             <VerifiedBadge level={verificationLevel} size="md" />
           </div>
-          <p className="text-sm md:text-base text-muted-foreground mt-0.5">@{profile.username}</p>
-          {profile.bio && (
-            <p className="text-sm md:text-base text-muted-foreground mt-3 leading-relaxed max-w-xs md:max-w-md">{profile.bio}</p>
+          <p className="text-sm md:text-base text-muted-foreground mt-0.5">@{profile?.username}</p>
+          {profile?.bio && (
+            <p className="text-sm md:text-base text-muted-foreground mt-3 leading-relaxed max-w-xs md:max-w-md">{profile?.bio}</p>
           )}
           </div>
         </motion.div>
@@ -202,12 +202,12 @@ export default function PublicProfilePage() {
             {/* Save Contact */}
             <button
               onClick={() => downloadVCard({
-                displayName: profile.displayName,
+                displayName: profile?.displayName,
                 phone: p.phone,
                 email: p.email,
                 website: p.website,
-                username: profile.username,
-                avatarUrl: profile.avatarUrl,
+                username: profile?.username,
+                avatarUrl: profile?.avatarUrl,
               })}
               className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium transition-all hover:opacity-80 ${buttonRadius} gradient-primary text-white`}
             >
@@ -227,11 +227,11 @@ export default function PublicProfilePage() {
           >
             <button
               onClick={() => downloadVCard({
-                displayName: profile.displayName,
+                displayName: profile?.displayName,
                 phone: p.phone,
                 email: p.email,
                 website: p.website,
-                username: profile.username,
+                username: profile?.username,
               })}
               className={`flex items-center gap-1.5 px-5 py-2.5 text-sm font-medium gradient-primary text-white ${buttonRadius}`}
             >
@@ -243,7 +243,7 @@ export default function PublicProfilePage() {
 
         {/* Link list */}
         <div className="space-y-3">
-          {profile.links.map((link, i) => (
+          {profile?.links?.map((link, i) => (
             <motion.a
               key={link.id}
               href={link.url}
@@ -254,7 +254,7 @@ export default function PublicProfilePage() {
               transition={{ delay: 0.12 + i * 0.07 }}
               onClick={() => {
                 trackEvent.mutate({
-                  data: { profileId: profile.id, eventType: "click", metadata: { linkId: link.id } },
+                  data: { profileId: profile?.id, eventType: "click", metadata: { linkId: link?.id } },
                 });
               }}
               className={`flex items-center justify-between w-full px-5 py-4 border card-glow hover:card-glow-hover hover:bg-accent transition-all duration-200 group ${buttonBg} ${buttonRadius}`}
@@ -271,7 +271,7 @@ export default function PublicProfilePage() {
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 + (profile.links.length || 0) * 0.07 }}
+            transition={{ delay: 0.3 + (profile?.links?.length || 0) * 0.07 }}
             className="mt-6 p-5 rounded-2xl border border-primary/30 bg-primary/5"
           >
             <h3 className="font-display font-semibold text-sm mb-3">Stay in touch</h3>

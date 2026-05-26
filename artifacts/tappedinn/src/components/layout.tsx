@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { useClerk } from "@clerk/react";
 import { cn } from "@/lib/utils";
-import logoImg from "/tappedinn-logo.png";
+import logoImg from "/logo.jpg";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 
 const APP_NAME = "Tapped Inn Network";
