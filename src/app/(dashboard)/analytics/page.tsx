@@ -1,5 +1,5 @@
 "use client";
-import { useGetMyProfile, useGetProfileAnalytics, getGetProfileAnalyticsQueryKey } from "@/lib/api-client";
+import { useGetMyProfile, useGetProfileAnalytics } from "@/lib/api-client";
 
 import { BarChart2, Eye, MousePointerClick, Wifi, TrendingUp, Users, Clock } from "lucide-react";
 import { motion } from "framer-motion";
@@ -41,8 +41,7 @@ function StatBadge({ label, value, icon: Icon, sub }: { label: string; value: st
 export default function AnalyticsPage() {
   const { data: profile } = useGetMyProfile();
   const { data: analytics, isLoading } = useGetProfileAnalytics(
-    profile?.id ?? "",
-    { query: { enabled: !!profile?.id, queryKey: getGetProfileAnalyticsQueryKey(profile?.id ?? "") } }
+    profile?.id ?? ""
   );
 
   const a = analytics as any;

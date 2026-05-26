@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { db, modesTable, withRetry } from "@/db";
+import { auth } from "@clerk/nextjs/server";
+import { db, profileModesTable, withRetry } from "@/db";
 import { eq } from "drizzle-orm";
 
 export async function DELETE(
@@ -7,11 +8,14 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { userId } = await auth();
+    if (!userId) return new NextResponse("Unauthorized", { status: 401 });
+
     const { id } = await params;
     const [deleted] = await withRetry(() =>
       db
-        .delete(modesTable)
-        .where(eq(modesTable.id, id))
+        .delete(profileModesTable)
+        .where(eq(profileModesTable.id, id))
         .returning()
     );
     if (!deleted) {
