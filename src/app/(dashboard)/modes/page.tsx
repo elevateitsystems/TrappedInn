@@ -6,8 +6,6 @@ import { Layers, Plus, Pencil, Trash2, Check, X, Loader2, Zap } from "lucide-rea
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "@/hooks/use-toast";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/$/, "") || "";
-
 const PRESET_MODES = [
   { label: "Business", emoji: "💼", description: "Professional links, contact info front and center" },
   { label: "Creative", emoji: "🎨", description: "Portfolio, artwork, creative projects" },

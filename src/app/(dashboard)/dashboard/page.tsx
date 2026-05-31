@@ -9,14 +9,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { VerificationLevel, VerifiedBadge } from "@/components/verified-badge";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/$/, "") || "";
-
 function useActiveMode(profileId: string | undefined) {
   const [activeMode, setActiveMode] = useState<{ label: string; emoji: string } | null>(null);
 
   useEffect(() => {
     if (!profileId) return;
-    fetch(`${BASE_URL}/api/modes`, { credentials: "include" })
+    fetch("/api/modes", { credentials: "include" })
       .then((r) => r.json())
       .then((modes: any[]) => {
         const active = modes.find((m) => m.isActive);
