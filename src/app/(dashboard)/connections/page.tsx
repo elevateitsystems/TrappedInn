@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useGetConnections, useDeleteConnection, getGetConnectionsQueryKey } from "@/lib/api-client";
 
 import { useQueryClient } from "@tanstack/react-query";
@@ -53,10 +54,13 @@ export default function ConnectionsPage() {
                   className="flex items-center gap-4 p-4 rounded-2xl border border-border bg-card card-glow group"
                 >
                   {p.avatarUrl ? (
-                    <img
+                    <Image
                       src={p.avatarUrl}
                       alt={p.displayName}
-                      className="w-10 h-10 rounded-full object-cover border border-border shrink-0"
+                      width={40}
+                      height={40}
+                      sizes="40px"
+                      className="h-10 w-10 shrink-0 rounded-full border border-border object-cover"
                     />
                   ) : (
                     <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-sm font-semibold text-primary shrink-0">

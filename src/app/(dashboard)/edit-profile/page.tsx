@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { useGetMyProfile, useUpdateMyProfile, getGetMyProfileQueryKey } from "@/lib/api-client";
 
@@ -7,6 +8,7 @@ import { Check, Loader2, Camera, Phone, Mail, Globe, MessageSquare, BadgeCheck, 
 import { motion } from "framer-motion";
 
 import { ImageCropperModal } from "@/components/image-cropper-modal";
+import { toast } from "@/hooks/use-toast";
 
 async function uploadAvatar(file: File | Blob): Promise<string> {
   const formData = new FormData();
@@ -108,11 +110,19 @@ export default function EditProfilePage() {
 
   const validateImage = (file: File): boolean => {
     if (!file.type.startsWith("image/")) {
-      alert("Please select an image file (JPG, PNG, GIF, or WebP).");
+      toast({
+        title: "Invalid image",
+        description: "Please select a JPG, PNG, GIF, or WebP image.",
+        variant: "destructive",
+      });
       return false;
     }
     if (file.size > MAX_IMAGE_BYTES) {
-      alert("Image is too large. Please pick one under 15 MB.");
+      toast({
+        title: "Image is too large",
+        description: "Please pick one under 15 MB.",
+        variant: "destructive",
+      });
       return false;
     }
     return true;
@@ -158,8 +168,13 @@ export default function EditProfilePage() {
       setForm((f) => ({ ...f, avatarUrl: url }));
       setAvatarPreview(url);
       closeAvatarCrop();
+      toast({ title: "Avatar uploaded" });
     } catch {
-      alert("Failed to upload avatar. Please try again.");
+      toast({
+        title: "Upload failed",
+        description: "Failed to upload avatar. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setUploading(false);
     }
@@ -181,8 +196,13 @@ export default function EditProfilePage() {
       setForm((f) => ({ ...f, headerImageUrl: url }));
       setHeaderPreview(url);
       closeHeaderCrop();
+      toast({ title: "Header uploaded" });
     } catch {
-      alert("Failed to upload header image. Please try again.");
+      toast({
+        title: "Upload failed",
+        description: "Failed to upload header image. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setHeaderUploading(false);
     }
@@ -211,7 +231,15 @@ export default function EditProfilePage() {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: getGetMyProfileQueryKey() });
           setSaved(true);
+          toast({ title: "Profile saved" });
           setTimeout(() => setSaved(false), 2500);
+        },
+        onError: (error) => {
+          toast({
+            title: "Save failed",
+            description: error instanceof Error ? error.message : "Please try again.",
+            variant: "destructive",
+          });
         },
       }
     );
@@ -262,7 +290,15 @@ export default function EditProfilePage() {
                 onClick={() => headerFileRef.current?.click()}
               >
                 {headerPreview ? (
-                  <img src={headerPreview} alt="Header" className="w-full h-full object-cover" />
+                  <Image
+                    src={headerPreview}
+                    alt="Header"
+                    width={512}
+                    height={160}
+                    priority
+                    sizes="(min-width: 768px) 512px, 100vw"
+                    className="h-full w-full object-cover"
+                  />
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center gap-1.5 text-muted-foreground">
                     <Camera className="w-5 h-5" />
@@ -285,7 +321,14 @@ export default function EditProfilePage() {
               <div className="flex items-end gap-3 px-4 pb-4 -mt-8 relative">
                 <div className="relative group shrink-0">
                   {avatarPreview ? (
-                    <img src={avatarPreview} alt="Avatar" className="w-16 h-16 rounded-full object-cover border-2 border-background" />
+                    <Image
+                      src={avatarPreview}
+                      alt="Avatar"
+                      width={64}
+                      height={64}
+                      sizes="64px"
+                      className="h-16 w-16 rounded-full border-2 border-background object-cover"
+                    />
                   ) : (
                     <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center text-white text-xl font-display font-semibold border-2 border-background">
                       {(form.displayName || "")[0]?.toUpperCase() ?? "?"}

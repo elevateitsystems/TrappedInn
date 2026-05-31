@@ -49,6 +49,7 @@ const clerkAppearance = {
 };
 
 import QueryProvider from "@/providers/query-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function RootLayout({
   children,
@@ -60,6 +61,7 @@ export default function RootLayout({
       <html lang="en" className="h-full antialiased dark">
         <body className="min-h-full flex flex-col">
           <QueryProvider>{children}</QueryProvider>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

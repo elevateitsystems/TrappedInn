@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Wifi, ShoppingBag, ExternalLink, BarChart2, Users, Share2, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
@@ -161,7 +162,7 @@ export default function LandingPage() {
         style={{ background: "rgba(10,10,10,0.92)", borderBottom: `1px solid ${BORDER}`, backdropFilter: "blur(12px)" }}
       >
         <Link href="/" className="flex items-center gap-2.5" title="Home">
-          <img src={"/logo.jpg"} alt="Tapped Inn" className="w-8 h-8 object-contain" style={{ filter: "invert(1)" }} />
+          <Image src="/logo.jpg" alt="Tapped Inn" width={32} height={32} className="h-8 w-8 object-contain" style={{ filter: "invert(1)" }} />
           <span className="font-display font-bold text-base tracking-tight text-white">{APP_NAME}</span>
         </Link>
         <div className="flex items-center gap-4">
@@ -529,7 +530,7 @@ export default function LandingPage() {
       <footer className="px-6 md:px-16 py-8" style={{ background: "#0a0a0a", borderTop: `1px solid ${BORDER}` }}>
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
-            <img src={"/logo.jpg"} alt="Tapped Inn" className="w-6 h-6 object-contain" style={{ filter: "invert(1)" }} />
+            <Image src="/logo.jpg" alt="Tapped Inn" width={24} height={24} className="h-6 w-6 object-contain" style={{ filter: "invert(1)" }} />
             <span className="font-display font-bold text-sm text-white">{APP_NAME}</span>
           </div>
           <p className="text-sm" style={{ color: "#555" }}>Your new digital identity platform.</p>

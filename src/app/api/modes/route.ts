@@ -1,31 +1,79 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
-import { db } from "@/db";
-import { profilesTable } from "@/db/schema/profiles";
-import { profileModesTable } from "@/db/schema/profile-modes";
+import { db, profileModesTable, withRetry } from "@/db";
 import { eq, asc } from "drizzle-orm";
+import { ApiError, getOrCreateCurrentUserProfile } from "@/lib/server/profile";
+
+function errorResponse(error: unknown) {
+  if (error instanceof ApiError) {
+    return NextResponse.json({ error: error.message }, { status: error.status });
+  }
+
+  console.error("Modes API error:", error);
+  return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+}
 
 export async function GET() {
   try {
-    const { userId } = await auth();
-    if (!userId) return new NextResponse("Unauthorized", { status: 401 });
+    const profile = await getOrCreateCurrentUserProfile();
 
-    const profile = await db.query.profilesTable.findFirst({
-      where: eq(profilesTable.userId, userId),
-    });
-
-    if (!profile) {
-      return NextResponse.json([]);
-    }
-
-    const modes = await db.query.profileModesTable.findMany({
+    const modes = await withRetry(() => db.query.profileModesTable.findMany({
       where: eq(profileModesTable.profileId, profile.id),
       orderBy: [asc(profileModesTable.position)],
-    });
+    }));
 
     return NextResponse.json(modes);
   } catch (error) {
-    console.error("Failed to fetch modes:", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    return errorResponse(error);
+  }
+}
+
+export async function POST(req: Request) {
+  try {
+    const profile = await getOrCreateCurrentUserProfile();
+    const body = await req.json();
+    const label = String(body.label ?? "").trim();
+    const emoji = String(body.emoji ?? "✨").trim() || "✨";
+    const displayName = String(body.displayName ?? "").trim();
+    const bio = String(body.bio ?? "").trim() || null;
+    const themeSettings =
+      body.themeSettings && typeof body.themeSettings === "object"
+        ? body.themeSettings
+        : {};
+
+    if (!label || !displayName) {
+      return NextResponse.json(
+        { error: "Mode name and display name are required" },
+        { status: 400 }
+      );
+    }
+
+    const currentModes = await withRetry(() =>
+      db.query.profileModesTable.findMany({
+        where: eq(profileModesTable.profileId, profile.id),
+      })
+    );
+    const nextPosition =
+      currentModes.reduce((max, mode) => Math.max(max, mode.position), -1) + 1;
+
+    const [created] = await withRetry(() =>
+      db
+        .insert(profileModesTable)
+        .values({
+          id: crypto.randomUUID(),
+          profileId: profile.id,
+          label,
+          emoji,
+          displayName,
+          bio,
+          themeSettings,
+          position: nextPosition,
+          isActive: false,
+        })
+        .returning()
+    );
+
+    return NextResponse.json(created, { status: 201 });
+  } catch (error) {
+    return errorResponse(error);
   }
 }

@@ -13,12 +13,14 @@ const isPublicRoute = createRouteMatcher([
   "/api/analytics/lead"
 ]);
 
-export default clerkMiddleware(async (auth, req) => {
+const proxy = clerkMiddleware(async (auth, req) => {
   if (!isPublicRoute(req)) {
     await auth.protect();
   }
   return NextResponse.next();
 });
+
+export default proxy;
 
 export const config = {
   matcher: [

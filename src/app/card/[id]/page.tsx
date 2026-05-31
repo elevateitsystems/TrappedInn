@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
-import { useGetCard, useTrackEvent } from "@/lib/api-client";
+import { useGetCard } from "@/lib/api-client";
 import { Wifi } from "lucide-react";
 
 export default function CardRedirectPage() {
@@ -11,17 +11,9 @@ export default function CardRedirectPage() {
   const { data: card, isError } = useGetCard(cardId, {
     query: { enabled: !!cardId } as any,
   });
-  const trackEvent = useTrackEvent();
 
   useEffect(() => {
     if (card) {
-      trackEvent.mutate({
-        data: {
-          profileId: card.profileId,
-          eventType: "tap",
-          metadata: { cardId: card.id },
-        },
-      });
       // Redirect to profile — the redirectUrl is the full card URL,
       // but we need to redirect to the profile page
       // We'll fetch the profile username via the redirectUrl pattern
@@ -40,7 +32,7 @@ export default function CardRedirectPage() {
         window.location.href = `/api/cards/${cardId}/redirect`;
       }, 500);
     }
-  }, [card]);
+  }, [card, cardId]);
 
   if (isError) {
     return (

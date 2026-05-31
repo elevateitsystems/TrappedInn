@@ -1,5 +1,5 @@
 "use client";
-import { use } from "react";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useGetPublicProfile, useTrackEvent } from "@/lib/api-client";
 import { useEffect, useState } from "react";
@@ -119,18 +119,26 @@ export default function PublicProfilePage() {
             <div className="relative mb-10 md:mb-16">
               {/* Banner image — overflow-hidden only on this inner div */}
               <div className="rounded-2xl overflow-hidden">
-                <img
+                <Image
                   src={p.headerImageUrl}
                   alt="Profile header"
+                  width={768}
+                  height={288}
+                  priority
+                  sizes="(min-width: 768px) 576px, 100vw"
                   className="w-full h-32 md:h-56 object-cover"
                 />
               </div>
               {/* Avatar sits OUTSIDE overflow-hidden so it isn't clipped */}
               <div className="absolute -bottom-8 md:-bottom-14 left-4 md:left-6" style={{ zIndex: 10 }}>
                 {profile?.avatarUrl ? (
-                  <img
+                  <Image
                     src={profile?.avatarUrl}
                     alt={profile?.displayName}
+                    width={112}
+                    height={112}
+                    priority
+                    sizes="(min-width: 768px) 112px, 64px"
                     className="w-16 h-16 md:w-28 md:h-28 rounded-full object-cover"
                     style={{ border: "4px solid hsl(var(--background))" }}
                   />
@@ -147,9 +155,13 @@ export default function PublicProfilePage() {
           <div className={`flex flex-col items-center text-center`}>
             {!p.headerImageUrl && (
               profile?.avatarUrl ? (
-                <img
+                <Image
                   src={profile?.avatarUrl}
                   alt={profile?.displayName}
+                  width={144}
+                  height={144}
+                  priority
+                  sizes="(min-width: 768px) 144px, 112px"
                   className={`object-cover border-2 border-border mb-4 ${layout === "hero" ? "w-28 h-28 md:w-36 md:h-36 rounded-3xl" : "w-20 h-20 md:w-28 md:h-28 rounded-full"}`}
                 />
               ) : (

@@ -3,8 +3,14 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 // Helper fetcher
 const fetcher = async (url: string, options?: RequestInit) => {
   const res = await fetch(url, { ...options, headers: { "Content-Type": "application/json", ...options?.headers } });
-  if (!res.ok) throw new Error("API Error");
-  return res.json();
+  const text = await res.text();
+  const data = text ? JSON.parse(text) : null;
+
+  if (!res.ok) {
+    throw new Error(data?.error || "API Error");
+  }
+
+  return data;
 };
 
 // Profile
@@ -72,9 +78,12 @@ export function useDeleteConnection() {
 
 // Analytics
 export const getGetProfileAnalyticsQueryKey = (params: any) => ["analytics", params];
-export function useGetProfileAnalytics(params: any) {
-  const qs = new URLSearchParams(params).toString();
-  return useQuery({ queryKey: getGetProfileAnalyticsQueryKey(params), queryFn: () => fetcher(`/api/analytics?${qs}`) });
+export function useGetProfileAnalytics(profileId?: string) {
+  return useQuery({
+    queryKey: getGetProfileAnalyticsQueryKey(profileId),
+    queryFn: () => fetcher("/api/analytics"),
+    enabled: !!profileId,
+  });
 }
 export function useTrackEvent() {
   return useMutation({

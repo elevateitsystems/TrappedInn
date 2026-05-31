@@ -2,9 +2,9 @@
 import { useState } from "react";
 
 import { useGetMyProfile } from "@/lib/api-client";
-import { Layers, Plus, Pencil, Trash2, Check, X, Loader2, Zap, Briefcase, Palette, Star } from "lucide-react";
+import { Layers, Plus, Pencil, Trash2, Check, X, Loader2, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "@/hooks/use-toast";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/$/, "") || "";
 
@@ -14,6 +14,17 @@ const PRESET_MODES = [
   { label: "Event", emoji: "⚡", description: "Tailored for a specific event or conference" },
   { label: "Personal", emoji: "🌟", description: "Personal social, casual bio" },
 ];
+
+async function readJsonResponse(res: Response) {
+  const text = await res.text();
+  const data = text ? JSON.parse(text) : null;
+
+  if (!res.ok) {
+    throw new Error(data?.error || "Request failed");
+  }
+
+  return data;
+}
 
 interface Mode {
   id: string;
@@ -36,7 +47,7 @@ function useModes(profileId: string | undefined) {
     setLoading(true);
     try {
       const res = await fetch(`/api/modes`, { credentials: "include" });
-      const data = await res.json();
+      const data = await readJsonResponse(res);
       setModes(Array.isArray(data) ? data : []);
       setFetched(true);
     } finally {
@@ -247,9 +258,16 @@ export default function ModesPage() {
         credentials: "include",
         body: JSON.stringify(form),
       });
-      const mode = await res.json();
+      const mode = await readJsonResponse(res);
       setModes((prev) => [...(prev ?? []), mode]);
       setShowCreate(false);
+      toast({ title: "Mode created" });
+    } catch (error) {
+      toast({
+        title: "Create failed",
+        description: error instanceof Error ? error.message : "Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setSaving(false);
     }
@@ -264,9 +282,16 @@ export default function ModesPage() {
         credentials: "include",
         body: JSON.stringify(form),
       });
-      const updated = await res.json();
+      const updated = await readJsonResponse(res);
       setModes((prev) => prev?.map((m) => (m.id === id ? updated : m)) ?? null);
       setEditingId(null);
+      toast({ title: "Mode updated" });
+    } catch (error) {
+      toast({
+        title: "Update failed",
+        description: error instanceof Error ? error.message : "Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setSaving(false);
     }
@@ -274,9 +299,17 @@ export default function ModesPage() {
 
   const handleDelete = async (id: string) => {
     try {
-      await fetch(`/api/modes/${id}`, { method: "DELETE", credentials: "include" });
+      const res = await fetch(`/api/modes/${id}`, { method: "DELETE", credentials: "include" });
+      await readJsonResponse(res);
       setModes((prev) => prev?.filter((m) => m.id !== id) ?? null);
-    } catch {}
+      toast({ title: "Mode deleted" });
+    } catch (error) {
+      toast({
+        title: "Delete failed",
+        description: error instanceof Error ? error.message : "Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleActivate = async (id: string) => {
@@ -286,8 +319,14 @@ export default function ModesPage() {
         method: "POST",
         credentials: "include",
       });
-      const updated = await res.json();
+      const updated = await readJsonResponse(res);
       setModes((prev) => prev?.map((m) => ({ ...m, isActive: m.id === id ? updated.isActive : false })) ?? null);
+    } catch (error) {
+      toast({
+        title: "Activation failed",
+        description: error instanceof Error ? error.message : "Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setActivatingId(null);
     }
@@ -296,8 +335,15 @@ export default function ModesPage() {
   const handleDeactivate = async () => {
     setActivatingId("deactivate");
     try {
-      await fetch(`/api/modes/deactivate`, { method: "POST", credentials: "include" });
+      const res = await fetch(`/api/modes/deactivate`, { method: "POST", credentials: "include" });
+      await readJsonResponse(res);
       setModes((prev) => prev?.map((m) => ({ ...m, isActive: false })) ?? null);
+    } catch (error) {
+      toast({
+        title: "Deactivate failed",
+        description: error instanceof Error ? error.message : "Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setActivatingId(null);
     }

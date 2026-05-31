@@ -1,50 +1,12 @@
 import { NextResponse } from "next/server";
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { db, profilesTable, withRetry } from "@/db";
 import { eq } from "drizzle-orm";
+import { getOrCreateCurrentUserProfile } from "@/lib/server/profile";
 
 export async function GET() {
   try {
-    const { userId } = await auth();
-    if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    let profile = await withRetry(() => db.query.profilesTable.findFirst({
-      where: eq(profilesTable.userId, userId),
-    }));
-
-    if (!profile) {
-      // Auto-create profile if missing
-      const user = await currentUser();
-      if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-      const email = user.emailAddresses[0]?.emailAddress || "";
-      const name = user.firstName || user.username || "New User";
-      
-      const newProfile = {
-        id: crypto.randomUUID(),
-        userId,
-        username: (user.username || user.id).toLowerCase(),
-        displayName: name,
-        email,
-        bio: "",
-        themeSettings: {},
-        contactSettings: {
-          showPhone: true,
-          showEmail: true,
-          showWebsite: true,
-          showSms: false,
-          showLocation: true,
-        },
-        leadCaptureEnabled: false,
-        verified: false,
-      };
-
-      const [inserted] = await db.insert(profilesTable).values(newProfile).returning();
-      profile = inserted;
-    }
-
+    const profile = await getOrCreateCurrentUserProfile();
     return NextResponse.json(profile);
   } catch (err) {
     console.error("Failed to get or create profile", err);
@@ -59,6 +21,7 @@ export async function PUT(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    await getOrCreateCurrentUserProfile();
     const rawData = await req.json();
 
     const cleanData: any = {};
@@ -78,11 +41,13 @@ export async function PUT(req: Request) {
       return NextResponse.json({ error: "No valid fields to update" }, { status: 400 });
     }
 
-    const [updated] = await db
-      .update(profilesTable)
-      .set(cleanData)
-      .where(eq(profilesTable.userId, userId))
-      .returning();
+    const [updated] = await withRetry(() =>
+      db
+        .update(profilesTable)
+        .set(cleanData)
+        .where(eq(profilesTable.userId, userId))
+        .returning()
+    );
 
     return NextResponse.json(updated);
   } catch (err) {
