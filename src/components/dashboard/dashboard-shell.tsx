@@ -33,7 +33,7 @@ const navItems = [
 function BrandLink({ compact = false }: { compact?: boolean }) {
   return (
     <Link
-      href="/dashboard"
+      href="/"
       className="flex items-center gap-2.5 border-border transition-colors hover:bg-sidebar-accent/40"
       title="Back to your dashboard"
     >

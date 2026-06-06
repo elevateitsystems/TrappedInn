@@ -4,7 +4,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Tapped Inn Network",
-  description: "Next.js migration",
+  description:
+    "Your network, tapped in. Connect, share, and grow with Tapped Inn.",
 };
 
 const clerkAppearance = {
@@ -38,9 +39,12 @@ const clerkAppearance = {
     alertText: "text-destructive-foreground",
     logoBox: "mb-2",
     logoImage: "h-10 w-10",
-    socialButtonsBlockButton: "border border-border bg-secondary hover:bg-accent transition-colors",
-    formButtonPrimary: "bg-primary hover:bg-primary/90 text-primary-foreground transition-colors",
-    formFieldInput: "bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary",
+    socialButtonsBlockButton:
+      "border border-border bg-secondary hover:bg-accent transition-colors",
+    formButtonPrimary:
+      "bg-primary hover:bg-primary/90 text-primary-foreground transition-colors",
+    formFieldInput:
+      "bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary",
     footerAction: "bg-transparent",
     dividerLine: "bg-border",
     alert: "bg-destructive/10 border-destructive/30",
