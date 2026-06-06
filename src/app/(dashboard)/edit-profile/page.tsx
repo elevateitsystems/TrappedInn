@@ -305,14 +305,26 @@ export default function EditProfilePage() {
                     <span className="text-xs font-medium">Add header image</span>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  {headerUploading ? (
-                    <Loader2 className="w-6 h-6 text-white animate-spin" />
-                  ) : (
-                    <div className="flex items-center gap-1.5 text-white text-xs font-semibold">
-                      <Camera className="w-4 h-4" /> Change header
-                    </div>
-                  )}
+                <div
+  className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity ${
+    headerUploading
+      ? "opacity-100"
+      : "opacity-0 group-hover:opacity-100"
+  }`}
+>
+                 {headerUploading ? (
+  <div className="flex flex-col items-center gap-2 text-white">
+    <Loader2 className="w-6 h-6 animate-spin" />
+    <span className="text-xs font-medium">
+      Uploading to Cloudinary...
+    </span>
+  </div>
+) : (
+  <div className="flex items-center gap-1.5 text-white text-xs font-semibold">
+    <Camera className="w-4 h-4" />
+    Change header
+  </div>
+)}
                 </div>
                 <input ref={headerFileRef} type="file" accept="image/*" className="hidden" onChange={handleHeaderFileChange} />
               </div>
@@ -334,12 +346,16 @@ export default function EditProfilePage() {
                       {(form.displayName || "")[0]?.toUpperCase() ?? "?"}
                     </div>
                   )}
-                  <button
-                    type="button"
-                    onClick={() => fileRef.current?.click()}
-                    disabled={uploading}
-                    className="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                  >
+<button
+  type="button"
+  onClick={() => fileRef.current?.click()}
+  disabled={uploading}
+  className={`absolute inset-0 rounded-full bg-black/50 flex items-center justify-center transition-opacity cursor-pointer ${
+    uploading
+      ? "opacity-100"
+      : "opacity-0 group-hover:opacity-100"
+  }`}
+>
                     {uploading ? <Loader2 className="w-4 h-4 text-white animate-spin" /> : <Camera className="w-4 h-4 text-white" />}
                   </button>
                 </div>

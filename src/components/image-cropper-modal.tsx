@@ -1,6 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
-import { X, Check } from "lucide-react";
+import { Check, Loader2, X } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
 
 interface ImageCropperModalProps {
   imageSrc: string;
@@ -8,7 +9,7 @@ interface ImageCropperModalProps {
   shape: "round" | "rect";
   title: string;
   onCancel: () => void;
-  onSave: (blob: Blob) => void;
+  onSave: (blob: Blob) => Promise<void>;
 }
 
 export function ImageCropperModal({ imageSrc, title, onCancel, onSave }: ImageCropperModalProps) {
@@ -20,7 +21,7 @@ export function ImageCropperModal({ imageSrc, title, onCancel, onSave }: ImageCr
     try {
       const response = await fetch(imageSrc);
       const blob = await response.blob();
-      onSave(blob);
+      await onSave(blob);
     } catch (error) {
       console.error(error);
     } finally {
@@ -39,10 +40,10 @@ export function ImageCropperModal({ imageSrc, title, onCancel, onSave }: ImageCr
         </div>
         <div className="p-5 flex flex-col items-center justify-center gap-4">
           <div className="w-full h-64 bg-black/20 rounded-lg flex items-center justify-center overflow-hidden border border-border">
-            <img src={imageSrc} alt="Crop preview" className="max-w-full max-h-full object-contain" />
+            <Image src={imageSrc} alt="Crop preview" className="max-w-full max-h-full object-contain" width={256} height={128} />
           </div>
           <p className="text-sm text-muted-foreground text-center">
-            (Image cropping is currently simplified for the Next.js migration)
+            {/* (Image cropping is currently simplified for the Next.js migration) */}
           </p>
         </div>
         <div className="px-5 py-4 border-t border-border flex items-center justify-end gap-3 bg-muted/20">
@@ -57,11 +58,17 @@ export function ImageCropperModal({ imageSrc, title, onCancel, onSave }: ImageCr
             disabled={loading}
             className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 flex items-center gap-2 transition-colors disabled:opacity-50"
           >
-            {loading ? "Saving..." : (
-              <>
-                <Check className="w-4 h-4" /> Save Image
-              </>
-            )}
+            {loading ? (
+  <>
+    <Loader2 className="w-4 h-4 animate-spin" />
+    Uploading...
+  </>
+) : (
+  <>
+    <Check className="w-4 h-4" />
+    Save Image
+  </>
+)}
           </button>
         </div>
       </div>
