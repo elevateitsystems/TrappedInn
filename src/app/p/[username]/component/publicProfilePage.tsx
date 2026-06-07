@@ -21,29 +21,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { PLATFORM_ICONS } from "./PLATFORM_ICONS";
 
 const APP_NAME = "Tapped Inn Network";
 
-const getSocialIcon = (url: string) => {
-  const u = url.toLowerCase();
+export const getSocialIcon = (url: string): string | null => {
+  const lower = url.toLowerCase();
 
-  if (u.includes("facebook.com")) {
-    return "/facebook.webp";
-  }
-  if (u.includes("instagram.com")) {
-    return "/instagram.webp";
-  }
-  if (u.includes("youtube.com") || u.includes("youtu.be")) {
-    return "/youtube.webp";
-  }
-  if (u.includes("linkedin.com")) {
-    return "/linkedin.webp";
-  }
-  if (u.includes("x.com") || u.includes("twitter.com")) {
-    return "/twitter.webp";
+  for (const domain of Object.keys(PLATFORM_ICONS)) {
+    if (lower.includes(domain)) {
+      return PLATFORM_ICONS[domain];
+    }
   }
 
-  return null; // fallback
+  return null;
 };
 
 export default function PublicProfilePage() {
@@ -389,17 +380,13 @@ export default function PublicProfilePage() {
                     {iconUrl ? (
                       <Image
                         src={iconUrl}
-                        alt="icon"
-                        height={40}
-                        width={40}
-                        className="size-6 shrink-0 group-hover:opacity-100 opacity-70 transition"
-                        onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).src =
-                            "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/external-link.svg";
-                        }}
+                        alt="Platform Icon"
+                        width={24}
+                        height={24}
+                        className="size-6 shrink-0 opacity-70 group-hover:opacity-100 transition"
                       />
                     ) : (
-                      <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+                      <Globe className="size-5 shrink-0 text-muted-foreground group-hover:text-primary transition" />
                     )}
                   </div>
                 </motion.a>
