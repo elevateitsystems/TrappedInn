@@ -50,7 +50,7 @@ export const PLATFORM_ICONS: Record<string, string> = {
   "tieba.baidu.com": "/platform_icons/tieba.png",
   "line.me": "/platform_icons/line.png",
   "kakaotalk.com": "/platform_icons/kakaotalk.png",
-// done
+
   // Messaging
   "signal.org": "/platform_icons/signal.png",
   "viber.com": "/platform_icons/viber.png",
@@ -70,7 +70,7 @@ export const PLATFORM_ICONS: Record<string, string> = {
   "joinmastodon.org": "/platform_icons/mastodon.png",
   "bsky.app": "/platform_icons/bluesky.png",
   "bere.al": "/platform_icons/bereal.png",
-  "nextdoor.com": "/platform_icons/nextdoor.png",
+  "nextdoor.com": "/platform_icons/nextdoor.jpeg",
   "minds.com": "/platform_icons/minds.png",
   "truthsocial.com": "/platform_icons/truthsocial.png",
   "gab.com": "/platform_icons/gab.png",
