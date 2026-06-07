@@ -36,20 +36,21 @@ export const PLATFORM_ICONS: Record<string, string> = {
   "discord.gg": "/platform_icons/discord.png",
   "discord.com": "/platform_icons/discord.png",
   "clubhouse.com": "/platform_icons/clubhouse.png",
-  // Done
+  
   // Regional
   "douyin.com": "/platform_icons/douyin.png",
   "weibo.com": "/platform_icons/weibo.png",
   "kuaishou.com": "/platform_icons/kuaishou.png",
   "qq.com": "/platform_icons/qq.png",
   "qzone.qq.com": "/platform_icons/qzone.png",
+
   "vk.com": "/platform_icons/vk.png",
   "vkontakte.ru": "/platform_icons/vk.png",
   "ok.ru": "/platform_icons/odnoklassniki.png",
   "tieba.baidu.com": "/platform_icons/tieba.png",
   "line.me": "/platform_icons/line.png",
   "kakaotalk.com": "/platform_icons/kakaotalk.png",
-
+// done
   // Messaging
   "signal.org": "/platform_icons/signal.png",
   "viber.com": "/platform_icons/viber.png",
